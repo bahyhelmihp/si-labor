@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" ></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	<link href="bootstrap.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+	<h1>    Sistem Informasi Laboratorium<h1>
+	<h5>    Selamat Datang di Pusat Informasi Terkini Laboratorium </h5>
+	<br>
+	<div class="container-fluid">
+	<h4>Select Number of Rows</h4>
+	<div class="form-group">
+		<select name="state" id="maxRows" class="form-control" style="width:150px;">
+			<option value="5000"> 5</option>
+			<option value="5000"> 10</option>
+			<option value="5000"> 15</option>
+			<option value="5000"> 20</option>
+			<option value="5000"> 25</option>
+			<option value="5000"> 50</option>
+			<option value="5000"> 100</option>
+		</select>
+	</div>
+	<div th:if="${datasupply.isEmpty()}">
+   		<div>Stok kosong/habis! Segera ajukan kebutuhan reagen.</div>
+	</div>
+	
+	<form th:action="@{/lab/stok/tambah}" class="form-inline" method="GET">
+			<button class="btn btn-alert mb-2" type="submit">Tambah Persediaan Reagen</button>
+	</form>
+	<table id="mytable" class="table table-bordered table-striped">
+	  <thead>
+	  	<tr>
+	  		<th>Id</th>
+	  		<th>Jenis</th>
+	    	<th>Nama</th>
+	    	<th>Jumlah</th>
+	    	<th>Deskripsi</th>
+	    	<th>Edit</th>
+	  	</tr>
+	  </thead>
+	  <tbody>
+	  	<tr th:each="supply : ${datasupply}">
+	  		<td th:text="${supply.id}"></td>
+	  		<td th:text="${supply.jenis}"></td>
+	   		<td th:text="${supply.nama}"></td>
+	  	 	<td th:text="${supply.deskripsi}"></td>
+	    	<td th:text="${supply.jumlah}"></td>
+	    	<td><a th:href="@{'/lab/stok/ubah/' +${supply.id}}">Update ... </a></td>
+	  	</tr>
+	  </tbody>
+	</table>
+	<div class="pagination-container">
+		<nav>
+			<ul class="pagination"></ul>
+		</nav>
+	</div>
+</div>
+	
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script> 
+	var table = '#mytable'
+	$('#maxRows').on('change', function(){
+		$('.pagination').html('')
+		var trnum = 0
+		var maxRows = parseInt($(this).val())
+		var totalRows = $(table+' tbody tr').length
+		$(table+' tr:gt(0)').each(function(){
+			trnum++
+			if(trnum > maxRows){
+				$(this).hide()
+			}
+			if trnum <= maxRows){
+				$(this).show()
+			}
+		})
+		if(totalRows >maxRows){
+			var pagenum = Math.ceil(totalRows/maxRows)
+			for(var i=1; i<=pagenum;){
+				$('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ + '<span class="sr-only">(current)</span></span>\<li>').show()
+			}
+		}
+		$('.pagination li:first-child').addClass('active')
+		$('.pagination li').on('click', fuction(){
+			var pagenum = $(this).attr('data-page')
+			var trIndex=0;
+			$('.pagination li').removeClass('active')
+			$(this).addClass('active')
+			$(table+' tr:gt(0)').each(function(){
+				trIndex++
+				if(trIndex > (maxRows*pageNum) || trIndex<=((maxRows*pageNum)-maxRows)){
+					$(this).hide()
+				} else{
+					$(this).show()
+				}
+			})
+		})
+	})
+	$(function(){
+		$('table tr:eq(0)').prepend('<th>ID</th>')
+		var id = 0;
+		$('table tr:gt(0)').each(function(){
+			id++
+			$(this).prepend('<td>'+id+'</td')
+		})
+	})
+	
+	</script>
+</body>
+</html>

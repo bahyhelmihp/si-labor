@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" ></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{/lab/stok/tambah}" method="POST">
+						<div class="card-body">
+							<table style="width:100%">
+							 <h3> Stok reagen kosong/habis! </h3>
+							 <h4> Silahkan ajukan rencana kebutuhan reagen. </h4>
+							</table>
+							<br>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

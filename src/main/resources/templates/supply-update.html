@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<object th:include="fragments/fragment :: title" ></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	
+	<div class="container-fluid">
+		<h2>Ubah</h2>
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{'/lab/stok/ubah/'} + ${datasupply.id}" th:object="${supply}" method="POST">
+						<input type="hidden" th:value="${datasupply.id}" name="id"></input>
+						<input type="hidden" th:value="${datasupply.nama}" name="nama"></input>
+						<input type="hidden" th:value="${datasupply.jenis}" name="jenis"></input>
+						<input type="hidden" th:value="${datasupply.deskripsi}" name="deskripsi"></input>
+						<div class="card-body">
+							<table style="width:100%" cellpadding="10">
+							<tr>
+							  <tr>
+							    <th>Jumlah Reagen</th>
+							    <td><input class="form-control"  type="number" th:value="${datasupply.jumlah}" name="jumlah"/></td>
+							  </tr>
+							 </tr>
+							</table>
+							<br>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
