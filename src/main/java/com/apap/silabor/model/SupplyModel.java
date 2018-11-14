@@ -4,12 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "supply")
@@ -39,6 +43,9 @@ public class SupplyModel implements Serializable{
 	@NotNull
 	@Column(name= "jumlah", nullable = false)
 	private Integer jumlah;
+	
+	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
+	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
 	
 	public long getId() {
 		return id;
@@ -78,6 +85,14 @@ public class SupplyModel implements Serializable{
 
 	public void setJumlah(Integer jumlah) {
 		this.jumlah = jumlah;
+	}
+
+	public List<KebutuhanReagenModel> getListKebutuhanReagen() {
+		return listKebutuhanReagen;
+	}
+
+	public void setListKebutuhanReagen(List<KebutuhanReagenModel> listKebutuhanReagen) {
+		this.listKebutuhanReagen = listKebutuhanReagen;
 	}
 
 	

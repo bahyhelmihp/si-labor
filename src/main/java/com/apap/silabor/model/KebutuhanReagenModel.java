@@ -34,7 +34,7 @@ public class KebutuhanReagenModel implements Serializable {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_reagen", referencedColumnName = "lab_supplies")
+	@JoinColumn(name = "id_reagen", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private SupplyModel supply;
