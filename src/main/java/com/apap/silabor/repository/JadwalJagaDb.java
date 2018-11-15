@@ -11,6 +11,6 @@ import com.apap.silabor.model.UserRoleModel;
 @Repository
 public interface JadwalJagaDb extends JpaRepository<JadwalJagaModel, Long> {
 	
-	JadwalJagaModel findByDate (Date tanggal);
+	JadwalJagaModel findByTanggal (Date tanggal);
 	
 }
