@@ -34,7 +34,7 @@ public class PemeriksaanModel implements Serializable {
 	
 	@NotNull
 	@Column(name = "tanggal_pemeriksaan", nullable = false)
-	private Date tanggalPemeriksaan1;
+	private Date tanggalPemeriksaan;
 	
 	@NotNull
 	@Column(name = "status", nullable = false)
