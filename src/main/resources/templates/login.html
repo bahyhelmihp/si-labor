@@ -17,10 +17,12 @@
                     <div class="card-header">
                         Log In
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 32px;">
                         <div th:if="${param.error}">
-                            <span style="color: red">Invalid username or password</span>
-                        </div>
+							<div class="alert alert-danger">
+								<strong>Invalid!</strong> you enter a wrong username or password
+							</div>
+						</div>
                         <form th:action="@{/login}" method="POST">
                             <div class="row form-group">
                                 <label class="col-sm-4">Username:</label>
