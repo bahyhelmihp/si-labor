@@ -1,6 +1,9 @@
 package com.apap.silabor.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,6 +42,9 @@ public class JenisPemeriksaanModel implements Serializable{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private SupplyModel supply;
+	
+	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
+	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 
 	public long getId() {
 		return id;
@@ -63,6 +69,15 @@ public class JenisPemeriksaanModel implements Serializable{
 	public void setSupply(SupplyModel supply) {
 		this.supply = supply;
 	}
+
+	public List<PemeriksaanModel> getListPemeriksaan() {
+		return listPemeriksaan;
+	}
+
+	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
+		this.listPemeriksaan = listPemeriksaan;
+	}
+	
 	
 	
 	
