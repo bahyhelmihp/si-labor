@@ -16,21 +16,18 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 	JadwalJagaDb jadwalJagaDb;
 
 	@Override
-	public JadwalJagaModel addJadwal(JadwalJagaModel jadwal) {
-		// TODO Auto-generated method stub
-		return jadwalJagaDb.save(jadwal);
+	public JadwalJagaModel addJadwal(JadwalJagaModel jadwalJaga) {
+		return jadwalJagaDb.save(jadwalJaga);
 	}
 
 	@Override
 	public JadwalJagaModel getJadwalByDate(Date tanggal) {
-		// TODO Auto-generated method stub
 		return jadwalJagaDb.findByDate(tanggal);
 	}
 
 	@Override
-	public JadwalJagaModel updateJadwal(JadwalJagaModel jadwal) {
-		// TODO Auto-generated method stub
-		return jadwalJagaDb.save(jadwal);
+	public JadwalJagaModel updateJadwal(JadwalJagaModel jadwalJaga) {
+		return jadwalJagaDb.save(jadwalJaga);
 	}
 
 }

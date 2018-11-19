@@ -5,10 +5,10 @@ import java.sql.Date;
 import com.apap.silabor.model.JadwalJagaModel;
 
 public interface JadwalJagaService {
-	JadwalJagaModel addJadwal(JadwalJagaModel jadwal);
+	JadwalJagaModel addJadwal(JadwalJagaModel jadwalJaga);
 
 	JadwalJagaModel getJadwalByDate(Date tanggal);
 
-	JadwalJagaModel updateJadwal(JadwalJagaModel jadwal);
+	JadwalJagaModel updateJadwal(JadwalJagaModel jadwalJaga);
 
 }
