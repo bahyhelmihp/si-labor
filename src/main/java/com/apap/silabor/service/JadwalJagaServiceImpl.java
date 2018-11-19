@@ -22,7 +22,9 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 
 	@Override
 	public JadwalJagaModel getJadwalByDate(Date tanggal) {
-		return jadwalJagaDb.findByDate(tanggal);
+		// TODO Auto-generated method stub
+		return jadwalJagaDb.findByTanggal(tanggal);
+
 	}
 
 	@Override

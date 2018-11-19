@@ -47,6 +47,9 @@ public class SupplyModel implements Serializable{
 	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
 	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
 	
+	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
+	private List<PemeriksaanModel> listPemeriksaanModel = new ArrayList<PemeriksaanModel>();
+	
 	public long getId() {
 		return id;
 	}
@@ -93,6 +96,14 @@ public class SupplyModel implements Serializable{
 
 	public void setListKebutuhanReagen(List<KebutuhanReagenModel> listKebutuhanReagen) {
 		this.listKebutuhanReagen = listKebutuhanReagen;
+	}
+
+	public List<PemeriksaanModel> getListPemeriksaanModel() {
+		return listPemeriksaanModel;
+	}
+
+	public void setListPemeriksaanModel(List<PemeriksaanModel> listPemeriksaanModel) {
+		this.listPemeriksaanModel = listPemeriksaanModel;
 	}
 
 	
