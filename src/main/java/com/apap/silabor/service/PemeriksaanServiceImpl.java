@@ -3,10 +3,14 @@ package com.apap.silabor.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.repository.PemeriksaanDb;
 
+@Service
+@Transactional
 public class PemeriksaanServiceImpl implements PemeriksaanService {
 	@Autowired
 	PemeriksaanDb pemeriksaanDb;

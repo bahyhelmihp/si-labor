@@ -54,8 +54,62 @@ public class PemeriksaanModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private JenisPemeriksaanModel jenis_pemeriksaan;
-	
-	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Date getTanggalPengajuan() {
+		return tanggalPengajuan;
+	}
+
+	public void setTanggalPengajuan(Date tanggalPengajuan) {
+		this.tanggalPengajuan = tanggalPengajuan;
+	}
+
+	public Date getTanggalPemeriksaan() {
+		return tanggalPemeriksaan;
+	}
+
+	public void setTanggalPemeriksaan(Date tanggalPemeriksaan) {
+		this.tanggalPemeriksaan = tanggalPemeriksaan;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getPasien() {
+		return pasien;
+	}
+
+	public void setPasien(int pasien) {
+		this.pasien = pasien;
+	}
+
+	public String getHasil() {
+		return hasil;
+	}
+
+	public void setHasil(String hasil) {
+		this.hasil = hasil;
+	}
+
+	public JenisPemeriksaanModel getJenis_pemeriksaan() {
+		return jenis_pemeriksaan;
+	}
+
+	public void setJenis_pemeriksaan(JenisPemeriksaanModel jenis_pemeriksaan) {
+		this.jenis_pemeriksaan = jenis_pemeriksaan;
+	}
 }
 
 
