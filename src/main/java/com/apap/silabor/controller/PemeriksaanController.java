@@ -43,7 +43,7 @@ public class PemeriksaanController {
 	//FITUR 10
 	@PostMapping(value = "/permintaan/tambah")
 	public LabResultDetail addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
-		if (pemeriksaan.getId() == 1) {
+		if (pemeriksaan.getStatus() == 1) {
 			LabResultDetail detail = restTemplate.postForObject(Setting.addLabResultUrl, pemeriksaan, LabResultDetail.class);
 			return detail;
 		}
