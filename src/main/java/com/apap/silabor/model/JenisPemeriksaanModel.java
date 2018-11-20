@@ -37,15 +37,9 @@ public class JenisPemeriksaanModel implements Serializable{
 	@Column(name= "nama", nullable = false)
 	private String nama;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_supplies", referencedColumnName = "id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private SupplyModel supply;
-	
 	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
-
+	
 	public long getId() {
 		return id;
 	}
@@ -60,14 +54,6 @@ public class JenisPemeriksaanModel implements Serializable{
 
 	public void setNama(String nama) {
 		this.nama = nama;
-	}
-
-	public SupplyModel getSupply() {
-		return supply;
-	}
-
-	public void setSupply(SupplyModel supply) {
-		this.supply = supply;
 	}
 
 	public List<PemeriksaanModel> getListPemeriksaan() {

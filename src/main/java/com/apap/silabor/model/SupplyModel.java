@@ -8,10 +8,18 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +54,6 @@ public class SupplyModel implements Serializable{
 	
 	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
 	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
-	
-	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
-	private List<PemeriksaanModel> listPemeriksaanModel = new ArrayList<PemeriksaanModel>();
 	
 	public long getId() {
 		return id;
@@ -96,14 +101,6 @@ public class SupplyModel implements Serializable{
 
 	public void setListKebutuhanReagen(List<KebutuhanReagenModel> listKebutuhanReagen) {
 		this.listKebutuhanReagen = listKebutuhanReagen;
-	}
-
-	public List<PemeriksaanModel> getListPemeriksaanModel() {
-		return listPemeriksaanModel;
-	}
-
-	public void setListPemeriksaanModel(List<PemeriksaanModel> listPemeriksaanModel) {
-		this.listPemeriksaanModel = listPemeriksaanModel;
 	}
 
 	

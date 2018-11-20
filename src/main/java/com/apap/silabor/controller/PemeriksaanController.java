@@ -14,7 +14,7 @@ import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.service.PemeriksaanService;
 
 @RestController
-@RequestMapping("/pemeriksaan")
+@RequestMapping("/lab/pemeriksaan")
 public class PemeriksaanController {
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
