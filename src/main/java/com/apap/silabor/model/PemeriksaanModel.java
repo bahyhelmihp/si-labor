@@ -40,9 +40,11 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name = "status", nullable = false)
 	private int status;
 	
-	@NotNull
-	@Column(name = "id_pasien", nullable = false)
-	private int pasien;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_pasien", referencedColumnName = "id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private PasienModel pasien;
 	
 	@NotNull
 	@Size(max=255)
@@ -87,11 +89,11 @@ public class PemeriksaanModel implements Serializable {
 		this.status = status;
 	}
 
-	public int getPasien() {
+	public PasienModel getPasien() {
 		return pasien;
 	}
 
-	public void setPasien(int pasien) {
+	public void setPasien(PasienModel pasien) {
 		this.pasien = pasien;
 	}
 
