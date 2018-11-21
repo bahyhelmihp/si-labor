@@ -31,18 +31,26 @@ public class PemeriksaanController {
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
 	
-	//FITUR 7 Menampilkan permintaan pemeriksaan lab
-	@GetMapping(value = "/permintaan")
-	public String viewAllPemeriksaan(Model model) {
-		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-		model.addAttribute("pemeriksaanList", listPemeriksaan);
-		model.addAttribute("title", "Daftar Pemeriksaan Lab");
-		return "pemeriksaan-viewall";
+//	//FITUR 7 Menampilkan permintaan pemeriksaan lab
+//	@GetMapping(value = "/permintaan")
+//	public String viewAllPemeriksaan(Model model) {
+//		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
+//		model.addAttribute("pemeriksaanList", listPemeriksaan);
+//		model.addAttribute("title", "Daftar Pemeriksaan Lab");
+//		return "pemeriksaan-viewall";
+//	}
+	
+	
+	//FITUR 8
+	@PostMapping(value = "/permintaan")
+	public PemeriksaanModel addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
+		return pemeriksaanService.addPemeriksaan(pemeriksaan);
 	}
+
 	
 	//FITUR 10
 	@PostMapping(value = "/permintaan/tambah")
-	public LabResultDetail addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
+	public LabResultDetail sendPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
 		if (pemeriksaan.getStatus() == 1) {
 			LabResultDetail detail = restTemplate.postForObject(Setting.addLabResultUrl, pemeriksaan, LabResultDetail.class);
 			return detail;

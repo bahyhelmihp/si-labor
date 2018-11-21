@@ -48,7 +48,7 @@ public class PemeriksaanModel implements Serializable {
 	
 	@NotNull
 	@Size(max=255)
-	@Column(name= "hasil", nullable = false)
+	@Column(name= "hasil", nullable = true)
 	private String hasil;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
