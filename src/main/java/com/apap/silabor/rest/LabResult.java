@@ -16,15 +16,6 @@ public class LabResult {
 	
 	private PasienTest pasien;
 
-	public LabResult(long id, String jenis, String hasil, Date tanggalPengajuan, PasienTest pasien) {
-		super();
-		this.id = id;
-		this.jenis = jenis;
-		this.hasil = hasil;
-		this.tanggalPengajuan = tanggalPengajuan;
-		this.pasien = pasien;
-	}
-
 	public String getJenis() {
 		return jenis;
 	}

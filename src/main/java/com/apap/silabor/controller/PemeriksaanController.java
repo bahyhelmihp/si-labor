@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
+import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
@@ -42,21 +45,44 @@ public class PemeriksaanController {
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
-	
+
 	//FITUR 8
-	@PostMapping(value = "/permintaan")
+	@PostMapping(value = "/permintaan/save")
 	public PemeriksaanModel addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
 		return pemeriksaanService.addPemeriksaan(pemeriksaan);
+	}
+
+	//FITUR 9
+	@GetMapping(value = "/{id}")
+	public PemeriksaanModel updateStatus(@PathVariable(value="id") long id) {
+		return pemeriksaanService.getPemeriksaanById(id);
 	}
 
 	//FITUR 10
 	@GetMapping(value = "/permintaan/send")
 	public String sendPemeriksaan() {
-		//LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
-		LabResult labResult = new LabResult(1, "urin", "diabetes", Date.valueOf("2018-10-10"), new PasienTest(1));
-		return restTemplate.postForObject(Setting.addLabResultUrl, labResult, String.class);
-
+		
+		//Object Sementara
+		LabResult labResult = new LabResult();
+		PasienTest pasien = new PasienTest();
+		labResult.setHasil("diabetes");
+		labResult.setJenis("urin");
+		labResult.setPasien(pasien);
+		pasien.setId(1);
+		labResult.setTanggalPengajuan(Date.valueOf("2018-11-21"));
+		
+		//Consume API
+		LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
+		
+		//Return Response
+		return response.getMessage();
 	}
 
+	@GetMapping(value = "/test")
+	public ResponseEntity<String> getPasien() {
+		String path = "http://si-appointment.herokuapp.com/api/6/getAllPasien";
+		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
+		return response;
+	}
 
 }
