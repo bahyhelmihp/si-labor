@@ -40,6 +40,17 @@ public class JenisPemeriksaanModel implements Serializable{
 	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
+	@OneToMany(mappedBy= "jenisPemeriksaan", fetch = FetchType.LAZY)
+	private List<SupplyModel> listSupply = new ArrayList<SupplyModel>();
+
+	public List<SupplyModel> getListSupply() {
+		return listSupply;
+	}
+
+	public void setListSupply(List<SupplyModel> listSupply) {
+		this.listSupply = listSupply;
+	}
+
 	public long getId() {
 		return id;
 	}

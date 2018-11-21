@@ -17,6 +17,9 @@
 				<div class="card">
 					<form th:action="@{'/lab/stok/ubah/'} + ${datasupply.id}" th:object="${supply}" method="POST">
 						<input type="hidden" th:value="${datasupply.id}" name="id"></input>
+						<input type="hidden" th:value="${datasupply.nama}" name="nama"></input>
+						<input type="hidden" th:value="${datasupply.jenis}" name="jenis"></input>
+						<input type="hidden" th:value="${datasupply.deskripsi}" name="deskripsi"></input>
 						<div class="card-body">
 							<table style="width:100%" cellpadding="10">
 							<tr>
@@ -33,7 +36,7 @@
 							  		<td th:text="${datasupply.deskripsi}"></td>
 							  	</tr>
 							  	<tr>
-							    	<th>Jumlah Reagen</th>
+							    	<th>Jumlah</th>
 							    	<td><input class="form-control"  type="number" th:value="${datasupply.jumlah}" name="jumlah"/></td>
 							  	</tr>
 							 </tr>
@@ -41,6 +44,11 @@
 							<br>
 							<button type="submit" class="btn btn-primary">Simpan</button>
 						</div>
+						<script>
+						function myFunction() {
+						    alert("Data Berhasil Disimpan!");
+						}
+						</script>
 					</form>
 				</div>
 			</div>
