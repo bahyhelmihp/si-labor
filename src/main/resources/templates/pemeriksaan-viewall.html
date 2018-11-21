@@ -20,7 +20,7 @@
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<div style="padding: 32px;" >
 
-		<table id="jabatanTable" class="display" style="margin-left:auto; margin-right:auto;" text-align="left;">
+		<table id="pemeriksaanTable" class="display" style="margin-left:auto; margin-right:auto;" text-align="left;">
 
 			<!-- Header Table -->
 			<thead>
@@ -35,7 +35,7 @@
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="pemeriksaan : ${pemeriksaanList}">
-					<td th:text="${pemeriksaan.pasien}"></td>
+					<td th:text="${pemeriksaan.pasien.id}"></td>
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
 					<td th:text="${pemeriksaan.status}"></td>
 				</tr>
@@ -57,6 +57,6 @@
 
 <script>
 	$(document).ready(function() {
-		$('#jabatanTable').DataTable();
+		$('#pemeriksaanTable').DataTable();
 	});
 </script>

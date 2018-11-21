@@ -1,5 +1,6 @@
 package com.apap.silabor.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
-import com.apap.silabor.rest.LabResultDetail;
+import com.apap.silabor.rest.LabResult;
+import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.PemeriksaanService;
 
@@ -22,24 +24,24 @@ import com.apap.silabor.service.PemeriksaanService;
 public class PemeriksaanController {
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	@Bean
-    public RestTemplate rest() {
-    	return new RestTemplate();
-    }
-	
+	public RestTemplate rest() {
+		return new RestTemplate();
+	}
+
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
-	
-//	//FITUR 7 Menampilkan permintaan pemeriksaan lab
-//	@GetMapping(value = "/permintaan")
-//	public String viewAllPemeriksaan(Model model) {
-//		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-//		model.addAttribute("pemeriksaanList", listPemeriksaan);
-//		model.addAttribute("title", "Daftar Pemeriksaan Lab");
-//		return "pemeriksaan-viewall";
-//	}
-	
+
+
+	//FITUR 7 Menampilkan permintaan pemeriksaan lab
+	@GetMapping(value = "/permintaan")
+	public String viewAllPemeriksaan(Model model) {
+		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
+		model.addAttribute("pemeriksaanList", listPemeriksaan);
+		model.addAttribute("title", "Daftar Pemeriksaan Lab");
+		return "pemeriksaan-viewall";
+	}
 	
 	//FITUR 8
 	@PostMapping(value = "/permintaan")
@@ -47,16 +49,14 @@ public class PemeriksaanController {
 		return pemeriksaanService.addPemeriksaan(pemeriksaan);
 	}
 
-	
 	//FITUR 10
-	@PostMapping(value = "/permintaan/tambah")
-	public LabResultDetail sendPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
-		if (pemeriksaan.getStatus() == 1) {
-			LabResultDetail detail = restTemplate.postForObject(Setting.addLabResultUrl, pemeriksaan, LabResultDetail.class);
-			return detail;
-		}
-		return null;
+	@GetMapping(value = "/permintaan/send")
+	public String sendPemeriksaan() {
+		//LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
+		LabResult labResult = new LabResult(1, "urin", "diabetes", Date.valueOf("2018-10-10"), new PasienTest(1));
+		return restTemplate.postForObject(Setting.addLabResultUrl, labResult, String.class);
+
 	}
 
-	
+
 }
