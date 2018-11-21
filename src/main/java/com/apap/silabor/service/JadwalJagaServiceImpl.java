@@ -1,6 +1,7 @@
 package com.apap.silabor.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,7 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 	}
 
 	@Override
-	public JadwalJagaModel getJadwalByDate(Date tanggal) {
-		// TODO Auto-generated method stub
+	public List<JadwalJagaModel> getJadwalByDate(Date tanggal) {
 		return jadwalJagaDb.findByTanggal(tanggal);
 
 	}
@@ -30,6 +30,11 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 	@Override
 	public JadwalJagaModel updateJadwal(JadwalJagaModel jadwalJaga) {
 		return jadwalJagaDb.save(jadwalJaga);
+	}
+
+	@Override
+	public JadwalJagaModel getJadwalById(long id) {
+		return jadwalJagaDb.findById(id);
 	}
 
 }
