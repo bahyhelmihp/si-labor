@@ -40,6 +40,11 @@ public class KebutuhanReagenModel implements Serializable {
 	private SupplyModel supply;
 	
 	@NotNull
+	@Size(max=100)
+	@Column(name = "nama", nullable = false)
+	private String nama;
+	
+	@NotNull
 	@Column(name = "tanggal_update", nullable = false)
 	private Date tanggal_update;
 	
@@ -50,6 +55,14 @@ public class KebutuhanReagenModel implements Serializable {
 	@NotNull
 	@Column(name = "status", nullable = false)
 	private int status;
+	
+	public String getNama() {
+		return nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
 
 	public long getId() {
 		return id;
