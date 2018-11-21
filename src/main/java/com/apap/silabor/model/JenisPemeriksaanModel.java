@@ -37,7 +37,7 @@ public class JenisPemeriksaanModel implements Serializable{
 	@Column(name= "nama", nullable = false)
 	private String nama;
 	
-	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
 	public long getId() {

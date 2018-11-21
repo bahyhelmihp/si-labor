@@ -19,6 +19,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "pemeriksaan")
@@ -40,22 +41,28 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name = "status", nullable = false)
 	private int status;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_pasien", referencedColumnName = "id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private PasienModel pasien;
+	@NotNull
+	@Column(name = "id_pasien", nullable = false)
+	private long idPasien;
 	
 	@NotNull
 	@Size(max=255)
-	@Column(name= "hasil", nullable = false)
+	@Column(name= "hasil", nullable = true)
 	private String hasil;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jenis", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private JenisPemeriksaanModel jenis_pemeriksaan;
+	private JenisPemeriksaanModel jenisPemeriksaan;
+	
+	public long getIdPasien() {
+		return idPasien;
+	}
+
+	public void setIdPasien(long idPasien) {
+		this.idPasien = idPasien;
+	}
 
 	public long getId() {
 		return id;
@@ -89,14 +96,6 @@ public class PemeriksaanModel implements Serializable {
 		this.status = status;
 	}
 
-	public PasienModel getPasien() {
-		return pasien;
-	}
-
-	public void setPasien(PasienModel pasien) {
-		this.pasien = pasien;
-	}
-
 	public String getHasil() {
 		return hasil;
 	}
@@ -105,12 +104,12 @@ public class PemeriksaanModel implements Serializable {
 		this.hasil = hasil;
 	}
 
-	public JenisPemeriksaanModel getJenis_pemeriksaan() {
-		return jenis_pemeriksaan;
+	public JenisPemeriksaanModel getJenisPemeriksaan() {
+		return jenisPemeriksaan;
 	}
 
-	public void setJenis_pemeriksaan(JenisPemeriksaanModel jenis_pemeriksaan) {
-		this.jenis_pemeriksaan = jenis_pemeriksaan;
+	public void setJenisPemeriksaan(JenisPemeriksaanModel jenisPemeriksaan) {
+		this.jenisPemeriksaan = jenisPemeriksaan;
 	}
 }
 
