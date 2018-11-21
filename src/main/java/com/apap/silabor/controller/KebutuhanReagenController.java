@@ -37,12 +37,13 @@ public class KebutuhanReagenController {
 		//gak masuk
 		LocalDate date = LocalDate.now();
 		Date tanggal =  Date.valueOf(date);
-		kebutuhan.setTanggal_update(tanggal);
+		//kebutuhan.setTanggal_update(tanggal);
 		
 		//id masih sementara
 		SupplyModel supply = supplyService.getSupplyById(1);
 		kebutuhan.setSupply(supply);
 		
+		model.addAttribute("tanggal", tanggal);
 		model.addAttribute("kebutuhan", kebutuhan);
 		return "kebutuhan-add";
 	}

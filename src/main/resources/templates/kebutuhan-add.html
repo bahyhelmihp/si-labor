@@ -18,6 +18,7 @@
                         <form th:action="@{/lab/kebutuhan/tambah}" th:object="${kebutuhan}" method="POST">
                            	<input type="hidden" th:field="*{supply}"/>
                            	<input type="hidden" name="status" value=1 class="form-control"/>
+                           	<input type="hidden" name="tanggal_update" th:value="${tanggal}" class="form-control"/>
                            	
                             Nama: <br>
                             <input type="text" name="nama" class="form-control"/>
