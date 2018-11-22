@@ -21,7 +21,10 @@
                            	<input type="hidden" name="tanggal_update" th:value="${tanggal}" class="form-control"/>
                            	
                             Nama: <br>
-                            <input type="text" name="nama" class="form-control"/>
+                            <select name="nama" class="form-control" >
+                            	<option value="garam"> Garam</option>
+                            	<option value="ninut"> Ninut</option>
+                            </select>
                             <br>
                             Jumlah: <br>
                             <input type="number" name="jumlah" min=1 class="form-control"/>
