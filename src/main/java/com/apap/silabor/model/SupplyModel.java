@@ -56,10 +56,10 @@ public class SupplyModel implements Serializable{
 	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_pemeriksaan", referencedColumnName = "id")
+	@JoinColumn(name = "id_JenisPemeriksaan", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private PemeriksaanModel pemeriksaan;
+	private JenisPemeriksaanModel jenisPemeriksaan;
 	
 	public long getId() {
 		return id;

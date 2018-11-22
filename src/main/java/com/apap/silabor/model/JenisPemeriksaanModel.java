@@ -38,6 +38,9 @@ public class JenisPemeriksaanModel implements Serializable{
 	private String nama;
 	
 	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
+	private List<SupplyModel> listSupply = new ArrayList<SupplyModel>();
+	
+	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
 	public long getId() {
