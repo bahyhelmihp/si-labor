@@ -53,9 +53,6 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name= "hasil", nullable = true)
 	private String hasil;
 	
-	@OneToMany(mappedBy = "pemeriksaan", fetch = FetchType.LAZY)
-	private List<SupplyModel> listSupply = new ArrayList<SupplyModel>();
-	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jenis", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
