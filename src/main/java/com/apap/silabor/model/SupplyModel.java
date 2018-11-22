@@ -55,6 +55,12 @@ public class SupplyModel implements Serializable{
 	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
 	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_pemeriksaan", referencedColumnName = "id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private PemeriksaanModel pemeriksaan;
+	
 	public long getId() {
 		return id;
 	}
