@@ -56,6 +56,12 @@ public class PemeriksaanModel implements Serializable {
 	@JsonIgnore
 	private JenisPemeriksaanModel jenisPemeriksaan;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_jadwal", referencedColumnName = "id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private JadwalJagaModel jadwalJaga;
+	
 	public long getIdPasien() {
 		return idPasien;
 	}
