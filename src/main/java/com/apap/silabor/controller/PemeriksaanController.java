@@ -54,8 +54,9 @@ public class PemeriksaanController {
 
 	//FITUR 9
 	@GetMapping(value = "/{id}")
-	public PemeriksaanModel updateStatus(@PathVariable(value="id") long id) {
-		return pemeriksaanService.getPemeriksaanById(id);
+	public long updateStatus(@PathVariable(value="id") long id) {
+		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
+		return pemeriksaan.getId();
 	}
 
 	//FITUR 10
@@ -78,9 +79,9 @@ public class PemeriksaanController {
 		return response.getMessage();
 	}
 
-	@GetMapping(value = "/test")
+	@GetMapping(value = "/tompel")
 	public ResponseEntity<String> getPasien() {
-		String path = "http://si-appointment.herokuapp.com/api/6/getAllPasien";
+		String path = "http://si-appointment.herokuapp.com/api/6/getAllPasienRawatJalan";
 		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
 		return response;
 	}
