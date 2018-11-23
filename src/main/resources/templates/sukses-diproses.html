@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Sukses Update</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
+	<div class="alert alert-success">
+		<h4>Sukses!</h4>
+		<p th:text="'Pemeriksaan berhasil diproses.'"></p>
+		</div>
+	</div>
+</body>
+</html>

@@ -68,18 +68,23 @@ public class PemeriksaanController {
 					Calendar today = Calendar.getInstance();
 					today.set(Calendar.HOUR_OF_DAY, 0);
 					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					pemeriksaan.setStatus(1);
 					//Sukses
-					return "update-menunggu";
+					pemeriksaanService.addPemeriksaan(pemeriksaan);
+					return "sukses-diproses";
 				}
 			}
 			return "gagal";
 		}
+		//Diproses -> Selesai
 		else {
-			//Diproses -> Selesai
-			model.addAttribute("pemeriksaan", pemeriksaan);
-			return "update-proses";
+			PemeriksaanModel pemeriksaanDiproses = pemeriksaanService.getPemeriksaanById(id);
+			model.addAttribute("pemeriksaanDiproses", pemeriksaanDiproses);
+			return "update-hasil";
 		}
 	}
+	
+	
 
 	//FITUR 10
 	@GetMapping(value = "/permintaan/send")
