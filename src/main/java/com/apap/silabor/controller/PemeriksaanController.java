@@ -68,6 +68,7 @@ public class PemeriksaanController {
 					Calendar today = Calendar.getInstance();
 					today.set(Calendar.HOUR_OF_DAY, 0);
 					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					//Set Diproses
 					pemeriksaan.setStatus(1);
 					//Sukses
 					pemeriksaanService.addPemeriksaan(pemeriksaan);
@@ -105,5 +106,4 @@ public class PemeriksaanController {
 		//Return 
 		return "redirect:/lab/pemeriksaan/permintaan";
 	}
-
 }
