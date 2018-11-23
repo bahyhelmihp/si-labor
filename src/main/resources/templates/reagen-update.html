@@ -8,23 +8,27 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="row">
+	
+	<div class="container-fluid">
+		<h2>Ubah Kebutuhan Reagen</h2>
+		<br>
+		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
-					<form th:action="@{/lab/stok/tambah}" method="POST">
+					<form th:action="@{'/lab/kebutuhan/ubah/'} + ${datareagen.id}" th:object="${reagen}" method="POST">
 						<div class="card-body">
-							<table style="width:100%">
-							 <h3> Stok reagen kosong/habis! </h3>
-							 <h4> Silahkan ajukan rencana kebutuhan reagen. </h4>
-							</table>
+							
+							Status: <br>
+							<input type="radio" name="status" value=0> 0<br>
+							<input type="radio" name="status" value=1> 1<br>
 							<br>
-						</div>
+							
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>			
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 </body>
 </html>
