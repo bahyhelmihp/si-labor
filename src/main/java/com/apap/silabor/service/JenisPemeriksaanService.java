@@ -9,7 +9,7 @@ public interface JenisPemeriksaanService {
 
 	JenisPemeriksaanDb getJenisPemeriksaanDb();
 
-	
+	JenisPemeriksaanModel getJenisPemeriksaanById(long id);
 
 	//JenisPemeriksaan getJenisPemeriksaanDb();
 
