@@ -40,5 +40,22 @@ public class JenisPemeriksaanLabSuppliesModel implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_lab_supplies", referencedColumnName = "id")
 	private SupplyModel labSupplies;
+
+	public JenisPemeriksaanModel getJenisPemeriksaan() {
+		return jenisPemeriksaan;
+	}
+
+	public void setJenisPemeriksaan(JenisPemeriksaanModel jenisPemeriksaan) {
+		this.jenisPemeriksaan = jenisPemeriksaan;
+	}
+
+	public SupplyModel getLabSupplies() {
+		return labSupplies;
+	}
+
+	public void setLabSupplies(SupplyModel labSupplies) {
+		this.labSupplies = labSupplies;
+	}
+	
 }
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+import com.apap.silabor.model.JenisPemeriksaanLabSuppliesModel;
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
@@ -69,11 +70,11 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		//Menunggu -> Diproses
 		if (pemeriksaan.getStatus() == 0) {
-			for (SupplyModel supply: pemeriksaan.getJenisPemeriksaan().getListSupply()) {
+			for (JenisPemeriksaanLabSuppliesModel pemeriksaan_supply : pemeriksaan.getJenisPemeriksaan().getListJenisPemeriksaanLabSupplies()) {
 				//Lab Supllies Ada
-				if (supply.getJumlah() != 0) {
+				if (pemeriksaan_supply.getId() == pemeriksaan.getId() && pemeriksaan_supply.getLabSupplies().getJumlah() != 0) {
 					//Kurangi Supply
-					supply.setJumlah(supply.getJumlah() - 1);
+					pemeriksaan_supply.getLabSupplies().setJumlah(pemeriksaan_supply.getLabSupplies().getJumlah() - 1);
 					//Set Tanggal Pemeriksaan
 					Calendar today = Calendar.getInstance();
 					today.set(Calendar.HOUR_OF_DAY, 0);
@@ -94,8 +95,6 @@ public class PemeriksaanController {
 			return "update-hasil";
 		}
 	}
-	
-	
 
 	//FITUR 10
 	@GetMapping(value = "/permintaan/send")
