@@ -1,6 +1,7 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
+import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
@@ -53,9 +55,30 @@ public class PemeriksaanController {
 
 	//FITUR 9
 	@PostMapping(value = "/{id}")
-	public long updateStatus(@PathVariable(value="id") long id) {
+	public String updateStatus(@PathVariable(value="id") long id, Model model) {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
-		return pemeriksaan.getId();
+		//Menunggu -> Diproses
+		if (pemeriksaan.getStatus() == 0) {
+			for (SupplyModel supply: pemeriksaan.getJenisPemeriksaan().getListSupply()) {
+				//Lab Supllies Ada
+				if (supply.getJumlah() != 0) {
+					//Kurangi Supply
+					supply.setJumlah(supply.getJumlah() - 1);
+					//Set Tanggal Pemeriksaan
+					Calendar today = Calendar.getInstance();
+					today.set(Calendar.HOUR_OF_DAY, 0);
+					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					//Sukses
+					return "update-menunggu";
+				}
+			}
+			return "gagal";
+		}
+		else {
+			//Diproses -> Selesai
+			model.addAttribute("pemeriksaan", pemeriksaan);
+			return "update-proses";
+		}
 	}
 
 	//FITUR 10
