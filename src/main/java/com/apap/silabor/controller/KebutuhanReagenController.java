@@ -7,6 +7,7 @@ import com.apap.silabor.service.SupplyService;
 
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,9 +42,16 @@ public class KebutuhanReagenController {
 		Date tanggal =  Date.valueOf(date);
 		model.addAttribute("tanggal", tanggal);
 		
-		//id masih sementara
-		SupplyModel supply = supplyService.getSupplyById(1);
-		reagen.setSupply(supply);
+		//mengambil list supply dengan jenis reagen
+		List<SupplyModel> listSupply = supplyService.getListSupply();
+		List result = new ArrayList<>();
+				
+		for(int i = 0; i<listSupply.size(); i++) {
+			if(listSupply.get(i).getJenis().equalsIgnoreCase("reagen")) {
+				result.add(listSupply.get(i));
+			}
+		}
+		model.addAttribute("listsupply", result);
 		
 		model.addAttribute("reagen", reagen);
 		return "reagen-add";
@@ -51,6 +59,8 @@ public class KebutuhanReagenController {
 	
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.POST)
 	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel reagen) {
+		SupplyModel supply = reagen.getSupply();
+		reagen.setNama(supply.getNama());
 		kebutuhanReagenService.addReagen(reagen);
 		return "success";
 	}
@@ -74,16 +84,21 @@ public class KebutuhanReagenController {
 	
 	@RequestMapping(value="lab/kebutuhan/ubah/{id}", method = RequestMethod.POST)
 	private String updateReagenSubmit(@PathVariable(value="id") long id, KebutuhanReagenModel reagen, Model model) {
-				
+		//input tanggal ketika diubah	
 		LocalDate date = LocalDate.now();
 		Date tanggal =  Date.valueOf(date);
 		reagen.setTanggal_update(tanggal);
 		
+		//integrasi dengan supply bersangkutan
 		SupplyModel supply = supplyService.getSupplyById(id);
 		reagen.setSupply(supply);
 		
 		kebutuhanReagenService.updateReagen(reagen);
 		model.addAttribute("datareagen", reagen);
+		
+		//mengubah nama pada title sesuai reagen
+		String nama = reagen.getNama();
+		model.addAttribute("nama", nama);
 		return "success";
 	}
 }
