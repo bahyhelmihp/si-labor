@@ -10,6 +10,8 @@ public interface JadwalJagaService {
 
 	List<JadwalJagaModel> getJadwalByDate(Date tanggal);
 
+	List<JadwalJagaModel> getAllJadwaJaga();
+
 	JadwalJagaModel getJadwalById(long id);
 
 	JadwalJagaModel updateJadwal(JadwalJagaModel jadwalJaga);
