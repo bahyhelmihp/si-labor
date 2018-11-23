@@ -66,8 +66,14 @@ public class JenisPemeriksaanModel implements Serializable{
 	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
 		this.listPemeriksaan = listPemeriksaan;
 	}
-	
-	
+
+	public List<SupplyModel> getListSupply() {
+		return listSupply;
+	}
+
+	public void setListSupply(List<SupplyModel> listSupply) {
+		this.listSupply = listSupply;
+	}
 	
 	
 }

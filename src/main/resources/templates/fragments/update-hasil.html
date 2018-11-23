@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Update Hasil</title>
+</head>
+<body>
+	<form th:action="@{/update}" th:object="${pemeriksaanDiproses}" method="POST">
+		<input type="hidden" th:value="${pemeriksaanDiproses.id}" name="id" />
+		<input type="hidden" th:value="${pemeriksaanDiproses.tanggaPengajuan}" name="tanggal_pengajuan" />
+		<input type="hidden" th:value="${pemeriksaanDiproses.tanggaPemeriksaan}" name="tanggal_pemeriksaan" />
+		<input type="hidden" th:value="2" name="status" />
+		<input type="hidden" th:value="${pemeriksaanDiproses.idPasien}" name="id_pasien" />
+		<br>
+		Hasil: 
+		<br> 	
+		<input type="text" name="hasil" />
+		<br>
+		<input type="hidden" th:field="*{pemeriksaanDiproses.jenisPemeriksaan}" />
+		<input type="hidden" th:field="*{pemeriksaanDiproses.jadwalJaga}" />		
+	</form>
+</body>
+</html>
