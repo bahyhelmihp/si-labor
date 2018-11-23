@@ -120,6 +120,16 @@ public class PemeriksaanModel implements Serializable {
 	public void setJenisPemeriksaan(JenisPemeriksaanModel jenisPemeriksaan) {
 		this.jenisPemeriksaan = jenisPemeriksaan;
 	}
+
+	public JadwalJagaModel getJadwalJaga() {
+		return jadwalJaga;
+	}
+
+	public void setJadwalJaga(JadwalJagaModel jadwalJaga) {
+		this.jadwalJaga = jadwalJaga;
+	}
+	
+	
 }
 
 

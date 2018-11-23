@@ -11,4 +11,6 @@ public interface PemeriksaanService {
 	
 	PemeriksaanModel getPemeriksaanById(Long id);
 	
+	List<PemeriksaanModel> makeListRequestPemeriksaan(List<Long> listId);
+	
 }

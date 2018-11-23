@@ -17,11 +17,14 @@
                     
                         <form th:action="@{/lab/kebutuhan/tambah}" th:object="${reagen}" method="POST">
                            	<input type="hidden" th:field="*{supply}"/>
-                           	<input type="hidden" name="status" value=1 class="form-control"/>
-                           	<input type="hidden" name="tanggal_update" th:value="${tanggal}" class="form-control"/>
+                           	<input type="hidden" name="status" value=1 />
+                           	<input type="hidden" name="tanggal_update" th:value="${tanggal}" />
                            	
                             Nama: <br>
-                            <input type="text" name="nama" class="form-control"/>
+                            <select name="nama" class="form-control" >
+                            	<option value="garam"> Garam</option>
+                            	<option value="ninut"> Ninut</option>
+                            </select>
                             <br>
                             Jumlah: <br>
                             <input type="number" name="jumlah" min=1 class="form-control"/>
