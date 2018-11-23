@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.JenisPemeriksaanLabSuppliesModel;
 import com.apap.silabor.model.PemeriksaanModel;
-import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
