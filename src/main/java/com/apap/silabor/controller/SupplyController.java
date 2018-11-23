@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.apap.silabor.model.SupplyModel;
+import com.apap.silabor.service.JenisPemeriksaanService;
 import com.apap.silabor.service.SupplyService;
 
 @Controller
@@ -17,9 +18,13 @@ public class SupplyController {
 	@Autowired
 	private SupplyService supplyService;
 	
+	@Autowired
+	private JenisPemeriksaanService jenisPemeriksaanService;
+	
 	//FITUR 14 Membuat data persediaan lab
 	@RequestMapping(value = "/lab/stok/tambah", method = RequestMethod.GET)
 	private String addLabSupply(Model model) {
+		model.addAttribute("suppliesByJenisPemeriksaan", ((JenisPemeriksaanService)jenisPemeriksaanService).getJenisPemeriksaanDb().findAll());
 		model.addAttribute("supply", new SupplyModel());
 		model.addAttribute("title", "Tambah Persediaan Lab");
 		return "supply-add";

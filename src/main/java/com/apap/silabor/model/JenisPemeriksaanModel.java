@@ -37,12 +37,20 @@ public class JenisPemeriksaanModel implements Serializable{
 	@Column(name= "nama", nullable = false)
 	private String nama;
 	
-	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
-	private List<SupplyModel> listSupply = new ArrayList<SupplyModel>();
-	
-	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
+	@OneToMany(mappedBy= "jenisPemeriksaan", fetch = FetchType.LAZY)
+	private List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies = new ArrayList<JenisPemeriksaanLabSuppliesModel>();
+
+	public List<JenisPemeriksaanLabSuppliesModel> getListJenisPemeriksaanLabSupplies() {
+		return listJenisPemeriksaanLabSupplies;
+	}
+
+	public void setListJenisPemeriksaanLabSupplies(List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies) {
+		this.listJenisPemeriksaanLabSupplies = listJenisPemeriksaanLabSupplies;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -66,14 +74,8 @@ public class JenisPemeriksaanModel implements Serializable{
 	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
 		this.listPemeriksaan = listPemeriksaan;
 	}
-
-	public List<SupplyModel> getListSupply() {
-		return listSupply;
-	}
-
-	public void setListSupply(List<SupplyModel> listSupply) {
-		this.listSupply = listSupply;
-	}
+	
+	
 	
 	
 }

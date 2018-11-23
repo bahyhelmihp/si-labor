@@ -1,6 +1,7 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.apap.silabor.model.JenisPemeriksaanLabSuppliesModel;
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
@@ -41,12 +44,20 @@ public class PemeriksaanController {
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) {
+		
+		// mengambil data dari {url}
+		String path = "aa";
+		List<Long> listOfIdPasien = new ArrayList<Long>();
+		//listOfIdPasien = restTemplate.getForObject(path, List.class);
+		
+		listOfIdPasien.add((long) 1);
+		listOfIdPasien.add((long) 2);
+		
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-		model.addAttribute("pemeriksaanList", listPemeriksaan);
-		model.addAttribute("title", "Daftar Pemeriksaan Lab");
+			model.addAttribute("pemeriksaanList", listPemeriksaan);
+			model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
-
 	//FITUR 8
 	@PostMapping(value = "/permintaan/save")
 	public PemeriksaanModel addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
@@ -59,15 +70,16 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		//Menunggu -> Diproses
 		if (pemeriksaan.getStatus() == 0) {
-			for (SupplyModel supply: pemeriksaan.getJenisPemeriksaan().getListSupply()) {
+			for (JenisPemeriksaanLabSuppliesModel pemeriksaan_supply : pemeriksaan.getJenisPemeriksaan().getListJenisPemeriksaanLabSupplies()) {
 				//Lab Supllies Ada
-				if (supply.getJumlah() != 0) {
+				if (pemeriksaan_supply.getId() == pemeriksaan.getId() && pemeriksaan_supply.getLabSupplies().getJumlah() != 0) {
 					//Kurangi Supply
-					supply.setJumlah(supply.getJumlah() - 1);
+					pemeriksaan_supply.getLabSupplies().setJumlah(pemeriksaan_supply.getLabSupplies().getJumlah() - 1);
 					//Set Tanggal Pemeriksaan
 					Calendar today = Calendar.getInstance();
 					today.set(Calendar.HOUR_OF_DAY, 0);
 					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					//Set Diproses
 					pemeriksaan.setStatus(1);
 					//Sukses
 					pemeriksaanService.addPemeriksaan(pemeriksaan);
@@ -83,8 +95,6 @@ public class PemeriksaanController {
 			return "update-hasil";
 		}
 	}
-	
-	
 
 	//FITUR 10
 	@GetMapping(value = "/permintaan/send")
@@ -105,5 +115,4 @@ public class PemeriksaanController {
 		//Return 
 		return "redirect:/lab/pemeriksaan/permintaan";
 	}
-
 }
