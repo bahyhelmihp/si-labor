@@ -11,14 +11,7 @@ public class LabResponse {
 
 	private String message;
 
-	private LabResult labResult;
-
-	public LabResponse(String status, String message, LabResult labResult) {
-		super();
-		this.status = status;
-		this.message = message;
-		this.labResult = labResult;
-	}
+	private LabResult result;
 
 	public String getStatus() {
 		return status;
@@ -36,12 +29,14 @@ public class LabResponse {
 		this.message = message;
 	}
 
-	public LabResult getLabResult() {
-		return labResult;
+	public LabResult getResult() {
+		return result;
 	}
 
-	public void setLabResult(LabResult labResult) {
-		this.labResult = labResult;
+	public void setResult(LabResult result) {
+		this.result = result;
 	}
+
+	
 	
 }

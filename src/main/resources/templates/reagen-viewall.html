@@ -11,59 +11,36 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h1>    Sistem Informasi Laboratorium<h1>
-	<h5>    Selamat Datang di Pusat Informasi Terkini Laboratorium </h5>
-	<br>
-	<div class="container-fluid">
-	<h4>Select Number of Rows</h4>
-	<div class="form-group">
-		<select name="state" id="maxRows" class="form-control" style="width:150px;">
-			<option value="5000"> 5</option>
-			<option value="5000"> 10</option>
-			<option value="5000"> 15</option>
-			<option value="5000"> 20</option>
-			<option value="5000"> 25</option>
-			<option value="5000"> 50</option>
-			<option value="5000"> 100</option>
-		</select>
-	</div>
-	<div th:if="${datasupply.isEmpty()}">
-   		<div>Stok kosong/habis! Segera ajukan kebutuhan reagen.</div>
-	</div>
-	
-	<form th:action="@{/lab/stok/tambah}" class="form-inline" method="GET">
-			<button class="btn btn-alert mb-2" type="submit">Tambah Persediaan Reagen</button>
-	</form>
-	<table id="mytable" class="table table-bordered table-striped">
-	  <thead>
-	  	<tr>
-	  		<th>Id</th>
-	  		<th>Jenis</th>
-	    	<th>Nama</th>
-	    	<th>Deskripsi</th>
-	    	<th>Jumlah</th>
-	    	<th>Edit</th>
-	  	</tr>
-	  </thead>
-	  <tbody>
-	  	<tr th:each="supply : ${datasupply}">
-	  		<td th:text="${supply.id}"></td>
-	  		<td th:text="${supply.jenis}"></td>
-	   		<td th:text="${supply.nama}"></td>
-	  	 	<td th:text="${supply.deskripsi}"></td>
-	    	<td th:text="${supply.jumlah}"></td>
-	    	<td><a th:href="@{'/lab/stok/ubah/' +${supply.id}}">Update ... </a></td>
-	  	</tr>
-	  </tbody>
-	</table>
-	<div class="pagination-container">
-		<nav>
-			<ul class="pagination"></ul>
-		</nav>
-	</div>
-</div>
-	
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+		<h1>  Perencanaan Kebutuhan Reagen</h1><br>
+		<div class="container-fluid">
+			<table id="mytable" class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nama</th>
+						<th>Jumlah</th>
+						<th>Status</th>
+						<th>Tanggal Diubah</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="reagen: ${datareagen}">
+						<td th:text="${reagen.id}"></td>
+						<td th:text="${reagen.nama}"></td>
+						<td th:text="${reagen.jumlah}"></td>
+						<td th:text="${reagen.status}"></td>
+						<td th:text="${reagen.tanggal_update}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pagination-container">
+				<nav>
+					<ul class="pagination"></ul>
+				</nav>
+			</div>
+		</div>
+		
 	<script src="jquery.min.js"></script>
 	<script src="bootstrap.min.js"></script>
 	<script> 
@@ -115,4 +92,3 @@
 	
 	</script>
 </body>
-</html>

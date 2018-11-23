@@ -26,11 +26,4 @@ public class PageController {
 		return "login";
 	}
 	
-	@RequestMapping("/lab/pemeriksaan")
-	public String viewAllPemeriksaan(Model model) {
-		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-			model.addAttribute("pemeriksaanList", listPemeriksaan);
-			model.addAttribute("title", "Daftar Pemeriksaan Lab");
-		return "pemeriksaan-viewall";
-	}
 }

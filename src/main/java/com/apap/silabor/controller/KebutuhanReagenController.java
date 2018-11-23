@@ -7,6 +7,7 @@ import com.apap.silabor.service.SupplyService;
 
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,24 +33,32 @@ public class KebutuhanReagenController {
 	//FITUR 3 : Membuat perencanaan kebutuhan reagen
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
-		KebutuhanReagenModel kebutuhan = new KebutuhanReagenModel();
+		KebutuhanReagenModel reagen = new KebutuhanReagenModel();
 		
-		//gak masuk
+		//input tanggal otomatis
 		LocalDate date = LocalDate.now();
 		Date tanggal =  Date.valueOf(date);
-		kebutuhan.setTanggal_update(tanggal);
+		model.addAttribute("tanggal", tanggal);
 		
 		//id masih sementara
 		SupplyModel supply = supplyService.getSupplyById(1);
-		kebutuhan.setSupply(supply);
+		reagen.setSupply(supply);
 		
-		model.addAttribute("kebutuhan", kebutuhan);
-		return "kebutuhan-add";
+		model.addAttribute("reagen", reagen);
+		return "reagen-add";
 	}
 	
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.POST)
-	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel kebutuhan) {
-		kebutuhanReagenService.addKebutuhan(kebutuhan);
+	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel reagen) {
+		kebutuhanReagenService.addReagen(reagen);
 		return "success";
+	}
+	
+	@RequestMapping(value = "/lab/kebutuhan", method = RequestMethod.GET)
+	private String viewAll(Model model) {
+		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
+		
+		model.addAttribute("datareagen", reagen);
+		return "reagen-viewall";
 	}
 }

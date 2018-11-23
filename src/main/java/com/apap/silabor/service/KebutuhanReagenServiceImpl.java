@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * KebutuhanReagenServiceImpl
  */
@@ -14,10 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class KebutuhanReagenServiceImpl implements KebutuhanReagenService{
 	@Autowired
-	private KebutuhanReagenDb kebutuhanDb;
+	private KebutuhanReagenDb reagenDb;
 	
 	@Override
-	public KebutuhanReagenModel addKebutuhan(KebutuhanReagenModel kebutuhan) {
-		return kebutuhanDb.save(kebutuhan);
+	public KebutuhanReagenModel addReagen(KebutuhanReagenModel reagen) {
+		return reagenDb.save(reagen);
+	}
+	
+	@Override
+	public List<KebutuhanReagenModel> getListReagen(){
+		return reagenDb.findAll();
 	}
 }

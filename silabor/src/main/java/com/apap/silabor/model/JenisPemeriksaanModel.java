@@ -40,6 +40,17 @@ public class JenisPemeriksaanModel implements Serializable{
 	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
 	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
+	@OneToMany(mappedBy= "jenisPemeriksaan", fetch = FetchType.LAZY)
+	private List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies = new ArrayList<JenisPemeriksaanLabSuppliesModel>();
+
+	public List<JenisPemeriksaanLabSuppliesModel> getListJenisPemeriksaanLabSupplies() {
+		return listJenisPemeriksaanLabSupplies;
+	}
+
+	public void setListJenisPemeriksaanLabSupplies(List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies) {
+		this.listJenisPemeriksaanLabSupplies = listJenisPemeriksaanLabSupplies;
+	}
+
 	public long getId() {
 		return id;
 	}

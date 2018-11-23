@@ -15,28 +15,8 @@
 				<div class="card">
 					<form th:action="@{/lab/stok/tambah}" th:object="${supply}" method="POST">
 						<div class="card-body">
-							<table style="width:100%">
-							 <tr>
-							    <th>Jenis</th>
-							    <td><input class="form-control"  type="text" name="jenis"/></td>
-							  </tr>
-							  
-							  <tr>
-							    <th>Nama</th>
-							    <td><input class="form-control"  type="text" name="nama"/></td>
-							  </tr>
-							
-							  <tr>
-							    <th>Jumlah</th>
-							    <td><input class="form-control"  type="number" min="1" step="1" name="jumlah"/></td>
-							  </tr>
-	
-							  <tr>
-							    <th>Deskripsi</th>
-							    <td><input class="form-control"  type="text" name="deskripsi"/></td>
-							  </tr>
-							 
-							</table>
+							 <input type="hidden" th:value=  name=/> </tr>
+							  					
 							<br>
 							<button type="submit" class="btn btn-primary">Simpan</button>
 						</div>

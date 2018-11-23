@@ -55,6 +55,9 @@ public class SupplyModel implements Serializable{
 	@OneToMany(mappedBy = "supply", fetch = FetchType.LAZY)
 	private List<KebutuhanReagenModel> listKebutuhanReagen = new ArrayList<KebutuhanReagenModel>();
 	
+	@OneToMany(mappedBy = "labSupplies", fetch = FetchType.LAZY)
+	private List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies = new ArrayList<JenisPemeriksaanLabSuppliesModel>();
+
 	public long getId() {
 		return id;
 	}
