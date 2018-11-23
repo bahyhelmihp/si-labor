@@ -23,15 +23,32 @@
 						<div class="card-body">
 							<table style="width:100%" cellpadding="10">
 							<tr>
-							  <tr>
-							    <th>Jumlah Reagen</th>
-							    <td><input class="form-control"  type="number" th:value="${datasupply.jumlah}" name="jumlah"/></td>
-							  </tr>
+								<tr>
+							  		<th>Nama</th>
+							  		<td th:text="${datasupply.nama}"></td>
+							  	</tr>
+							  	<tr>
+							  		<th>Jenis</th>
+							  		<td th:text="${datasupply.jenis}"></td>
+							  	</tr>
+							  	<tr>
+							  		<th>Deskripsi</th>
+							  		<td th:text="${datasupply.deskripsi}"></td>
+							  	</tr>
+							  	<tr>
+							    	<th>Jumlah</th>
+							    	<td><input class="form-control"  type="number" th:value="${datasupply.jumlah}" name="jumlah"/></td>
+							  	</tr>
 							 </tr>
 							</table>
 							<br>
 							<button type="submit" class="btn btn-primary">Simpan</button>
 						</div>
+						<script>
+						function myFunction() {
+						    alert("Data Berhasil Disimpan!");
+						}
+						</script>
 					</form>
 				</div>
 			</div>

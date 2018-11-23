@@ -37,8 +37,8 @@ public class JenisPemeriksaanModel implements Serializable{
 	@Column(name= "nama", nullable = false)
 	private String nama;
 	
-	@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
-	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
+	//@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
+	//private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
 	@OneToMany(mappedBy= "jenisPemeriksaan", fetch = FetchType.LAZY)
 	private List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies = new ArrayList<JenisPemeriksaanLabSuppliesModel>();
@@ -67,13 +67,13 @@ public class JenisPemeriksaanModel implements Serializable{
 		this.nama = nama;
 	}
 
-	public List<PemeriksaanModel> getListPemeriksaan() {
-		return listPemeriksaan;
-	}
+//	public List<PemeriksaanModel> getListPemeriksaan() {
+//		return listPemeriksaan;
+//	}
 
-	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
-		this.listPemeriksaan = listPemeriksaan;
-	}
+//	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
+//		this.listPemeriksaan = listPemeriksaan;
+//	}
 	
 	
 	

@@ -35,7 +35,7 @@ public class SupplyModel implements Serializable{
 	//nip varchar255 notnull unique
 	@NotNull
 	@Size(max=255)
-	@Column(name= "jenis", nullable = false, unique = true)
+	@Column(name= "jenis", nullable = false)
 	private String jenis;
 	
 	@NotNull
