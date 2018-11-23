@@ -10,4 +10,6 @@ import com.apap.silabor.model.KebutuhanReagenModel;
 public interface KebutuhanReagenService {
 	KebutuhanReagenModel addReagen(KebutuhanReagenModel reagen);
 	List<KebutuhanReagenModel> getListReagen();
+	KebutuhanReagenModel getReagenById(long id);
+	KebutuhanReagenModel updateReagen(KebutuhanReagenModel reagen);
 }

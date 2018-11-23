@@ -2,6 +2,7 @@ package com.apap.silabor.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
+import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
@@ -62,11 +64,37 @@ public class PemeriksaanController {
 	}
 
 	//FITUR 9
-	@GetMapping(value = "/{id}")
-	public long updateStatus(@PathVariable(value="id") long id) {
+	@PostMapping(value = "/{id}")
+	public String updateStatus(@PathVariable(value="id") long id, Model model) {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
-		return pemeriksaan.getId();
+		//Menunggu -> Diproses
+		if (pemeriksaan.getStatus() == 0) {
+			for (SupplyModel supply: pemeriksaan.getJenisPemeriksaan().getListSupply()) {
+				//Lab Supllies Ada
+				if (supply.getJumlah() != 0) {
+					//Kurangi Supply
+					supply.setJumlah(supply.getJumlah() - 1);
+					//Set Tanggal Pemeriksaan
+					Calendar today = Calendar.getInstance();
+					today.set(Calendar.HOUR_OF_DAY, 0);
+					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					pemeriksaan.setStatus(1);
+					//Sukses
+					pemeriksaanService.addPemeriksaan(pemeriksaan);
+					return "sukses-diproses";
+				}
+			}
+			return "gagal";
+		}
+		//Diproses -> Selesai
+		else {
+			PemeriksaanModel pemeriksaanDiproses = pemeriksaanService.getPemeriksaanById(id);
+			model.addAttribute("pemeriksaanDiproses", pemeriksaanDiproses);
+			return "update-hasil";
+		}
 	}
+	
+	
 
 	//FITUR 10
 	@GetMapping(value = "/permintaan/send")
@@ -84,15 +112,8 @@ public class PemeriksaanController {
 		//Consume API
 		LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
 		
-		//Return Response
-		return response.getMessage();
-	}
-
-	@GetMapping(value = "/tompel")
-	public ResponseEntity<String> getPasien() {
-		String path = "http://si-appointment.herokuapp.com/api/6/getAllPasienRawatJalan";
-		ResponseEntity<String> response = restTemplate.getForEntity(path, String.class);
-		return response;
+		//Return 
+		return "redirect:/lab/pemeriksaan/permintaan";
 	}
 
 }
