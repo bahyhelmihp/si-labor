@@ -32,9 +32,15 @@
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="pemeriksaan : ${pemeriksaanList}">
-					<td th:text="${pemeriksaan.pasien.id}"></td>
+					<td th:text="${pemeriksaan.idPasien}"></td>
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
 					<td th:text="${pemeriksaan.status}"></td>
+					<td>
+						<!--  Angka ID Hanya Untuk Testing -->
+						<a th:href="@{/lab/pemeriksaan/1}">Proses</a>
+						<a th:href="@{/lab/pemeriksaan/2}">Selesaikan</a>
+						<a th:href="@{/lab/pemeriksaan/permintaan/send/1}">Kirim</a>
+					</td>
 				</tr>
 			</tbody>
 

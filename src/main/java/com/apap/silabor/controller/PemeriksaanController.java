@@ -98,7 +98,7 @@ public class PemeriksaanController {
 			return "update-hasil";
 		}
 	}
-	
+	//Sukses Update Diproses -> Selesai
 	@PostMapping(value = "/permintaan/update/sukses")
 	public String updatePemeriksaan(PemeriksaanModel pemeriksaan) {
 		pemeriksaanService.addPemeriksaan(pemeriksaan);
@@ -106,7 +106,8 @@ public class PemeriksaanController {
 	}
 
 	//FITUR 10
-	@PostMapping(value = "/permintaan/send/{id}")
+	//Sementara GetMapping Dulu
+	@GetMapping(value = "/permintaan/send/{id}")
 	public String sendPemeriksaan() {
 		
 		//Object Sementara
