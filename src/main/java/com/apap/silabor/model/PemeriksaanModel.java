@@ -48,7 +48,6 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name = "id_pasien", nullable = false)
 	private long idPasien;
 	
-	@NotNull
 	@Size(max=255)
 	@Column(name= "hasil", nullable = true)
 	private String hasil;

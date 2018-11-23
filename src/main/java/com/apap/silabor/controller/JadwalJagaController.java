@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.JadwalJagaModel;
@@ -76,6 +78,12 @@ public class JadwalJagaController {
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Ubah Jadwal Jaga");
 		return "success";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "lab/jadwal-jaga/getJadwalJaga")
+	public List<JadwalJagaModel> getJadwalJagaPemeriksaan(Model model) {
+		return jadwalJagaService.getAllJadwaJaga();
 	}
 
 }
