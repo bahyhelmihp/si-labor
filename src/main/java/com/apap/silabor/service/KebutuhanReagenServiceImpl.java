@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * KebutuhanReagenServiceImpl
@@ -26,5 +27,18 @@ public class KebutuhanReagenServiceImpl implements KebutuhanReagenService{
 	@Override
 	public List<KebutuhanReagenModel> getListReagen(){
 		return reagenDb.findAll();
+	}
+	
+	@Override
+	public KebutuhanReagenModel getReagenById(long id) {
+		return reagenDb.getOne(id);
+	}
+	
+	@Override
+	public KebutuhanReagenModel updateReagen(KebutuhanReagenModel reagen) {
+		KebutuhanReagenModel updateReagen = reagenDb.getOne(reagen.getId());
+		
+		updateReagen.setStatus(reagen.getStatus());
+		return reagenDb.save(updateReagen);
 	}
 }
