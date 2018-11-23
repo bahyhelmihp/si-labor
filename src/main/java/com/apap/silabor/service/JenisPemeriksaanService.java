@@ -1,13 +1,16 @@
 package com.apap.silabor.service;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.apap.silabor.model.JenisPemeriksaanModel;
+import com.apap.silabor.repository.JenisPemeriksaanDb;
 
 public interface JenisPemeriksaanService {
-	JenisPemeriksaanModel addJenisPemeriksaan(JenisPemeriksaanModel jenisPemeriksaan);
 
-	List<JenisPemeriksaanModel> getListJenisPemeriksaan();
+	JenisPemeriksaanDb getJenisPemeriksaanDb();
 
-	JenisPemeriksaanModel getJenisPemeriksaanById(long id);
+	
+
+	//JenisPemeriksaan getJenisPemeriksaanDb();
 
 }
