@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Sukses Diproses</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<form th:action="@{lab/pemeriksaan/permintaan/update/sukses}" th:object="${pemeriksaan}" method="POST">
+		Hasil:
+		<br>
+		<input type=text th:value="${pemeriksaan.hasil}" name="hasil"  />
+		<br>
+		<button type="submit">Submit</button>
+	</form>
+</body>
+</html>

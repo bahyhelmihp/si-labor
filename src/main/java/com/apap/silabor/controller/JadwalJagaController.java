@@ -28,7 +28,7 @@ public class JadwalJagaController {
 	RestTemplate restTemplate;
 
 	@Bean
-	public RestTemplate rest() {
+	public RestTemplate restJadwalJaga() {
 		return new RestTemplate();
 	}
 
