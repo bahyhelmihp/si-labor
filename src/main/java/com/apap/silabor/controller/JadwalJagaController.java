@@ -23,6 +23,7 @@ public class JadwalJagaController {
 	@RequestMapping(value = "lab/jadwal-jaga/tambah", method = RequestMethod.GET)
 	private String addJadwalJaga(Model model) {
 		model.addAttribute("jadwalJaga", new JadwalJagaModel());
+		model.addAttribute("title", "Tambah Jadwal Jaga");
 		return "jadwalJaga-add";
 	}
 
@@ -36,6 +37,7 @@ public class JadwalJagaController {
 	private String getJadwalJaga(@PathVariable("tanggal") Date tanggal, Model model) {
 		List<JadwalJagaModel> archive = jadwalJagaService.getJadwalByDate(tanggal);
 		model.addAttribute("jadwalJaga", archive);
+		model.addAttribute("title", "Lihat Jadwal Jaga");
 		return "jadwalJaga-view";
 	}
 
@@ -43,7 +45,7 @@ public class JadwalJagaController {
 	private String updateJadwalJaga(@PathVariable(value = "id") long id, Model model) {
 		JadwalJagaModel archive = jadwalJagaService.getJadwalById(id);
 		model.addAttribute("jadwalJaga", archive);
-		model.addAttribute("title", "Ubah Data Reagen");
+		model.addAttribute("title", "Ubah Jadwal Jaga");
 		return "jadwalJaga-update";
 	}
 
@@ -52,7 +54,7 @@ public class JadwalJagaController {
 		jadwalJaga.setId(id);
 		jadwalJagaService.updateJadwal(jadwalJaga);
 		model.addAttribute("jadwalJaga", jadwalJaga);
-		model.addAttribute("title", "Ubah Persediaan Reagen");
+		model.addAttribute("title", "Ubah Jadwal Jaga");
 		return "success";
 	}
 

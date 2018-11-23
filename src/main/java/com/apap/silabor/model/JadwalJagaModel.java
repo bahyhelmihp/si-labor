@@ -39,11 +39,15 @@ public class JadwalJagaModel implements Serializable {
 	@Column(name = "waktu_selesai", nullable = false)
 	private Time end;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "staff_id", referencedColumnName = "id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private StaffModel staff;
+	@NotNull
+	@Column(name = "staff", nullable = false)
+	private String namaStaff;
+
+//	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+//	@JoinColumn(name = "staff_id", referencedColumnName = "id")
+//	@OnDelete(action = OnDeleteAction.CASCADE)
+//	@JsonIgnore
+//	private StaffModel staff;
 
 	public long getId() {
 		return id;
@@ -77,11 +81,20 @@ public class JadwalJagaModel implements Serializable {
 		this.end = end;
 	}
 
-	public StaffModel getStaff() {
-		return staff;
+	public String getNamaStaff() {
+		return namaStaff;
 	}
 
-	public void setStaff(StaffModel staff) {
-		this.staff = staff;
+	public void setNamaStaff(String namaStaff) {
+		this.namaStaff = namaStaff;
 	}
+
+//	public StaffModel getStaff() {
+//		return staff;
+//	}
+//
+//	public void setStaff(StaffModel staff) {
+//		this.staff = staff;
+//	}
+
 }
