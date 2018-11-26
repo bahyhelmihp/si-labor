@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+
+	<div class="container-fluid">
+		<h2>Ubah Jadwal Jaga Lab</h2>
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{'/lab/jadwal-jaga/ubah/'} + ${jadwalJaga.id}"
+						th:object="${supply}" method="POST">
+						<input type="hidden" th:value="${jadwalJaga.id}" name="id"></input>
+						<input type="hidden" th:value="${jadwalJaga.tanggal}"name="tanggal"></input> 
+						<input type="hidden" th:value="${jadwalJaga.start}" name="start"></input>
+						<input type="hidden" th:value="${jadwalJaga.end}" name="end"></input>
+						<input type="hidden" th:value="${jadwalJaga.namastaff}"></input>
+						<div class="card-body">
+							<table style="width: 100%" cellpadding="10">
+								<tr>
+									<th>Tanggal</th>
+									<td><input class="form-control" type="date"
+										th:value="${jadwalJaga.tanggal}" name="tanggal" /></td>
+								</tr>
+								<tr>
+									<th>Waktu Mulai</th>
+									<td><input class="form-control" type="time"
+										th:value="${jadwalJaga.start}" name="start" /></td>
+								</tr>
+								<tr>
+									<th>Waktu Selesai</th>
+									<td><input class="form-control" type="time"
+										th:value="${jadwalJaga.end}" name="end" /></td>
+								</tr>
+								<tr>
+									<th>Nama Staff</th>
+									<td><select class="form-control" name="namaStaff" th:value="${jadwalJaga.namaStaff}">
+										<option th:each="ls, iterationStatus : ${listStaff}"
+											th:value="${ls.nama}" th:text="${ls.nama}">Nama
+											Staff</option>
+								</select></td>
+								</tr>
+							</table>
+							<br>
+							<button type="submit" class="btn btn-primary">Simpan</button>
+						</div>
+						<script>
+							function myFunction() {
+								alert("Data Berhasil Disimpan!");
+							}
+						</script>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
