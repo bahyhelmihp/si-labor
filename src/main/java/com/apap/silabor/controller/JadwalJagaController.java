@@ -27,10 +27,10 @@ public class JadwalJagaController {
 	@Autowired
 	RestTemplate restTemplate;
 
-	@Bean
-	public RestTemplate rest() {
-		return new RestTemplate();
-	}
+//	@Bean
+//	public RestTemplate rest() {
+//		return new RestTemplate();
+//	}
 
 	@Autowired
 	JadwalJagaService jadwalJagaService;
