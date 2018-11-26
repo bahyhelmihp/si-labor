@@ -10,11 +10,19 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
-	<form th:action="@{lab/pemeriksaan/permintaan/update/sukses}" th:object="${pemeriksaan}" method="POST">
+	<form th:action="@{/lab/pemeriksaan/permintaan/update/sukses}" th:object="${pemeriksaan}" method="POST">
 		Hasil:
 		<br>
-		<input type=text th:value="${pemeriksaan.hasil}" name="hasil"  />
+		<input type="text" th:value="${pemeriksaan.hasil}" name="hasil" />
 		<br>
+		<input type="hidden" th:value="${pemeriksaan.id}" name="id" />
+		<input type="hidden" th:value="${pemeriksaan.tanggalPengajuan}" name="tanggalPengajuan" />
+		<input type="hidden" th:value="${pemeriksaan.tanggalPemeriksaan}" name="tanggalPemeriksaan" />
+		<input type="hidden" th:value="${pemeriksaan.status}" name="status" />
+		<input type="hidden" th:value="${pemeriksaan.idPasien}" name="idPasien" />
+		<input type="hidden" th:field="*{jenisPemeriksaan}" />
+		<input type="hidden" th:field="*{jadwalJaga}" />
+		
 		<button type="submit">Submit</button>
 	</form>
 </body>

@@ -43,6 +43,22 @@ public class JenisPemeriksaanModel implements Serializable{
 			mappedBy = "jenisPemeriksaanList")
 	private List<SupplyModel> supplyList;
 	
+	public List<PemeriksaanModel> getListPemeriksaan() {
+		return listPemeriksaan;
+	}
+
+	public void setListPemeriksaan(List<PemeriksaanModel> listPemeriksaan) {
+		this.listPemeriksaan = listPemeriksaan;
+	}
+
+	public List<SupplyModel> getSupplyList() {
+		return supplyList;
+	}
+
+	public void setSupplyList(List<SupplyModel> supplyList) {
+		this.supplyList = supplyList;
+	}
+
 	public long getId() {
 		return id;
 	}

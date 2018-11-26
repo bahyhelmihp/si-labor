@@ -34,11 +34,14 @@
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
 					<td th:text="${pemeriksaan.status}"></td>
 					<td>
-						<!--  Angka ID Hanya Untuk Testing -->
-						
-						<a th:if="${pemeriksaan.status} == 0" th:href="@{/lab/pemeriksaan/1}">Proses</a>
-						<a th:if="${pemeriksaan.status} == 1" th:href="@{/lab/pemeriksaan/2}">Selesaikan</a>
-						<a th:if="${pemeriksaan.status} == 2" th:href="@{/lab/pemeriksaan/permintaan/send/1}">Kirim</a>
+						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
+							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 0">Proses</button>
+							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
+						</form>
+						<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}" method="POST">
+							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 2">Kirim</button>
+						</form>
+						<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 3" disabled>Terkirim</button>
 					</td>
 				</tr>
 			</tbody>

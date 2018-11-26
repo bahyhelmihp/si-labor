@@ -32,12 +32,10 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name = "id")
 	private long id;
 	
-	@NotNull
-	@Column(name = "tanggal_pengajuan", nullable = false)
+	@Column(name = "tanggal_pengajuan", nullable = true)
 	private Date tanggalPengajuan;
 	
-	@NotNull
-	@Column(name = "tanggal_pemeriksaan", nullable = false)
+	@Column(name = "tanggal_pemeriksaan", nullable = true)
 	private Date tanggalPemeriksaan;
 	
 	@NotNull
@@ -58,7 +56,7 @@ public class PemeriksaanModel implements Serializable {
 	@JsonIgnore
 	private JenisPemeriksaanModel jenisPemeriksaan;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "id_jadwal", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore

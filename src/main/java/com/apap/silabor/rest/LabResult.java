@@ -1,13 +1,11 @@
 package com.apap.silabor.rest;
 
 import java.sql.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LabResult {
-	private long id;
 
 	private String jenis;
 

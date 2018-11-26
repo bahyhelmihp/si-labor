@@ -60,6 +60,14 @@ public class SupplyModel implements Serializable{
             joinColumns = { @JoinColumn(name = "id_supply") },
             inverseJoinColumns = { @JoinColumn(name = "id_jenisPemeriksaan") })
     private List<JenisPemeriksaanModel> jenisPemeriksaanList;
+	
+	public List<JenisPemeriksaanModel> getJenisPemeriksaanList() {
+		return jenisPemeriksaanList;
+	}
+
+	public void setJenisPemeriksaanList(List<JenisPemeriksaanModel> jenisPemeriksaanList) {
+		this.jenisPemeriksaanList = jenisPemeriksaanList;
+	}
 
 	public long getId() {
 		return id;

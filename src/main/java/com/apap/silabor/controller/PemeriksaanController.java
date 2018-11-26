@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import com.apap.silabor.model.JenisPemeriksaanLabSuppliesModel;
 import com.apap.silabor.model.PemeriksaanModel;
+import com.apap.silabor.model.SupplyModel;
 import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.JadwalJagaService;
 import com.apap.silabor.service.PemeriksaanService;
+import com.apap.silabor.service.SupplyService;
 
 @Controller
 @RequestMapping("/lab/pemeriksaan")
@@ -37,6 +39,9 @@ public class PemeriksaanController {
 	}
 
 	@Autowired
+	private SupplyService supplyService;
+
+	@Autowired
 	private PemeriksaanService pemeriksaanService;
 
 	@Autowired
@@ -45,18 +50,18 @@ public class PemeriksaanController {
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) {
-		
+
 		// mengambil data dari {url}
 		String path = "aa";
 		List<Long> listOfIdPasien = new ArrayList<Long>();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
-		
+
 		listOfIdPasien.add((long) 1);
 		listOfIdPasien.add((long) 2);
-		
+
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-			model.addAttribute("pemeriksaanList", listPemeriksaan);
-			model.addAttribute("title", "Daftar Pemeriksaan Lab");
+		model.addAttribute("pemeriksaanList", listPemeriksaan);
+		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
 	//FITUR 8
@@ -71,19 +76,26 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		//Menunggu -> Diproses
 		if (pemeriksaan.getStatus() == 0) {
-			for (JenisPemeriksaanLabSuppliesModel pemeriksaan_supply : pemeriksaan.getJenisPemeriksaan().getListJenisPemeriksaanLabSupplies()) {
+			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
+
 				//Lab Supllies Ada
-				if (pemeriksaan_supply.getId() == pemeriksaan.getId() && pemeriksaan_supply.getLabSupplies().getJumlah() != 0) {
+				if (supply.getJumlah() != 0) {
+
 					//Kurangi Supply
-					pemeriksaan_supply.getLabSupplies().setJumlah(pemeriksaan_supply.getLabSupplies().getJumlah() - 1);
+					supply.setJumlah(supply.getJumlah() - 1);
+					supplyService.addSupply(supply);
+
 					//Set Tanggal Pemeriksaan
-					Calendar today = Calendar.getInstance();
-					today.set(Calendar.HOUR_OF_DAY, 0);
-					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					Calendar currentTime = Calendar.getInstance();
+					Date sqlDate = new Date((currentTime.getTime()).getTime());
+					pemeriksaan.setTanggalPemeriksaan(sqlDate);
+
 					//Set Jadwal Jaga
 					pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
+
 					//Set Diproses
 					pemeriksaan.setStatus(1);
+
 					//Sukses
 					pemeriksaanService.addPemeriksaan(pemeriksaan);
 					return "sukses-diproses";
@@ -93,6 +105,8 @@ public class PemeriksaanController {
 		}
 		//Diproses -> Selesai
 		else {
+
+			//Get Pemeriksaan Diproses
 			PemeriksaanModel pemeriksaanDiproses = pemeriksaanService.getPemeriksaanById(id);
 			model.addAttribute("pemeriksaan", pemeriksaanDiproses);
 			return "update-hasil";
@@ -101,28 +115,38 @@ public class PemeriksaanController {
 	//Sukses Update Diproses -> Selesai
 	@PostMapping(value = "/permintaan/update/sukses")
 	public String updatePemeriksaan(PemeriksaanModel pemeriksaan) {
+
+		//Set Selesai
+		pemeriksaan.setStatus(2);
 		pemeriksaanService.addPemeriksaan(pemeriksaan);
-		return "redirect:/lab/pemeriksaan/permintaan";
+		return "sukses-selesai";
 	}
 
 	//FITUR 10
-	//Sementara GetMapping Dulu
-	@GetMapping(value = "/permintaan/send/{id}")
-	public String sendPemeriksaan() {
-		
+	@PostMapping(value = "/kirim/{id}")
+	public String kirimPemeriksaan(@PathVariable(value="id") long id) {
+
+		//Get Pemeriksaan Selesai
+		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
+
 		//Object Sementara
 		LabResult labResult = new LabResult();
 		PasienTest pasien = new PasienTest();
-		labResult.setHasil("diabetes");
-		labResult.setJenis("urin");
+		labResult.setHasil(pemeriksaan.getHasil());
+		labResult.setJenis(pemeriksaan.getJenisPemeriksaan().getNama());
 		labResult.setPasien(pasien);
-		pasien.setId(1);
-		labResult.setTanggalPengajuan(Date.valueOf("2018-11-21"));
-		
+		pasien.setId(pemeriksaan.getIdPasien());
+		labResult.setTanggalPengajuan(pemeriksaan.getTanggalPengajuan());
+
 		//Consume API
 		LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
-		System.out.println(response.getMessage());
-		
+
+		//Set Selesai
+		if (response.getMessage().equals("success")) {
+			pemeriksaan.setStatus(3);
+			pemeriksaanService.addPemeriksaan(pemeriksaan);
+		}
+
 		//Return 
 		return "redirect:/lab/pemeriksaan/permintaan";
 	}
