@@ -4,23 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "jenis_pemeriksaan")
@@ -37,20 +32,17 @@ public class JenisPemeriksaanModel implements Serializable{
 	@Column(name= "nama", nullable = false)
 	private String nama;
 	
-	//@OneToMany(mappedBy = "jenis_pemeriksaan", fetch = FetchType.LAZY)
-	//private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
+	@OneToMany(mappedBy = "jenisPemeriksaan", fetch = FetchType.LAZY)
+	private List<PemeriksaanModel> listPemeriksaan = new ArrayList<PemeriksaanModel>();
 	
-	@OneToMany(mappedBy= "jenisPemeriksaan", fetch = FetchType.LAZY)
-	private List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies = new ArrayList<JenisPemeriksaanLabSuppliesModel>();
-
-	public List<JenisPemeriksaanLabSuppliesModel> getListJenisPemeriksaanLabSupplies() {
-		return listJenisPemeriksaanLabSupplies;
-	}
-
-	public void setListJenisPemeriksaanLabSupplies(List<JenisPemeriksaanLabSuppliesModel> listJenisPemeriksaanLabSupplies) {
-		this.listJenisPemeriksaanLabSupplies = listJenisPemeriksaanLabSupplies;
-	}
-
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+	},
+			mappedBy = "jenisPemeriksaanList")
+	private List<SupplyModel> supplyList;
+	
 	public long getId() {
 		return id;
 	}
