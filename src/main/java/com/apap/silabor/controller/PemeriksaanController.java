@@ -121,6 +121,7 @@ public class PemeriksaanController {
 		
 		//Consume API
 		LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
+		System.out.println(response.getMessage());
 		
 		//Return 
 		return "redirect:/lab/pemeriksaan/permintaan";

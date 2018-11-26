@@ -5,7 +5,6 @@
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
@@ -15,9 +14,8 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<div style="padding: 32px;" >
-
-		<table id="pemeriksaanTable" class="display" style="margin-left:auto; margin-right:auto;" text-align="left;">
+	<br>
+		<table id="pemeriksaanTable">
 
 			<!-- Header Table -->
 			<thead>
@@ -25,7 +23,7 @@
 					<th>Nama Pasien</th>
 					<th>Tanggal Pemeriksaan </th>
 					<th>Status</th>
-					
+					<th>Action</th>
 				</tr>
 			</thead>
 
@@ -37,24 +35,14 @@
 					<td th:text="${pemeriksaan.status}"></td>
 					<td>
 						<!--  Angka ID Hanya Untuk Testing -->
-						<a th:href="@{/lab/pemeriksaan/1}">Proses</a>
-						<a th:href="@{/lab/pemeriksaan/2}">Selesaikan</a>
-						<a th:href="@{/lab/pemeriksaan/permintaan/send/1}">Kirim</a>
+						
+						<a th:if="${pemeriksaan.status} == 0" th:href="@{/lab/pemeriksaan/1}">Proses</a>
+						<a th:if="${pemeriksaan.status} == 1" th:href="@{/lab/pemeriksaan/2}">Selesaikan</a>
+						<a th:if="${pemeriksaan.status} == 2" th:href="@{/lab/pemeriksaan/permintaan/send/1}">Kirim</a>
 					</td>
 				</tr>
 			</tbody>
-
-
-			<!-- Footer Table -->
-			<tfoot>
-				<tr>
-					<th>Nama Pasien</th>
-					<th>Tanggal Pemeriksaan </th>
-					<th>Status</th>
-				</tr>
-			</tfoot>
 		</table>
-	</div>
 </body>
 
 
