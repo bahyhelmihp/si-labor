@@ -8,16 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LabResult {
 	private long id;
-	
+
 	private String jenis;
-	
+
 	private String hasil;
-	
+
 	private Date tanggalPengajuan;
-	
+
 	private PasienTest pasien;
-	
-	private List<StaffTest> listOfStaff;
 
 	public String getJenis() {
 		return jenis;
@@ -50,15 +48,5 @@ public class LabResult {
 	public void setPasien(PasienTest pasien) {
 		this.pasien = pasien;
 	}
-
-	public List<StaffTest> getListOfStaff() {
-		return listOfStaff;
-	}
-
-	public void setListOfStaff(List<StaffTest> listOfStaff) {
-		this.listOfStaff = listOfStaff;
-	}
-	
-	
 
 }

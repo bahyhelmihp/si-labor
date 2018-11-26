@@ -22,6 +22,7 @@ import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
 import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
+import com.apap.silabor.service.JadwalJagaService;
 import com.apap.silabor.service.PemeriksaanService;
 
 @Controller
@@ -38,6 +39,8 @@ public class PemeriksaanController {
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
 
+	@Autowired
+	private JadwalJagaService jadwalJagaService;
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
@@ -77,6 +80,8 @@ public class PemeriksaanController {
 					Calendar today = Calendar.getInstance();
 					today.set(Calendar.HOUR_OF_DAY, 0);
 					pemeriksaan.setTanggalPemeriksaan((Date) today.getTime());
+					//Set Jadwal Jaga
+					pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
 					//Set Diproses
 					pemeriksaan.setStatus(1);
 					//Sukses
@@ -89,13 +94,20 @@ public class PemeriksaanController {
 		//Diproses -> Selesai
 		else {
 			PemeriksaanModel pemeriksaanDiproses = pemeriksaanService.getPemeriksaanById(id);
-			model.addAttribute("pemeriksaanDiproses", pemeriksaanDiproses);
+			model.addAttribute("pemeriksaan", pemeriksaanDiproses);
 			return "update-hasil";
 		}
 	}
+	//Sukses Update Diproses -> Selesai
+	@PostMapping(value = "/permintaan/update/sukses")
+	public String updatePemeriksaan(PemeriksaanModel pemeriksaan) {
+		pemeriksaanService.addPemeriksaan(pemeriksaan);
+		return "redirect:/lab/pemeriksaan/permintaan";
+	}
 
 	//FITUR 10
-	@GetMapping(value = "/permintaan/send")
+	//Sementara GetMapping Dulu
+	@GetMapping(value = "/permintaan/send/{id}")
 	public String sendPemeriksaan() {
 		
 		//Object Sementara
@@ -109,6 +121,7 @@ public class PemeriksaanController {
 		
 		//Consume API
 		LabResponse response = restTemplate.postForObject(Setting.addLabResultUrl, labResult, LabResponse.class);
+		System.out.println(response.getMessage());
 		
 		//Return 
 		return "redirect:/lab/pemeriksaan/permintaan";

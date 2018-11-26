@@ -17,8 +17,8 @@ import com.apap.silabor.service.JenisPemeriksaanService;
 @RestController
 public class JenisPemeriksaanController {
 
-	@Autowired
-	RestTemplate restTemplate;
+//	@Autowired
+//	RestTemplate restTemplate;
 
 //	@Bean
 //	public RestTemplate restJenisPemeriksaan() {

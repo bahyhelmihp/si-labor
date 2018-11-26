@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/css/**").permitAll()
 			.antMatchers("/js/**").permitAll()
+			//Login Dimatikan Terlebih Dahulu
 			.antMatchers("/**").permitAll()
 			.anyRequest().authenticated()
 			.and()

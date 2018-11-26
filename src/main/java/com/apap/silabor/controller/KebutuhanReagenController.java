@@ -14,17 +14,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * KebutuhanReagenModel
  */
-@Controller
+@RestController
 public class KebutuhanReagenController {
 	@Autowired
 	private KebutuhanReagenService kebutuhanReagenService;
@@ -65,14 +68,15 @@ public class KebutuhanReagenController {
 		return "success";
 	}
 	
+	
 	//FITUR 4 : Melihat perencanaan kebutuhan reagen
-	@RequestMapping(value = "/lab/kebutuhan", method = RequestMethod.GET)
-	private String viewAll(Model model) {
+	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
+	@GetMapping(value = "/lab/kebutuhan")
+	private List<KebutuhanReagenModel> viewAll(Model model) {
 		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
-		
-		model.addAttribute("datareagen", reagen);
-		return "reagen-viewall";
+		return reagen;
 	}
+	
 	
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
 	@RequestMapping(value="/lab/kebutuhan/ubah/{id}", method = RequestMethod.GET)

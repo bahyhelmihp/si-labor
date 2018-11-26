@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.JadwalJagaModel;
-import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.Setting;
+import com.apap.silabor.rest.StaffResponse;
 import com.apap.silabor.rest.StaffTest;
 import com.apap.silabor.service.JadwalJagaService;
 
@@ -39,9 +39,9 @@ public class JadwalJagaController {
 	@RequestMapping(value = "lab/jadwal-jaga/tambah", method = RequestMethod.GET)
 	private String addJadwalJaga(Model model) {
 		// Consume API
-		LabResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, LabResponse.class);
-		List<StaffTest> listOfStaff = response.getResult().getListOfStaff();
-		model.addAttribute("listOfStaff", listOfStaff);
+		StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
+		List<StaffTest> listStaff = response.getResult();
+		model.addAttribute("listStaff", listStaff);
 		model.addAttribute("jadwalJaga", new JadwalJagaModel());
 		model.addAttribute("title", "Tambah Jadwal Jaga");
 		return "jadwalJaga-add";
