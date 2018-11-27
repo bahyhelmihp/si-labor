@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * KebutuhanReagenModel
  */
-@RestController
+@Controller
 public class KebutuhanReagenController {
 	@Autowired
 	private KebutuhanReagenService kebutuhanReagenService;
@@ -70,18 +70,31 @@ public class KebutuhanReagenController {
 	
 	
 	//FITUR 4 : Melihat perencanaan kebutuhan reagen
-	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
-	@GetMapping(value = "/lab/kebutuhan")
-	private List<KebutuhanReagenModel> viewAll(Model model) {
+	@RequestMapping(value="/lab/kebutuhan", method = RequestMethod.GET)
+	private String viewAllReagen(Model model) {
 		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
-		return reagen;
+
+		model.addAttribute("datareagen", reagen);
+		return "reagen-viewall";
 	}
+	
+	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
+//	@GetMapping(value = "/lab/kebutuhan")
+//	private List<KebutuhanReagenModel> viewAll(Model model) {
+//		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
+//		return reagen;
+//	}
 	
 	
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
 	@RequestMapping(value="/lab/kebutuhan/ubah/{id}", method = RequestMethod.GET)
 	private String updateReagen(@PathVariable(value="id") long id, Model model){
 		KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
+		
+		//mengubah nama pada title sesuai reagen
+		String nama = reagen.getNama();
+		model.addAttribute("nama", nama);
+		
 		model.addAttribute("datareagen", reagen);
 		return "reagen-update";
 	}
@@ -100,9 +113,7 @@ public class KebutuhanReagenController {
 		kebutuhanReagenService.updateReagen(reagen);
 		model.addAttribute("datareagen", reagen);
 		
-		//mengubah nama pada title sesuai reagen
-		String nama = reagen.getNama();
-		model.addAttribute("nama", nama);
+		
 		return "success";
 	}
 }

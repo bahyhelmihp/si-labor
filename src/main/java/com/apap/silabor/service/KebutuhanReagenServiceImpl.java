@@ -39,6 +39,7 @@ public class KebutuhanReagenServiceImpl implements KebutuhanReagenService{
 		KebutuhanReagenModel updateReagen = reagenDb.getOne(reagen.getId());
 		
 		updateReagen.setStatus(reagen.getStatus());
+		updateReagen.setTanggal_update(reagen.getTanggal_update());
 		return reagenDb.save(updateReagen);
 	}
 }
