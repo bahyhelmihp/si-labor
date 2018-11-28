@@ -79,11 +79,11 @@ public class KebutuhanReagenController {
 	}
 	
 	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
-//	@GetMapping(value = "/lab/kebutuhan")
-//	private List<KebutuhanReagenModel> viewAll(Model model) {
-//		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
-//		return reagen;
-//	}
+	@RequestMapping(value = "/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
+	private List<KebutuhanReagenModel> viewAll(Model model) {
+		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
+		return reagen;
+	}
 	
 	
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
