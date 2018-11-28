@@ -1,9 +1,12 @@
 package com.apap.silabor.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.apap.silabor.model.JenisPemeriksaanLabSuppliesModel;
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.rest.LabResponse;
 import com.apap.silabor.rest.LabResult;
+import com.apap.silabor.rest.PasienResponse;
 import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.JadwalJagaService;
@@ -44,7 +47,7 @@ public class PemeriksaanController {
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
-	public String viewAllPemeriksaan(Model model) {
+	public String viewAllPemeriksaan(Model model) throws IOException {
 		
 		// mengambil data dari {url}
 		String path = "aa";
@@ -55,8 +58,38 @@ public class PemeriksaanController {
 		listOfIdPasien.add((long) 2);
 		
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
-			model.addAttribute("pemeriksaanList", listPemeriksaan);
-			model.addAttribute("title", "Daftar Pemeriksaan Lab");
+		//call object pasien
+		String urlPasien = "";
+		int sizeListPemeriksaan = listPemeriksaan.size();
+		for(PemeriksaanModel pemeriksaan : listPemeriksaan) {
+			urlPasien += pemeriksaan.getIdPasien();
+			sizeListPemeriksaan --;
+			if(sizeListPemeriksaan>0) {
+				urlPasien += ",";
+			}
+		}
+		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+urlPasien+"&resultType=List";
+		System.out.println(url);
+		PasienResponse response = restTemplate.getForObject(url, PasienResponse.class)	;
+		System.out.println(response.getResult().get(0).getNama());
+		List<PasienTest> listPasien = new ArrayList<>();
+		listPasien = response.getResult();
+		System.out.println(listPasien.get(0));
+//		System.out.println("<<<<<<<<>>>>>>>>");
+//		System.out.println(listPasien);
+//
+//		System.out.println("<<<<<<<<>>>>>>>>");
+//		System.out.println(listPasien.keySet());
+//		
+//
+//		System.out.println("<<<<<<<<>>>>>>>>");
+//		System.out.println(listPasien.get("5"));
+//
+//		System.out.println("<<<<<<<<>>>>>>>>");
+//		System.out.println(listPasien.values());
+		model.addAttribute("pemeriksaanList", listPemeriksaan);
+		model.addAttribute("pasienList", listPasien);
+		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
 	//FITUR 8

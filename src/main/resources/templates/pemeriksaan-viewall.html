@@ -29,8 +29,8 @@
 
 			<!-- Body Table -->
 			<tbody>
-				<tr th:each="pemeriksaan : ${pemeriksaanList}">
-					<td th:text="${pemeriksaan.idPasien}"></td>
+				<tr th:each="pemeriksaan,iter : ${pemeriksaanList}">
+					<td th:text="${pasienList[iter.index].nama}"></td>
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
 					<td th:text="${pemeriksaan.status}"></td>
 					<td>

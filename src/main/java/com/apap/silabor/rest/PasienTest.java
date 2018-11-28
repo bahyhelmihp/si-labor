@@ -6,6 +6,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PasienTest {
 	private long id;
 
+	private String nama;
+	
+	public String toString() {
+		return nama+" id:"+id;
+	}
+
+	public String getNama() {
+		return nama;
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+
 	public long getId() {
 		return id;
 	}
