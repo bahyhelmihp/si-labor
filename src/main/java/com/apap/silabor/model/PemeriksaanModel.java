@@ -3,6 +3,7 @@ package com.apap.silabor.model;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -61,7 +62,8 @@ public class PemeriksaanModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private JadwalJagaModel jadwalJaga;
-	
+
+
 	public long getIdPasien() {
 		return idPasien;
 	}

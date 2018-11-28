@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,7 @@ import com.apap.silabor.rest.PasienResponse;
 import com.apap.silabor.rest.PasienTest;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.JadwalJagaService;
+import com.apap.silabor.service.JenisPemeriksaanService;
 import com.apap.silabor.service.PemeriksaanService;
 import com.apap.silabor.service.SupplyService;
 
@@ -46,6 +49,10 @@ public class PemeriksaanController {
 	private PemeriksaanService pemeriksaanService;
 
 	@Autowired
+	private JenisPemeriksaanService jenisPemeriksaanService;
+
+	
+	@Autowired
 	private JadwalJagaService jadwalJagaService;
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
@@ -55,11 +62,21 @@ public class PemeriksaanController {
 
 		// mengambil data dari {url}
 		String path = "aa";
-		List<Long> listOfIdPasien = new ArrayList<Long>();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
-
-		listOfIdPasien.add((long) 1);
-		listOfIdPasien.add((long) 2);
+		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
+		listIdPasienRawatInapBaru.add((long) 1);
+		listIdPasienRawatInapBaru.add((long) 10);
+		
+		for(long idPasienBaru : listIdPasienRawatInapBaru) {
+			PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
+			pemeriksaanBaru.setIdPasien(idPasienBaru);
+			pemeriksaanBaru.setStatus(0);
+			Calendar currentTime = Calendar.getInstance();
+			Date sqlDate = new Date((currentTime.getTime()).getTime());
+			pemeriksaanBaru.setTanggalPengajuan(sqlDate);
+			pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
+			pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
+		}
 
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
 		//call object pasien
@@ -72,13 +89,11 @@ public class PemeriksaanController {
 				urlPasien += ",";
 			}
 		}
-		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+urlPasien+"&resultType=List";
-		System.out.println(url);
+		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+urlPasien+"&resultType=Map";
 		PasienResponse response = restTemplate.getForObject(url, PasienResponse.class)	;
-		System.out.println(response.getResult().get(0).getNama());
-		List<PasienTest> listPasien = new ArrayList<>();
+		Map<String,PasienTest> listPasien = new HashMap<>();
 		listPasien = response.getResult();
-		System.out.println(listPasien.get(0));
+		System.out.println(listPasien.get("5"));
 //		System.out.println("<<<<<<<<>>>>>>>>");
 //		System.out.println(listPasien);
 //

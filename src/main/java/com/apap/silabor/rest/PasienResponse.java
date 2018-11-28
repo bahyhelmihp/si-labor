@@ -11,7 +11,7 @@ public class PasienResponse {
 
 	private String message;
 
-	private List<PasienTest> result;
+	private Map<String,PasienTest> result;
 
 	public String getStatus() {
 		return status;
@@ -29,13 +29,14 @@ public class PasienResponse {
 		this.message = message;
 	}
 
-	public List<PasienTest> getResult() {
+	public Map<String, PasienTest> getResult() {
 		return result;
 	}
 
-	public void setResult(List<PasienTest> result) {
+	public void setResult(Map<String, PasienTest> result) {
 		this.result = result;
 	}
+
 
 
 
