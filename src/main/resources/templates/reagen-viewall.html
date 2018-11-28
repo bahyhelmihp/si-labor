@@ -13,8 +13,9 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 		<div class="container-fluid">
-			<br><h1>     Perencanaan Kebutuhan Reagen</h1><br>
-			<table id="mytable" class="table table-bordered table-striped">
+			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1><br>
+			<h4 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h4>
+			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -24,6 +25,7 @@
 						<th>Tanggal Diubah</th>
 					</tr>
 				</thead>
+				
 				<tbody>
 					<tr th:each="reagen: ${datareagen}">
 						<td th:text="${reagen.id}"></td>

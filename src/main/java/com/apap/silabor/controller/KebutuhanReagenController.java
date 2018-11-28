@@ -73,7 +73,14 @@ public class KebutuhanReagenController {
 	@RequestMapping(value="/lab/kebutuhan", method = RequestMethod.GET)
 	private String viewAllReagen(Model model) {
 		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
-
+		
+		//cek tabel
+		boolean value = true;
+		if(reagen.size()==0) {
+			value = false;
+		} else value = true;
+		
+		model.addAttribute("value", value);
 		model.addAttribute("datareagen", reagen);
 		return "reagen-viewall";
 	}
