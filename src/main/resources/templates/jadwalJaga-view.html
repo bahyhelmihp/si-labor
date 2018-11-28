@@ -13,26 +13,24 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 		<div class="container-fluid">
-			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1><br>
-			<h4 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h4>
-			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
+			<br><h1 th:text="'Jadwal Jaga Staff'+'${tanggal}'"></h1><br>
+			<table id="mytable" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Nama</th>
-						<th>Jumlah</th>
-						<th>Status</th>
-						<th>Tanggal Diubah</th>
+						<th>ID</th>
+						<th>Tanggal</th>
+						<th>Waktu Mulai</th>
+						<th>Waktu Selesai</th>
+						<th>Nama Staff</th>
 					</tr>
 				</thead>
-				
 				<tbody>
-					<tr th:each="reagen: ${datareagen}">
-						<td th:text="${reagen.id}"></td>
-						<td th:text="${reagen.nama}"></td>
-						<td th:text="${reagen.jumlah}"></td>
-						<td th:text="${reagen.status}"></td>
-						<td th:text="${reagen.tanggal_update}"></td>
+					<tr th:each="jj: ${jadwalJaga}">
+						<td th:text="${jj.id}"></td>
+						<td th:text="${jj.tanggal}"></td>
+						<td th:text="${jj.start}"></td>
+						<td th:text="${jj.end}"></td>
+						<td th:text="${jj.namaStaff}"></td>
 					</tr>
 				</tbody>
 			</table>

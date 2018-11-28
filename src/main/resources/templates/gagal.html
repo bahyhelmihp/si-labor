@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Update Pemeriksaan</title>
+<title>Gagal Update</title>
 </head>
 <body>
-	
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
+	<div class="alert alert-danger">
+		<h4>Sukses!</h4>
+		<p th:text="'Pemeriksaan gagal diproses.'"></p>
+		</div>
+	</div>
 </body>
 </html>
