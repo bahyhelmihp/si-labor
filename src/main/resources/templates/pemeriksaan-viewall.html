@@ -30,9 +30,11 @@
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="pemeriksaan,iter : ${pemeriksaanList}">
-					<td th:text="${pasienList[iter.index].nama}"></td>
+					<td th:text="${pasienList.get('5').nama}"></td>
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
-					<td th:text="${pemeriksaan.status}"></td>
+					<td th:if="${pemeriksaan.status} == 0">Menunggu Persetujuan</td>
+					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
+					<td th:if="${pemeriksaan.status} == 2">Selesai</td>
 					<td>
 						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
 							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 0">Proses</button>

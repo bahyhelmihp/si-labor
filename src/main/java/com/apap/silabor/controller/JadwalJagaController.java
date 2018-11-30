@@ -51,7 +51,7 @@ public class JadwalJagaController {
 	@PostMapping(value = "lab/jadwal-jaga/tambah")
 	private String addJadwalJagaSubmit(@ModelAttribute JadwalJagaModel jadwalJaga) {
 		jadwalJagaService.addJadwal(jadwalJaga);
-		return "jadwalJaga-add";
+		return "success";
 	}
 
 	// Fitur 12
