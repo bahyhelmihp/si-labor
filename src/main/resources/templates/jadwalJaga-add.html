@@ -5,49 +5,56 @@
 <object th:include="fragments/fragment :: title"></object>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<object th:include="fragments/fragment :: jquery" th:remove="tag"></object>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 </head>
 
 <body>
-	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h1>Tambah Jadwal Jaga Lab</h1>
-	<div class="row">
-		<div class="col-md-6">
-			<div class="card">
-				<form th:action="@{/lab/jadwal-jaga/tambah}"
-					th:object="${jadwalJaga}" method="POST">
-					<div class="card-body">
-						<table style="width: 100%">
-							<tr>
-								<th>Tanggal</th>
-								<td><input class="form-control" type="date" name="tanggal" /></td>
-							</tr>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div style="margin-left: 2rem">
+		<h2>Tambah Jadwal Jaga</h2>
+		<form th:action="@{lab/jadwal-jaga/tambah}" th:object="${jadwalJaga}" method="POST"
+			id="tambahJadwal">
 
-							<tr>
-								<th>Waktu Mulai</th>
-								<td><input class="form-control" type="text" name="start" /></td>
-							</tr>
+			<table>
+				<tr style="height: 3rem">
+					<td style="width: 10rem">Tanggal</td>
+					<td><input type="date" th:name="tanggal" class="form-control"
+					required="required" th:field="*{tanggal}" /></td>
+				</tr>
+				<tr style="height: 3rem">
+					<td>Waktu Mulai</td>
+					<td><input type="time" th:name="start"
+						class="form-control" required="required" th:field="*{start}" /></td>
+				</tr>
+				<tr style="height: 3rem">
+					<td>Waktu Selesai</td>
+					<td><input type="time" th:name="end"
+						class="form-control" required="required"
+						th:field="*{end}" /></td>
+				</tr>
 
-							<tr>
-								<th>Waktu Selesai</th>
-								<td><input class="form-control" type="time" name="end" /></td>
-							</tr>
-							<tr>
-								<th>Nama Staff</th>
-								<td><select class="form-control" name="namaStaff">
-										<option th:each="ls, iterationStatus : ${listStaff}"
-											th:value="${ls.nama}" th:text="${ls.nama}">Nama
-											Staff</option>
-								</select></td>
-							</tr>
-						</table>
-						<br>
-						<button type="submit" class="btn btn-primary">Simpan</button>
-					</div>
-				</form>
-			</div>
-		</div>
+				<tr style="height:3rem">
+					<td>Nama Staff</td>
+					<td>
+						<select class="form-control" th:name="namaStaff" id="namaStaff" required="required">
+						<option disabled="disabled" selected="selected" >Pilih Nama Staff</option>
+					    	<option th:each="ns : ${listStaff}" th:value="${ns.nama}" th:text="${ns.nama}"></option>
+					    </select>
+					</td>
+				</tr>
+
+				
+			</table>
+			<br>
+			<button type="submit" class="btn btn-warning">Submit</button>
+		</form>
 	</div>
-
-
 </body>
+<script th:inline="javascript">
+$('.datepicker').datepicker({
+    startDate: '-3d'
+})
+</script>
 </html>
