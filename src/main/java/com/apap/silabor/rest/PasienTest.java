@@ -6,11 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PasienTest {
 	private long id;
 
-	private String nama;
-	
-	public String toString() {
-		return nama+" id:"+id;
-	}
+	private String nama; 
 
 	public String getNama() {
 		return nama;

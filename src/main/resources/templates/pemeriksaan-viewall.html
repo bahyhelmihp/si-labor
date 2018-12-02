@@ -30,7 +30,7 @@
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="pemeriksaan,iter : ${pemeriksaanList}">
-					<td th:text="${pasienList.get('5').nama}"></td>
+					<td th:text="${pasienList.get(#strings.toString(__${pemeriksaan.idPasien}__)).nama}"></td>
 					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
 					<td th:if="${pemeriksaan.status} == 0">Menunggu Persetujuan</td>
 					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
