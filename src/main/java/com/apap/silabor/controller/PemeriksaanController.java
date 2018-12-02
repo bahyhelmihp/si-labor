@@ -51,14 +51,14 @@ public class PemeriksaanController {
 	@Autowired
 	private JenisPemeriksaanService jenisPemeriksaanService;
 
-	
+
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) throws IOException {
-		
+
 
 		// mengambil data dari {url}
 		String path = "aa";
@@ -66,7 +66,7 @@ public class PemeriksaanController {
 		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
 		listIdPasienRawatInapBaru.add((long) 1);
 		listIdPasienRawatInapBaru.add((long) 10);
-		
+
 		for(long idPasienBaru : listIdPasienRawatInapBaru) {
 			PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
 			pemeriksaanBaru.setIdPasien(idPasienBaru);
@@ -94,18 +94,18 @@ public class PemeriksaanController {
 		Map<String,PasienTest> listPasien = new HashMap<>();
 		listPasien = response.getResult();
 		System.out.println(listPasien.get("5"));
-//		System.out.println("<<<<<<<<>>>>>>>>");
-//		System.out.println(listPasien);
-//
-//		System.out.println("<<<<<<<<>>>>>>>>");
-//		System.out.println(listPasien.keySet());
-//		
-//
-//		System.out.println("<<<<<<<<>>>>>>>>");
-//		System.out.println(listPasien.get("5"));
-//
-//		System.out.println("<<<<<<<<>>>>>>>>");
-//		System.out.println(listPasien.values());
+		//		System.out.println("<<<<<<<<>>>>>>>>");
+		//		System.out.println(listPasien);
+		//
+		//		System.out.println("<<<<<<<<>>>>>>>>");
+		//		System.out.println(listPasien.keySet());
+		//		
+		//
+		//		System.out.println("<<<<<<<<>>>>>>>>");
+		//		System.out.println(listPasien.get("5"));
+		//
+		//		System.out.println("<<<<<<<<>>>>>>>>");
+		//		System.out.println(listPasien.values());
 		model.addAttribute("pemeriksaanList", listPemeriksaan);
 		model.addAttribute("pasienList", listPasien);
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
@@ -123,36 +123,44 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		//Menunggu -> Diproses
 		if (pemeriksaan.getStatus() == 0) {
+			int error = 0;
+			List<SupplyModel> supplyChoosen = new ArrayList<>();
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
-
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
-
 					//Kurangi Supply
 					supply.setJumlah(supply.getJumlah() - 1);
-					supplyService.addSupply(supply);
-
+					supplyChoosen.add(supply);
 					//Set Tanggal Pemeriksaan
 					Calendar currentTime = Calendar.getInstance();
 					Date sqlDate = new Date((currentTime.getTime()).getTime());
 					pemeriksaan.setTanggalPemeriksaan(sqlDate);
-
 					//Set Jadwal Jaga
 					pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
-
 					//Set Diproses
 					pemeriksaan.setStatus(1);
-
-					//Sukses
-					pemeriksaanService.addPemeriksaan(pemeriksaan);
-					return "sukses-diproses";
+				}
+				//Lab Supplies Tidak Lengkap
+				else {
+					error += 1;
 				}
 			}
-			return "gagal";
+			//Syarat Terpenuhi
+			if (error == 0) {
+				//Sukses
+				for (SupplyModel supply : supplyChoosen) {
+					supplyService.addSupply(supply);
+				}
+				pemeriksaanService.addPemeriksaan(pemeriksaan);
+				return "sukses-diproses";
+			}
+			//Gagal
+			else {
+				return "gagal";
+			}
 		}
 		//Diproses -> Selesai
 		else {
-
 			//Get Pemeriksaan Diproses
 			PemeriksaanModel pemeriksaanDiproses = pemeriksaanService.getPemeriksaanById(id);
 			model.addAttribute("pemeriksaan", pemeriksaanDiproses);
