@@ -36,6 +36,7 @@
 					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
 					<td th:if="${pemeriksaan.status} == 2">Selesai</td>
 					<td>
+					
 						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
 							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 0">Proses</button>
 							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
