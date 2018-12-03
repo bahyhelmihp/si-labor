@@ -21,7 +21,7 @@
 			<thead>
 				<tr>
 					<th>Nama Pasien</th>
-					<th>Tanggal Pemeriksaan </th>
+					<th>Tanggal Permintaan </th>
 					<th>Status</th>
 					<th>Action</th>
 				</tr>
@@ -31,7 +31,7 @@
 			<tbody>
 				<tr th:each="pemeriksaan,iter : ${pemeriksaanList}">
 					<td th:text="${pasienList.get(#strings.toString(__${pemeriksaan.idPasien}__)).nama}"></td>
-					<td th:text="${pemeriksaan.tanggalPemeriksaan}"></td>
+					<td th:text="${pemeriksaan.tanggalPengajuan}"></td>
 					<td th:if="${pemeriksaan.status} == 0">Menunggu Persetujuan</td>
 					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
 					<td th:if="${pemeriksaan.status} == 2">Selesai</td>
