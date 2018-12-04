@@ -68,7 +68,9 @@ public class PemeriksaanController {
 		
 		listKamar = response.getResult();
 		for(KamarPasienIsi kamar : listKamar) {
-			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
+			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1)) {
+				System.out.println("masuk pak eko");
+			};
 		}
 		System.out.println(response.getResult());
 		return "home";
@@ -88,7 +90,7 @@ public class PemeriksaanController {
 
 		for(long idPasienBaru : listIdPasienRawatInapBaru) {
 			if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
-				PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
+		 		PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
 				pemeriksaanBaru.setIdPasien(idPasienBaru);
 				pemeriksaanBaru.setStatus(0);
 				Calendar currentTime = Calendar.getInstance();
