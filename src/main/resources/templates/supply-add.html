@@ -33,14 +33,7 @@
 							    <th>Deskripsi</th>
 							    <td><input class="form-control"  type="text" name="deskripsi"/></td>
 							  </tr>
-							  <tr>
-							  	<th>Jenis Pemeriksaan</th>
-							  	<td><select class="form-control" name="jenis_pemeriksaan">
-							  		<option th:each="jp, iterationStatus : ${suppliesByJenisPemeriksaan}"
-							  				th:value="${jp.id}" th:text="${jp.nama}">Jenis Pemeriksaan</option>
-							  		<select>
-							 	</td>
-							 </tr>
+							  
 							</table>
 							<br>
 							<button type="submit" class="btn btn-primary">Simpan</button>
