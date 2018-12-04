@@ -1,7 +1,10 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +52,9 @@ public class JadwalJagaController {
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/tambah")
-	private String addJadwalJagaSubmit(@ModelAttribute JadwalJagaModel jadwalJaga) {
+	private String addJadwalJagaSubmit(@ModelAttribute JadwalJagaModel jadwalJaga, HttpServletRequest request) {
+		jadwalJaga.setStart(Time.valueOf(request.getParameter("startString")));
+		jadwalJaga.setEnd(Time.valueOf(request.getParameter("endString")));
 		jadwalJagaService.addJadwal(jadwalJaga);
 		return "success";
 	}
@@ -83,7 +88,7 @@ public class JadwalJagaController {
 	}
 	
 	//Menu Awal
-	@RequestMapping(value="/lab/jadwal-jaga", method = RequestMethod.GET)
+	@GetMapping(value="/lab/jadwal-jaga")
 	private String viewAllJadwalJaga(Model model) {
 		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwaJaga();
 		model.addAttribute("jadwalJaga", jadwalJaga);
