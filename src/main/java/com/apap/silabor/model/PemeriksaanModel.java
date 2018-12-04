@@ -51,7 +51,7 @@ public class PemeriksaanModel implements Serializable {
 	@Column(name= "hasil", nullable = true)
 	private String hasil;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "id_jenis", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
