@@ -130,16 +130,24 @@ public class PemeriksaanController {
 	@PostMapping(value = "/{id}")
 	public String updateStatus(@PathVariable(value="id") long id, Model model) {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
+		List<SupplyModel> supplyChoosen = new ArrayList<>();
 		//Menunggu -> Diproses
 		if (pemeriksaan.getStatus() == 0) {
 			int error = 0;
-			List<SupplyModel> supplyChoosen = new ArrayList<>();
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
-					//Kurangi Supply
-					supply.setJumlah(supply.getJumlah() - 1);
 					supplyChoosen.add(supply);
+				}
+				//Lab Supplies Tidak Lengkap
+				else {
+					error += 1;
+				}
+			}
+			//Syarat Terpenuhi
+			if (error == 0) {
+				for (SupplyModel supply : supplyChoosen) {
+					supply.setJumlah(supply.getJumlah() - 1);
 					//Set Tanggal Pemeriksaan
 					Calendar currentTime = Calendar.getInstance();
 					Date sqlDate = new Date((currentTime.getTime()).getTime());
@@ -149,18 +157,6 @@ public class PemeriksaanController {
 					//Set Diproses
 					pemeriksaan.setStatus(1);
 				}
-				//Lab Supplies Tidak Lengkap
-				else {
-					error += 1;
-				}
-			}
-			//Syarat Terpenuhi
-			if (error == 0) {
-				//Sukses
-				for (SupplyModel supply : supplyChoosen) {
-					supplyService.addSupply(supply);
-				}
-				pemeriksaanService.addPemeriksaan(pemeriksaan);
 				return "sukses-diproses";
 			}
 			//Gagal

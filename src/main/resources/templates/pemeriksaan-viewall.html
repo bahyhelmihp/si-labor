@@ -15,6 +15,7 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
+	<div class="container-fluid">
 		<table id="pemeriksaanTable">
 
 			<!-- Header Table -->
@@ -35,6 +36,7 @@
 					<td th:if="${pemeriksaan.status} == 0">Menunggu Persetujuan</td>
 					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
 					<td th:if="${pemeriksaan.status} == 2">Selesai</td>
+					<td th:if="${pemeriksaan.status} == 3">Terkirim</td>
 					<td>
 					
 						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
@@ -44,11 +46,11 @@
 						<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}" method="POST">
 							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 2">Kirim</button>
 						</form>
-						<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 3" disabled>Terkirim</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		</div>
 </body>
 
 
