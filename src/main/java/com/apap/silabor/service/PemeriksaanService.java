@@ -13,4 +13,5 @@ public interface PemeriksaanService {
 	
 	List<PemeriksaanModel> makeListRequestPemeriksaan(List<Long> listId);
 	
+	boolean isExist(long idPasien, long jenisPemeriksaan);
 }

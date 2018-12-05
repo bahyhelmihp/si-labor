@@ -10,6 +10,7 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
+	<div class="container-fluid">
 	<form th:action="@{/lab/pemeriksaan/permintaan/update/sukses}" th:object="${pemeriksaan}" method="POST">
 		Hasil:
 		<br>
@@ -25,5 +26,6 @@
 		
 		<button type="submit">Submit</button>
 	</form>
+	</div>
 </body>
 </html>

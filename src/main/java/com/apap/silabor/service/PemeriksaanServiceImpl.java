@@ -65,13 +65,24 @@ public class PemeriksaanServiceImpl implements PemeriksaanService {
 				pemeriksaanBaru.setTanggalPemeriksaan(Date.valueOf("2018-09-09"));
 				pemeriksaanBaru.setStatus(1);
 				pemeriksaanBaru.setIdPasien(id);
-				//pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById((long)1));
+				pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById((long)1));
 				pemeriksaanBaru.setJadwalJaga(jadwalJagaService.getJadwalById(1));
 				pemeriksaanDb.save(pemeriksaanBaru);
 			}
 			
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isExist(long idPasien, long jenisPemeriksaan) {
+		// TODO Auto-generated method stub
+		for(PemeriksaanModel pemeriksaan : pemeriksaanDb.findAll()) {
+			if(pemeriksaan.getIdPasien() == idPasien && pemeriksaan.getJenisPemeriksaan().getId() == jenisPemeriksaan) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 
