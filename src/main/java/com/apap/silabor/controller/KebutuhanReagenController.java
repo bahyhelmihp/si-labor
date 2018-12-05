@@ -87,7 +87,7 @@ public class KebutuhanReagenController {
 	
 	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
 	@RequestMapping(value = "/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
-	private List<KebutuhanReagenModel> viewAll(Model model) {
+	private List<KebutuhanReagenModel> viewAll() {
 		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
 		return reagen;
 	}
