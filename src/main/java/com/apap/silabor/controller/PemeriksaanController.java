@@ -81,12 +81,13 @@ public class PemeriksaanController {
 
 		// mengambil data dari {url}
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
-		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-		listIdPasienRawatInapBaru.add((long) 1);
-		listIdPasienRawatInapBaru.add((long) 10);
+		
 
-		for(long idPasienBaru : listIdPasienRawatInapBaru) {
+		for(KamarPasienIsi kamar : listKamar) {
+			long idPasienBaru = kamar.getId_pasien();
 			if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
 				PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
 				pemeriksaanBaru.setIdPasien(idPasienBaru);
@@ -112,9 +113,9 @@ public class PemeriksaanController {
 			}
 		}
 		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+urlPasien+"&resultType=Map";
-		PasienResponse response = restTemplate.getForObject(url, PasienResponse.class)	;
+		PasienResponse response2 = restTemplate.getForObject(url, PasienResponse.class)	;
 		Map<String,PasienTest> listPasien = new HashMap<>();
-		listPasien = response.getResult();
+		listPasien = response2.getResult();
 		model.addAttribute("pemeriksaanList", listPemeriksaan);
 		model.addAttribute("pasienList", listPasien);
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");

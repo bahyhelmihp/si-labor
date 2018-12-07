@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.apap.silabor.model.JenisPemeriksaanModel;
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.repository.PemeriksaanDb;
 
@@ -77,6 +78,12 @@ public class PemeriksaanServiceImpl implements PemeriksaanService {
 	@Override
 	public boolean isExist(long idPasien, long jenisPemeriksaan) {
 		// TODO Auto-generated method stub
+		
+//		JenisPemeriksaanModel jenisPemeriksaanTarget = jenisPemeriksaanService.getJenisPemeriksaanById(jenisPemeriksaan);
+//		System.out.println("masuk pakeokk");
+//		if(pemeriksaanDb.findByIdPasienAndJenisPemeriksaan(idPasien, jenisPemeriksaanTarget)!= null) {
+//			return true;
+//		}
 		for(PemeriksaanModel pemeriksaan : pemeriksaanDb.findAll()) {
 			if(pemeriksaan.getIdPasien() == idPasien && pemeriksaan.getJenisPemeriksaan().getId() == jenisPemeriksaan) {
 				return true;

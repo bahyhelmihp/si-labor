@@ -62,8 +62,7 @@ public class PemeriksaanModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private JadwalJagaModel jadwalJaga;
-
-
+	
 	public long getIdPasien() {
 		return idPasien;
 	}
