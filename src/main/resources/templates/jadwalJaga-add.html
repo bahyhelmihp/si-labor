@@ -4,8 +4,6 @@
 <head>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-<object th:include="fragments/fragment :: jquery" th:remove="tag"></object>
-<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 </head>
 
 <body>
@@ -13,9 +11,8 @@
 	<br>
 	<div style="margin-left: 2rem">
 		<h2>Tambah Jadwal Jaga</h2>
-		<form th:action="@{lab/jadwal-jaga/tambah}" th:object="${jadwalJaga}" method="POST"
+		<form th:action="@{/lab/jadwal-jaga/tambah}" th:object="${jadwalJaga}" method="POST"
 			id="tambahJadwal">
-
 			<table>
 				<tr style="height: 3rem">
 					<td style="width: 10rem">Tanggal</td>
@@ -24,14 +21,13 @@
 				</tr>
 				<tr style="height: 3rem">
 					<td>Waktu Mulai</td>
-					<td><input type="time" th:name="start"
-						class="form-control" required="required" th:field="*{start}" /></td>
+					<td><input type="time" th:name="startString"
+						class="form-control" required="required" value="00:00:00" step=1  /></td>
 				</tr>
 				<tr style="height: 3rem">
 					<td>Waktu Selesai</td>
-					<td><input type="time" th:name="end"
-						class="form-control" required="required"
-						th:field="*{end}" /></td>
+					<td><input type="time" th:name="endString"
+						class="form-control" required="required" value="00:00:00" step=1 /></td>
 				</tr>
 
 				<tr style="height:3rem">
@@ -43,17 +39,11 @@
 					    </select>
 					</td>
 				</tr>
-
-				
 			</table>
 			<br>
-			<button type="submit" class="btn btn-warning">Submit</button>
+			<button type="submit" class="btn btn-warning">Simpan</button>
 		</form>
 	</div>
 </body>
-<script th:inline="javascript">
-$('.datepicker').datepicker({
-    startDate: '-3d'
-})
-</script>
+
 </html>
