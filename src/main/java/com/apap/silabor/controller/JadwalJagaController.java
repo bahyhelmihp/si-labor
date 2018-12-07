@@ -79,8 +79,9 @@ public class JadwalJagaController {
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/ubah/{id}")
-	private String updateLabSupplySubmit(@PathVariable(value = "id") long id, JadwalJagaModel jadwalJaga, Model model) {
-		jadwalJaga.setId(id);
+	private String updateLabSupplySubmit(@PathVariable(value = "id") long id, JadwalJagaModel jadwalJaga, Model model, HttpServletRequest request) {
+		jadwalJaga.setStart(Time.valueOf(request.getParameter("startString")));
+		jadwalJaga.setEnd(Time.valueOf(request.getParameter("endString")));
 		jadwalJagaService.updateJadwal(jadwalJaga);
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Ubah Jadwal Jaga");
@@ -90,7 +91,7 @@ public class JadwalJagaController {
 	//Menu Awal
 	@GetMapping(value="/lab/jadwal-jaga")
 	private String viewAllJadwalJaga(Model model) {
-		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwaJaga();
+		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwalJaga();
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Jadwal Jaga Lab");	
 		return "jadwalJaga-home";
@@ -100,7 +101,7 @@ public class JadwalJagaController {
 	@ResponseBody
 	@GetMapping(value = "lab/jadwal-jaga/getJadwalJaga")
 	public List<JadwalJagaModel> getJadwalJagaPemeriksaan(Model model) {
-		return jadwalJagaService.getAllJadwaJaga();
+		return jadwalJagaService.getAllJadwalJaga();
 	}
 
 }
