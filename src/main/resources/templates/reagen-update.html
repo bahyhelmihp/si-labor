@@ -10,7 +10,7 @@
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	
 	<div class="container-fluid"><br>
-		<h2 th:text="'Ubah Status '+ ${nama}"></h2>
+		<h3 th:text="'Ubah Status Pembelian '+ ${nama}"></h3>
 		<br>
 		<div class="row">
 			<div class="col-md-6">
@@ -18,9 +18,8 @@
 					<form th:action="@{'/lab/kebutuhan/ubah/'} + ${datareagen.id}" th:object="${reagen}" method="POST">
 						<div class="card-body">
 							
-							Status: <br>
-							<input type="radio" name="status" value=0> 0<br>
-							<input type="radio" name="status" value=1> 1<br>
+							<input type="radio" name="status" value=0> Sudah dibeli<br>
+							<input type="radio" name="status" value=1> Belum dibeli<br>
 							<br>
 							
 							<button type="submit" class="btn btn-primary">Simpan</button>
