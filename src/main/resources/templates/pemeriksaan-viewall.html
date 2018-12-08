@@ -24,7 +24,7 @@
 					<th>Nama Pasien</th>
 					<th>Tanggal Permintaan </th>
 					<th>Status</th>
-					<th>Action</th>
+					<th>Aksi</th>
 				</tr>
 			</thead>
 
@@ -44,7 +44,8 @@
 							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
 						</form>
 						<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}" method="POST">
-							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 2">Kirim</button>
+							<button th:if="!${authenticated} and ${pemeriksaan.status} == 2" type="submit" class="btn btn-primary" disabled>Kirim</button>
+							<button th:if="${authenticated} and ${pemeriksaan.status} == 2" type="submit" class="btn btn-primary">Kirim</button>
 						</form>
 					</td>
 				</tr>

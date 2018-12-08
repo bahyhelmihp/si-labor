@@ -1,7 +1,10 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +52,9 @@ public class JadwalJagaController {
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/tambah")
-	private String addJadwalJagaSubmit(@ModelAttribute JadwalJagaModel jadwalJaga) {
+	private String addJadwalJagaSubmit(@ModelAttribute JadwalJagaModel jadwalJaga, HttpServletRequest request) {
+		jadwalJaga.setStart(Time.valueOf(request.getParameter("startString")));
+		jadwalJaga.setEnd(Time.valueOf(request.getParameter("endString")));
 		jadwalJagaService.addJadwal(jadwalJaga);
 		return "success";
 	}
@@ -74,8 +79,9 @@ public class JadwalJagaController {
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/ubah/{id}")
-	private String updateLabSupplySubmit(@PathVariable(value = "id") long id, JadwalJagaModel jadwalJaga, Model model) {
-		jadwalJaga.setId(id);
+	private String updateLabSupplySubmit(@PathVariable(value = "id") long id, JadwalJagaModel jadwalJaga, Model model, HttpServletRequest request) {
+		jadwalJaga.setStart(Time.valueOf(request.getParameter("startString")));
+		jadwalJaga.setEnd(Time.valueOf(request.getParameter("endString")));
 		jadwalJagaService.updateJadwal(jadwalJaga);
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Ubah Jadwal Jaga");
@@ -83,9 +89,9 @@ public class JadwalJagaController {
 	}
 	
 	//Menu Awal
-	@RequestMapping(value="/lab/jadwal-jaga", method = RequestMethod.GET)
+	@GetMapping(value="/lab/jadwal-jaga")
 	private String viewAllJadwalJaga(Model model) {
-		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwaJaga();
+		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwalJaga();
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Jadwal Jaga Lab");	
 		return "jadwalJaga-home";
@@ -95,7 +101,7 @@ public class JadwalJagaController {
 	@ResponseBody
 	@GetMapping(value = "lab/jadwal-jaga/getJadwalJaga")
 	public List<JadwalJagaModel> getJadwalJagaPemeriksaan(Model model) {
-		return jadwalJagaService.getAllJadwaJaga();
+		return jadwalJagaService.getAllJadwalJaga();
 	}
 
 }

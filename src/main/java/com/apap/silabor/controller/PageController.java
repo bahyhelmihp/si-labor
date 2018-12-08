@@ -1,30 +1,32 @@
 package com.apap.silabor.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.apap.silabor.model.PemeriksaanModel;
-import com.apap.silabor.service.JenisPemeriksaanService;
-import com.apap.silabor.service.PemeriksaanService;
 
 @Controller
 public class PageController {
-	
-	@Autowired
-	private PemeriksaanService pemeriksaanService;
-	
-	@Autowired
-	private JenisPemeriksaanService jenisPemeriksaanService;
-	
+
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+			model.addAttribute("role", authority.getAuthority());
+		}
 		return "home";
 	}
-	
+
 	@RequestMapping("/login")
-	public String login() {
+	public String login(Model model) {
 		return "login";
 	}
-	
+
+	@RequestMapping("/register")
+	public String register(Model model) {
+		return "register";
+	}
+
 }

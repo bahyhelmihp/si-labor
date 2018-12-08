@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,11 @@ public class KebutuhanReagenController {
 	
 	@Autowired
 	private SupplyService supplyService;
+	
+	@Bean
+	public RestTemplate rest() {
+		return new RestTemplate();
+	}
 	
 	//FITUR 3 : Membuat perencanaan kebutuhan reagen
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.GET)
@@ -70,7 +77,7 @@ public class KebutuhanReagenController {
 	
 	
 	//FITUR 4 : Melihat perencanaan kebutuhan reagen
-	@RequestMapping(value="/lab/kebutuhan", method = RequestMethod.GET)
+	@GetMapping(value="/lab/kebutuhan")
 	private String viewAllReagen(Model model) {
 		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
 		
@@ -86,12 +93,12 @@ public class KebutuhanReagenController {
 	}
 	
 	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
+	@ResponseBody
 	@RequestMapping(value = "/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
-	private List<KebutuhanReagenModel> viewAll(Model model) {
-		List<KebutuhanReagenModel> reagen = kebutuhanReagenService.getListReagen();
-		return reagen;
+	private List<KebutuhanReagenModel> viewAll() {
+		//List<KebutuhanReagenModel> reagen = ;
+		return kebutuhanReagenService.getListReagen();
 	}
-	
 	
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
 	@RequestMapping(value="/lab/kebutuhan/ubah/{id}", method = RequestMethod.GET)
