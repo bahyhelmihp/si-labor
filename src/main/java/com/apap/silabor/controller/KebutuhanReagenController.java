@@ -71,10 +71,28 @@ public class KebutuhanReagenController {
 	
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.POST)
 	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel reagen) {
-		SupplyModel supply = reagen.getSupply();
-		reagen.setNama(supply.getNama());
-		kebutuhanReagenService.addReagen(reagen);
-				
+		//mengambil list reagen yang sudah ada
+		List<KebutuhanReagenModel> list_reagen = kebutuhanReagenService.getListReagen();
+		KebutuhanReagenModel reagen_temp = null;
+		long id = reagen.getSupply().getId();
+		
+		for (int i = 0; i<list_reagen.size(); i++) {
+			if(list_reagen.get(i).getSupply().getId()==id) {
+				reagen_temp = list_reagen.get(i);
+			}
+		}
+		
+		//melakukan tambah jumlah jika reagen sudah ada dan belum dibeli
+		if(reagen_temp!=null && reagen_temp.getStatus()==1) {
+			reagen_temp.setJumlah(reagen_temp.getJumlah() + reagen.getJumlah());
+			kebutuhanReagenService.updateReagen(reagen_temp);
+		}
+		else {
+			SupplyModel supply = reagen.getSupply();
+			reagen.setNama(supply.getNama());
+			kebutuhanReagenService.addReagen(reagen);
+		}
+		
 		return "success";
 	}
 	
@@ -99,7 +117,6 @@ public class KebutuhanReagenController {
 	@ResponseBody
 	@RequestMapping(value = "/api/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
 	private List<KebutuhanReagenModel> viewAll() {
-		//List<KebutuhanReagenModel> reagen = ;
 		return kebutuhanReagenService.getListReagen();
 	}
 	
@@ -138,8 +155,7 @@ public class KebutuhanReagenController {
 		
 		//cek status reagen, 0 = sudah dibeli
 		if(reagen.getStatus()==0) {
-			long id_supply = reagen_temp.getSupply().getId();
-			SupplyModel supply = supplyService.getSupplyById(id_supply);
+			SupplyModel supply = supplyService.getSupplyById(reagen_temp.getSupply().getId());
 			supply.setJumlah(supply.getJumlah() + reagen_temp.getJumlah());
 			supplyService.updateSupply(supply);
 			model.addAttribute("datasupply", supply);
