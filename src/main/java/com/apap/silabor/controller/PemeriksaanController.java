@@ -43,13 +43,15 @@ import com.apap.silabor.service.SupplyService;
 @Controller
 @RequestMapping("/lab/pemeriksaan")
 public class PemeriksaanController {
-	@Autowired
-	RestTemplate restTemplate;
-
-	@Bean
-	public RestTemplate rest() {
-		return new RestTemplate();
-	}
+//	@Autowired
+//	RestTemplate restTemplate;
+//
+//	@Bean
+//	public RestTemplate restPemeriksaan() {
+//		return new RestTemplate();
+//	}
+	
+	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
 	private SupplyService supplyService;
