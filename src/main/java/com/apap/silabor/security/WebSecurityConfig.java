@@ -17,12 +17,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.csrf().disable()
 			.authorizeRequests()
 			.antMatchers("/css/**").permitAll()
 			.antMatchers("/js/**").permitAll()
+			//Pembatasan
+			.antMatchers("lab/pemeriksaan/kirim/").hasAnyRole("Admin")
+			.antMatchers("lab/pemeriksaan/permintaan/").hasAnyAuthority("Admin")
+			
 			//Login Dimatikan Terlebih Dahulu
-			.antMatchers("/**").permitAll()
+			.antMatchers("/api/**").permitAll()
+			.antMatchers("/register/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -33,25 +37,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.permitAll();
 	}
 	
-	@Autowired
-	public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.passwordEncoder(encoder())
-			.withUser("cokicoki").password(encoder().encode("enaksekali"))
-			.roles("ADMIN");
-	}
-	
 	@Bean
 	public BCryptPasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-	/*@Autowired
-	private UserDetailsService userDetailsService;*/
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
-	/*@Autowired
+	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
-	}*/
+	}
 	
 }

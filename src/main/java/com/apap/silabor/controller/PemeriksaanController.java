@@ -8,10 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
+import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.KamarPasienIsi;
 import com.apap.silabor.rest.KamarPasienIsiResponse;
 import com.apap.silabor.rest.LabResponse;
@@ -36,13 +43,15 @@ import com.apap.silabor.service.SupplyService;
 @Controller
 @RequestMapping("/lab/pemeriksaan")
 public class PemeriksaanController {
-	@Autowired
-	RestTemplate restTemplate;
-
-	@Bean
-	public RestTemplate rest() {
-		return new RestTemplate();
-	}
+//	@Autowired
+//	RestTemplate restTemplate;
+//
+//	@Bean
+//	public RestTemplate restPemeriksaan() {
+//		return new RestTemplate();
+//	}
+	
+	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
 	private SupplyService supplyService;
@@ -60,12 +69,12 @@ public class PemeriksaanController {
 	//FITUR 7 testing
 	@GetMapping(value = "/testAmbilKamar")
 	public String testPemeriksaan(Model model) throws IOException {
-		
+
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
 		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-		
+
 		listKamar = response.getResult();
 		for(KamarPasienIsi kamar : listKamar) {
 			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
@@ -73,20 +82,26 @@ public class PemeriksaanController {
 		System.out.println(response.getResult());
 		return "home";
 	}
-	
+
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) throws IOException {
-
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Admin")) {
+				model.addAttribute("authenticated", authority.getAuthority());
+			}
+		}
 
 		// mengambil data dari {url}
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
-		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-		listIdPasienRawatInapBaru.add((long) 1);
-		listIdPasienRawatInapBaru.add((long) 10);
+		
 
-		for(long idPasienBaru : listIdPasienRawatInapBaru) {
+		for(KamarPasienIsi kamar : listKamar) {
+			long idPasienBaru = kamar.getId_pasien();
 			if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
 				PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
 				pemeriksaanBaru.setIdPasien(idPasienBaru);
@@ -96,7 +111,6 @@ public class PemeriksaanController {
 				pemeriksaanBaru.setTanggalPengajuan(sqlDate);
 				pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
 				pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
-
 			}
 		}
 
@@ -112,19 +126,24 @@ public class PemeriksaanController {
 			}
 		}
 		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+urlPasien+"&resultType=Map";
-		PasienResponse response = restTemplate.getForObject(url, PasienResponse.class)	;
+		PasienResponse response2 = restTemplate.getForObject(url, PasienResponse.class)	;
 		Map<String,PasienTest> listPasien = new HashMap<>();
-		listPasien = response.getResult();
+		listPasien = response2.getResult();
 		model.addAttribute("pemeriksaanList", listPemeriksaan);
 		model.addAttribute("pasienList", listPasien);
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
 	//FITUR 8
-	@PostMapping(value = "/permintaan/save")
-	public PemeriksaanModel addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
-		return pemeriksaanService.addPemeriksaan(pemeriksaan);
-	}
+    @PostMapping(value = "/permintaan/save")
+    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
+        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
+        pemeriksaanService.addPemeriksaan(pemeriksaan);
+        response.setStatus(200);
+        response.setMessage("success");
+        response.setResult(pemeriksaan);
+        return response;
+    }
 
 	//FITUR 9
 	@PostMapping(value = "/{id}")
@@ -132,9 +151,14 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		List<SupplyModel> supplyChoosen = new ArrayList<>();
 		//Menunggu -> Diproses
+		System.out.println(pemeriksaan.getStatus());
+		System.out.println(pemeriksaan.getJenisPemeriksaan().getNama());
 		if (pemeriksaan.getStatus() == 0) {
 			int error = 0;
+
+			//Iterasi Terpenuhi
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
+				System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
 					supplyChoosen.add(supply);
@@ -144,19 +168,25 @@ public class PemeriksaanController {
 					error += 1;
 				}
 			}
+
 			//Syarat Terpenuhi
 			if (error == 0) {
+				System.out.println(supplyChoosen.size());
 				for (SupplyModel supply : supplyChoosen) {
 					supply.setJumlah(supply.getJumlah() - 1);
-					//Set Tanggal Pemeriksaan
-					Calendar currentTime = Calendar.getInstance();
-					Date sqlDate = new Date((currentTime.getTime()).getTime());
-					pemeriksaan.setTanggalPemeriksaan(sqlDate);
-					//Set Jadwal Jaga
-					pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
-					//Set Diproses
-					pemeriksaan.setStatus(1);
+					System.out.println("Supply Chosen");
+					System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				}
+
+				//Set Tanggal Pemeriksaan
+				Calendar currentTime = Calendar.getInstance();
+				Date sqlDate = new Date((currentTime.getTime()).getTime());
+				pemeriksaan.setTanggalPemeriksaan(sqlDate);
+				//Set Jadwal Jaga
+				pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
+				//Set Diproses
+				pemeriksaan.setStatus(1);
+				pemeriksaanService.addPemeriksaan(pemeriksaan);
 				return "sukses-diproses";
 			}
 			//Gagal
@@ -185,7 +215,7 @@ public class PemeriksaanController {
 	//FITUR 10
 	@PostMapping(value = "/kirim/{id}")
 	public String kirimPemeriksaan(@PathVariable(value="id") long id) {
-
+		
 		//Get Pemeriksaan Selesai
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 

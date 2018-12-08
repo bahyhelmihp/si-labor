@@ -11,6 +11,7 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<h2 th:text=" 'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
+	<h3 th:text=" 'Kamu adalah seorang ' + ${role} + ' Laboratorium'"></h3>
 </body>
 
 </html>
