@@ -18,7 +18,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +39,8 @@ public class KebutuhanReagenController {
 	@Autowired
 	private SupplyService supplyService;
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
 	@Bean
-	public RestTemplate restReagen() {
+	public RestTemplate restPemeriksaan() {
 		return new RestTemplate();
 	}
 	
@@ -78,6 +74,7 @@ public class KebutuhanReagenController {
 		SupplyModel supply = reagen.getSupply();
 		reagen.setNama(supply.getNama());
 		kebutuhanReagenService.addReagen(reagen);
+				
 		return "success";
 	}
 	
@@ -113,7 +110,6 @@ public class KebutuhanReagenController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			for (GrantedAuthority authority: authentication.getAuthorities()) {
 				if (authority.getAuthority().equals("Admin")) {
-					//Jalanin Fungsi Lu
 					KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
 			
 					//mengubah nama pada title sesuai reagen
@@ -135,13 +131,20 @@ public class KebutuhanReagenController {
 		Date tanggal =  Date.valueOf(date);
 		reagen.setTanggal_update(tanggal);
 		
-		//integrasi dengan supply bersangkutan
-		SupplyModel supply = supplyService.getSupplyById(id);
-		reagen.setSupply(supply);
-		
 		kebutuhanReagenService.updateReagen(reagen);
-		model.addAttribute("datareagen", reagen);
+	
+		//set jumlah kebutuhan sesuai reagen yang sudah dibeli
+		KebutuhanReagenModel reagen_temp = kebutuhanReagenService.getReagenById(id);
 		
+		//cek status reagen, 0 = sudah dibeli
+		if(reagen.getStatus()==0) {
+			long id_supply = reagen_temp.getSupply().getId();
+			SupplyModel supply = supplyService.getSupplyById(id_supply);
+			supply.setJumlah(supply.getJumlah() + reagen_temp.getJumlah());
+			supplyService.updateSupply(supply);
+			model.addAttribute("datasupply", supply);
+		}
+		model.addAttribute("datareagen", reagen);
 		
 		return "success";
 	}

@@ -13,8 +13,9 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 		<div class="container-fluid">
-			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1><br>
-			<h4 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h4>
+			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1>
+			<h1 th:if="${value} == false">Oops :(</h1><br><br>
+			<h5 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h5><br>
 			
 			<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
 				<button class="btn btn-primary" type="submit">Tambah Reagen</button>
