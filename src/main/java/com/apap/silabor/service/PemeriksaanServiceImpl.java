@@ -85,7 +85,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService {
 //			return true;
 //		}
 		for(PemeriksaanModel pemeriksaan : pemeriksaanDb.findAll()) {
-			if(pemeriksaan.getIdPasien() == idPasien && pemeriksaan.getJenisPemeriksaan().getId() == jenisPemeriksaan) {
+			if(pemeriksaan.getIdPasien() == idPasien && pemeriksaan.getJenisPemeriksaan().getId() == jenisPemeriksaan && pemeriksaan.getStatus() == 0) {
 				return true;
 			}
 		}

@@ -8,10 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
+import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.KamarPasienIsi;
 import com.apap.silabor.rest.KamarPasienIsiResponse;
 import com.apap.silabor.rest.LabResponse;
@@ -122,10 +126,15 @@ public class PemeriksaanController {
 		return "pemeriksaan-viewall";
 	}
 	//FITUR 8
-	@PostMapping(value = "/permintaan/save")
-	public PemeriksaanModel addPemeriksaan(@RequestBody PemeriksaanModel pemeriksaan) {
-		return pemeriksaanService.addPemeriksaan(pemeriksaan);
-	}
+    @PostMapping(value = "/permintaan/save")
+    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
+        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
+        pemeriksaanService.addPemeriksaan(pemeriksaan);
+        response.setStatus(200);
+        response.setMessage("success");
+        response.setResult(pemeriksaan);
+        return response;
+    }
 
 	//FITUR 9
 	@PostMapping(value = "/{id}")
