@@ -12,64 +12,80 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h1>Sistem Informasi Laboratorium</h1>
-	<h5>Selamat Datang di Pusat Informasi Terkini Laboratorium</h5>
 	<br>
-	<div class="container-fluid">
-		<h4>Select Number of Rows</h4>
-		<div class="form-group">
-			<select name="state" id="maxRows" class="form-control"
-				style="width: 150px;">
-				<option value="5000">5</option>
-				<option value="5000">10</option>
-				<option value="5000">15</option>
-				<option value="5000">20</option>
-				<option value="5000">25</option>
-				<option value="5000">50</option>
-				<option value="5000">100</option>
-			</select>
-		</div>
-		<div th:if="${jadwalJaga.isEmpty()}">
-			<div>Jadwal jaga belum ada! Segera tambah jadwal jaga</div>
-		</div>
-
-		<form th:action="@{/lab/jadwal-jaga/tambah}" class="form-inline" method="GET">
-			<button class="btn btn-alert mb-2" type="submit">Tambah
-				Jadwal Jaga</button>
-		</form>
-		<table id="mytable" class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Tanggal</th>
-					<th>Waktu Mulai</th>
-					<th>Waktu Selesai</th>
-					<th>Nama Staff</th>
-					<th>Edit</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="jj : ${jadwalJaga}">
-					<td th:text="${jj.id}"></td>
-					<td th:text="${jj.tanggal}"></td>
-					<td th:text="${jj.start}"></td>
-					<td th:text="${jj.end}"></td>
-					<td th:text="${jj.namaStaff}"></td>
-					<td><a th:href="@{'/lab/jadwal-jaga/ubah/' +${jj.id}}">Update
-							... </a></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="pagination-container">
-			<nav>
-				<ul class="pagination"></ul>
-			</nav>
-		</div>
+	<div style="margin-left: 2rem">
+		<h4>Jadwal Jaga Laboratorium</h4>
 	</div>
+	<hr>
+	<div style="margin-left: 1rem" class="col-lg-4">
+		<h4>Lihat Jadwal Berdasarkan Tanggal</h4>
+		<p>Pilih tanggal yang diinginkan</p>
+		<form th:action="@{'/lab/jadwal-jaga/'+${tanggal}}">
+			<input type="date" th:field="*{tanggal}" class="form-control" />
+			<p></p>
+			<button type="submit" class="btn btn-info">Lihat</button>
+		</form>
+	</div>
+	
+	<div style="margin-left: 1rem" class="col-lg-4">
+		<h4>Tambah Jadwal Jaga Lab</h4>
+		<form th:action="@{/lab/jadwal-jaga/tambah}" class="form-control">
+			<button type="submit" class="btn btn-info">Tambah</button>
+		</form>
+	</div>
+	<br>
+	<div th:if="${jadwalJaga.isEmpty()}">
+		<div>Jadwal jaga belum ada! Segera tambah jadwal jaga</div>
+	</div>
+	<br>
+	<table id="mytable" class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Tanggal</th>
+				<th>Waktu Mulai</th>
+				<th>Waktu Selesai</th>
+				<th>Nama Staff</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="jj : ${jadwalJaga}">
+				<td th:text="${jj.id}"></td>
+				<td th:text="${jj.tanggal}"></td>
+				<td th:text="${jj.start}"></td>
+				<td th:text="${jj.end}"></td>
+				<td th:text="${jj.namaStaff}"></td>
+				<td><a th:href="@{'/lab/jadwal-jaga/ubah/' +${jj.id}}">Update
+						... </a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="pagination-container">
+		<nav>
+			<ul class="pagination"></ul>
+		</nav>
+	</div>
+
 
 	<script src="jquery.min.js"></script>
 	<script src="bootstrap.min.js"></script>
 	<script> 
+	
+	var $form = $( '#dateForm' );
+	var $idField = $( "#date" );
+
+	$form.submit( function( event ) {
+
+	  // respects th:action="@{/mycontroller/}" and appends id
+	  $form.attr( 'action',  $form.attr('action') + $idField.val() );
+
+	  // otherwise ?id=xx
+	  $idField.prop( "disabled", true );
+
+	  // submits the form in the normal way !
+	  return;
+	});
 	var table = '#mytable'
 	$('#maxRows').on('change', function(){
 		$('.pagination').html('')

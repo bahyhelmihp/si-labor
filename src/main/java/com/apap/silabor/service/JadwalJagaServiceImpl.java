@@ -38,7 +38,7 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 	}
 
 	@Override
-	public List<JadwalJagaModel> getAllJadwaJaga() {
+	public List<JadwalJagaModel> getAllJadwalJaga() {
 		// TODO Auto-generated method stub
 		return jadwalJagaDb.findAll();
 	}

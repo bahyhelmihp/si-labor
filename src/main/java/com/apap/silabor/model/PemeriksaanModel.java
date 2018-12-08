@@ -54,7 +54,7 @@ public class PemeriksaanModel implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_jenis", referencedColumnName = "id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
+	
 	private JenisPemeriksaanModel jenisPemeriksaan;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
@@ -62,8 +62,7 @@ public class PemeriksaanModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private JadwalJagaModel jadwalJaga;
-
-
+	
 	public long getIdPasien() {
 		return idPasien;
 	}
