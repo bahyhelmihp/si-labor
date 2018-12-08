@@ -37,8 +37,11 @@ public class KebutuhanReagenController {
 	@Autowired
 	private SupplyService supplyService;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
 	@Bean
-	public RestTemplate rest() {
+	public RestTemplate restReagen() {
 		return new RestTemplate();
 	}
 	
