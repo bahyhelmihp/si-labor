@@ -13,6 +13,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,16 +109,25 @@ public class KebutuhanReagenController {
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
 	@RequestMapping(value="/lab/kebutuhan/ubah/{id}", method = RequestMethod.GET)
 	private String updateReagen(@PathVariable(value="id") long id, Model model){
-		KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
-		
-		//mengubah nama pada title sesuai reagen
-		String nama = reagen.getNama();
-		model.addAttribute("nama", nama);
-		
-		model.addAttribute("datareagen", reagen);
-		return "reagen-update";
-	}
-	
+		String show = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			for (GrantedAuthority authority: authentication.getAuthorities()) {
+				if (authority.getAuthority().equals("Admin")) {
+					//Jalanin Fungsi Lu
+					KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
+			
+					//mengubah nama pada title sesuai reagen
+					String nama = reagen.getNama();
+					model.addAttribute("nama", nama);
+			
+					model.addAttribute("datareagen", reagen);
+					show = "reagen-update";
+				}else show="not-admin";
+				
+			}
+			return show;
+		}
+	 
 	@RequestMapping(value="lab/kebutuhan/ubah/{id}", method = RequestMethod.POST)
 	private String updateReagenSubmit(@PathVariable(value="id") long id, KebutuhanReagenModel reagen, Model model) {
 		//input tanggal ketika diubah	
