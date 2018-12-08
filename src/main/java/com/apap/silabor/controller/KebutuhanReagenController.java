@@ -38,7 +38,7 @@ public class KebutuhanReagenController {
 	private SupplyService supplyService;
 	
 	@Bean
-	public RestTemplate rest() {
+	public RestTemplate restReagen() {
 		return new RestTemplate();
 	}
 	
