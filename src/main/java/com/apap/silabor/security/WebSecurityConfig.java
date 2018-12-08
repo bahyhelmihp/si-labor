@@ -23,6 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			//Pembatasan
 			.antMatchers("lab/pemeriksaan/kirim/").hasAnyRole("Admin")
 			.antMatchers("lab/pemeriksaan/permintaan/").hasAnyAuthority("Admin")
+			.antMatchers("lab/jadwal-jaga/tambah/").hasAuthority("Admin")
+			.antMatchers("lab/jadwal-jaga/ubah/").hasAuthority("Admin")
 			
 			//Login Dimatikan Terlebih Dahulu
 			.antMatchers("/api/**").permitAll()
