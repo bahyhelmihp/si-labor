@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Home</title>
+
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body">
+			<form th:action="@{/register/addUser}" method="POST">
+				<div class="row form-group">
+					<label class="col-sm-4">User Name: </label> <input
+						class="col-sm-8 form-control input-sm" type="text" name="username" />
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4">Password: </label> <input
+						class="col-sm-8 form-control input-sm"
+						pattern="([A-Za-z])(?=.*\d).{7,}"
+						title="Password must contain letter & number, min. 8 character."
+						type="password" name="password" />
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4">Role: </label> <input
+						class="col-sm-8 form-control input-sm" type="text" name="role" />
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

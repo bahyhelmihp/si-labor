@@ -10,6 +10,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,12 +63,12 @@ public class PemeriksaanController {
 	//FITUR 7 testing
 	@GetMapping(value = "/testAmbilKamar")
 	public String testPemeriksaan(Model model) throws IOException {
-		
+
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
 		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-		
+
 		listKamar = response.getResult();
 		for(KamarPasienIsi kamar : listKamar) {
 			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
@@ -73,11 +76,16 @@ public class PemeriksaanController {
 		System.out.println(response.getResult());
 		return "home";
 	}
-	
+
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) throws IOException {
-
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Admin")) {
+				model.addAttribute("authenticated", authority.getAuthority());
+			}
+		}
 
 		// mengambil data dari {url}
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
@@ -96,7 +104,6 @@ public class PemeriksaanController {
 				pemeriksaanBaru.setTanggalPengajuan(sqlDate);
 				pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
 				pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
-
 			}
 		}
 
@@ -132,9 +139,14 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		List<SupplyModel> supplyChoosen = new ArrayList<>();
 		//Menunggu -> Diproses
+		System.out.println(pemeriksaan.getStatus());
+		System.out.println(pemeriksaan.getJenisPemeriksaan().getNama());
 		if (pemeriksaan.getStatus() == 0) {
 			int error = 0;
+
+			//Iterasi Terpenuhi
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
+				System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
 					supplyChoosen.add(supply);
@@ -144,19 +156,25 @@ public class PemeriksaanController {
 					error += 1;
 				}
 			}
+
 			//Syarat Terpenuhi
 			if (error == 0) {
+				System.out.println(supplyChoosen.size());
 				for (SupplyModel supply : supplyChoosen) {
 					supply.setJumlah(supply.getJumlah() - 1);
-					//Set Tanggal Pemeriksaan
-					Calendar currentTime = Calendar.getInstance();
-					Date sqlDate = new Date((currentTime.getTime()).getTime());
-					pemeriksaan.setTanggalPemeriksaan(sqlDate);
-					//Set Jadwal Jaga
-					pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
-					//Set Diproses
-					pemeriksaan.setStatus(1);
+					System.out.println("Supply Chosen");
+					System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				}
+
+				//Set Tanggal Pemeriksaan
+				Calendar currentTime = Calendar.getInstance();
+				Date sqlDate = new Date((currentTime.getTime()).getTime());
+				pemeriksaan.setTanggalPemeriksaan(sqlDate);
+				//Set Jadwal Jaga
+				pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
+				//Set Diproses
+				pemeriksaan.setStatus(1);
+				pemeriksaanService.addPemeriksaan(pemeriksaan);
 				return "sukses-diproses";
 			}
 			//Gagal
@@ -185,7 +203,7 @@ public class PemeriksaanController {
 	//FITUR 10
 	@PostMapping(value = "/kirim/{id}")
 	public String kirimPemeriksaan(@PathVariable(value="id") long id) {
-
+		
 		//Get Pemeriksaan Selesai
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 
