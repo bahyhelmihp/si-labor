@@ -39,7 +39,6 @@ import com.apap.silabor.service.JenisPemeriksaanService;
 import com.apap.silabor.service.PemeriksaanService;
 
 @Controller
-//@RequestMapping("/lab/pemeriksaan")
 public class PemeriksaanController {
 //	@Autowired
 //	RestTemplate restTemplate;
