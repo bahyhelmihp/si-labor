@@ -85,6 +85,7 @@ public class PemeriksaanController {
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) throws IOException {
+		//Menambahkan Otentikasi Admin
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority: authentication.getAuthorities()) {
 			if (authority.getAuthority().equals("Admin")) {
