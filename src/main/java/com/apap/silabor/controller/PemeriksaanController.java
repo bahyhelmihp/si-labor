@@ -239,6 +239,6 @@ public class PemeriksaanController {
 		}
 
 		//Return 
-		return "redirect:/lab/pemeriksaan/permintaan";
+		return "sukses-kirim";
 	}
 }

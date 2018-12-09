@@ -6,12 +6,16 @@
 
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
 	<h2 th:text=" 'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
-	<h3 th:text=" 'Kamu adalah seorang ' + ${role} + ' Laboratorium'"></h3>
+	<p th:text=" 'Kamu adalah seorang ' + ${role} + ' Laboratorium.'"></p>
+	</div>
 </body>
 
 </html>
