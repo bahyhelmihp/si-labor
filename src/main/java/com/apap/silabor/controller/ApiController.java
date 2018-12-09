@@ -14,7 +14,7 @@ import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.service.PemeriksaanService;
 
 @RestController
-@RequestMapping("api/lab/pemeriksaan")
+@RequestMapping("/api/lab/pemeriksaan")
 public class ApiController {
 	
 	@Autowired
