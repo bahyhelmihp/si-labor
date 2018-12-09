@@ -8,25 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
-import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.KamarPasienIsi;
 import com.apap.silabor.rest.KamarPasienIsiResponse;
 import com.apap.silabor.rest.LabResponse;
@@ -51,9 +46,6 @@ public class PemeriksaanController {
 //	}
 	
 	RestTemplate restTemplate = new RestTemplate();
-
-	@Autowired
-	private SupplyService supplyService;
 
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
@@ -136,6 +128,7 @@ public class PemeriksaanController {
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
+	
 //	//FITUR 8
 //    @PostMapping(value = "/permintaan/save")
 //    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
