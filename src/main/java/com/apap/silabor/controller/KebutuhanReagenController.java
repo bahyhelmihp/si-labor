@@ -128,7 +128,7 @@ public class KebutuhanReagenController {
 	@RequestMapping(value = "/api/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
 	private BaseResponse<List<KebutuhanReagenModel>> viewAll() {
 		BaseResponse<List<KebutuhanReagenModel>> response = new BaseResponse<List<KebutuhanReagenModel>>();
-		response.setStatus(202);
+		response.setStatus(200);
 		response.setMessage("success");
 		response.setResult(kebutuhanReagenService.getListReagen());
 		
