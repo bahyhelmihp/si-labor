@@ -26,6 +26,7 @@ import com.apap.silabor.rest.Setting;
 import com.apap.silabor.rest.StaffResponse;
 import com.apap.silabor.rest.StaffTest;
 import com.apap.silabor.service.JadwalJagaService;
+import com.apap.silabor.controller.JadwalCollection;
 
 @Controller
 public class JadwalJagaController {
