@@ -7,21 +7,28 @@
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
+</head>
 <style>
-body {
-    background-color: #E6E6FA;
+.head {
+	background-color: #343a40;
+	color: white;
+	margin: auto;
+	width: 50%;
+	padding: 10px;
 }
 </style>
-
-</head>
-
 <body>
 	<br>
-	<h2 align="center">Selamat Datang di SiLabor RS APAP</h2>
-	<p align="center">Sistem Informasi Laboratorium Rumah Sakit APAP
-		v1.0</p>
+	<div class="head">
+		<h2 align="center">Selamat Datang di SiLabor RS APAP</h2>
+		<p align="center">Sistem Informasi Laboratorium Rumah Sakit APAP
+			v1.0</p>
+	</div>
 	<table width="1000">
-		<br><br><br><br>
+		<br>
+		<br>
+		<br>
+		<br>
 		<tr>
 			<td width="500"><img align="right"
 				src="https://image.flaticon.com/icons/png/512/63/63794.png"
@@ -43,15 +50,14 @@ body {
 
 						<p></p>
 						<div class="row">
-							<label class="col-sm-3">Password:</label> <input
-								type="password" class="col-sm-7 form-control input-sm"
-								name="password">
+							<label class="col-sm-3">Password:</label> <input type="password"
+								class="col-sm-7 form-control input-sm" name="password">
 						</div>
 
 						<p></p>
-							<label class="col-sm-8"></label>
-							<button type="submit" align="right" class="btn btn-primary">Sign
-								In</button>
+						<label class="col-sm-8"></label>
+						<button type="submit" class="btn btn-primary">Sign
+							In</button>
 					</form>
 				</div>
 			</td>
@@ -60,10 +66,18 @@ body {
 </body>
 
 <footer>
-<div style="margin-right:20px">
-	<br><br><br><br><br><br><br><br><br>
-	<p align="right">Developed by Kelompok 6 - APAP C</p>
-</div>
+	<div style="margin-right: 19px">
+		
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<p align="right">Developed by Kelompok 6 - APAP C</p>
+	</div>
 </footer>
 
 </html>

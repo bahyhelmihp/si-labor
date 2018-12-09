@@ -43,12 +43,17 @@
 			  	 	<td th:text="${supply.deskripsi}"></td>
 	    			<td th:text="${supply.jumlah}"></td>
 	    			<td>
-	    				
+
 	    				<form th:action="@{'/lab/stok/ubah/' + ${supply.id}}" class="form-inline" method="GET">
 							<button class="btn btn-primary" type="submit">Update </button>
 						</form>
 	    				<div th:if="${supply.jumlah} == 0" >
 	    					<div th:if="${supply.jenis} == 'Reagen'" >
+	    						<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
+									<button class="btn btn-danger" type="submit">Ajukan Reagen</button>
+								</form>
+							</div>
+	    					<div th:if="${supply.jenis} == 'reagen'" >
 	    						<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
 									<button class="btn btn-danger" type="submit">Ajukan Reagen</button>
 								</form>

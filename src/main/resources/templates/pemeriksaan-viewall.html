@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	
+	<title>Permintaan Pemeriksaan</title>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -16,6 +16,9 @@
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
 	<div class="container-fluid">
+		<h2>Daftar Permintaan Pemeriksaan</h2>
+		<p>Daftar permintaan pemeriksaan dari SI Rawat Inap dan SI Rawat Jalan</p>
+		<br>
 		<table id="pemeriksaanTable">
 
 			<!-- Header Table -->
