@@ -32,7 +32,6 @@ import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.JadwalJagaService;
 import com.apap.silabor.service.JenisPemeriksaanService;
 import com.apap.silabor.service.PemeriksaanService;
-import com.apap.silabor.service.SupplyService;
 
 @Controller
 @RequestMapping("/lab/pemeriksaan")
