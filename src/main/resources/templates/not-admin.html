@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-<title>Sorry..</title>
-<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-</head>
-
-<body>
-	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="alert alert-danger" style="margin: 100px 100px 200px 100px">
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+	<title>Sorry..</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
 		<br>
-		<div>
-			<h1>Oops :(</h1>
+		<div class="alert alert-danger" style="margin: 100px 100px 200px 100px">
 			<br>
-			<br>
-			<h5>Kamu bukan Admin</h5>
-			<h5>Kamu tidak bisa mengakses fitur ini</h5>
+			<div>
+				<h1>Oops :(</h1>
+				<br>
+				<br>
+				<h5>Kamu bukan Admin</h5>
+				<h5>Kamu tidak bisa mengakses fitur ini</h5>
+			</div>
 		</div>
-	</div>
-</body>
-</html>
+	</body>
+	</html>

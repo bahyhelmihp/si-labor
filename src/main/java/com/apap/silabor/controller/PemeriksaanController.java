@@ -150,14 +150,11 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		List<SupplyModel> supplyChoosen = new ArrayList<>();
 		//Menunggu -> Diproses
-		System.out.println(pemeriksaan.getStatus());
-		System.out.println(pemeriksaan.getJenisPemeriksaan().getNama());
 		if (pemeriksaan.getStatus() == 0) {
 			int error = 0;
 
 			//Iterasi Terpenuhi
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
-				System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
 					supplyChoosen.add(supply);
@@ -167,19 +164,23 @@ public class PemeriksaanController {
 					error += 1;
 				}
 			}
+			
+			//Cek Jadwal Ada
+			Calendar currentTime = Calendar.getInstance();
+			Date sqlDate = new Date((currentTime.getTime()).getTime());
+			if (jadwalJagaService.getJadwalByDate(sqlDate).isEmpty()) {
+				System.out.println("Jadwal Jaga Kosong");
+				error += 1;
+			}
 
 			//Syarat Terpenuhi
+			System.out.println("Error: " + error);
 			if (error == 0) {
-				System.out.println(supplyChoosen.size());
 				for (SupplyModel supply : supplyChoosen) {
 					supply.setJumlah(supply.getJumlah() - 1);
-					System.out.println("Supply Chosen");
-					System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				}
 
 				//Set Tanggal Pemeriksaan
-				Calendar currentTime = Calendar.getInstance();
-				Date sqlDate = new Date((currentTime.getTime()).getTime());
 				pemeriksaan.setTanggalPemeriksaan(sqlDate);
 				//Set Jadwal Jaga
 				pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
