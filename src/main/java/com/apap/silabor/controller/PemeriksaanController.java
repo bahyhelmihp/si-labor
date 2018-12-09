@@ -210,7 +210,7 @@ public class PemeriksaanController {
 		}
 	}
 	//Sukses Update Diproses -> Selesai
-	@PostMapping(value = "/permintaan/update/sukses")
+	@PostMapping(value = "lab/pemeriksaan/permintaan/update/sukses")
 	public String updatePemeriksaan(PemeriksaanModel pemeriksaan) {
 
 		//Set Selesai
