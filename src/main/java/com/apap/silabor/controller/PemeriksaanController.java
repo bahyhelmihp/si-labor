@@ -65,22 +65,22 @@ public class PemeriksaanController {
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
 
-	//FITUR 7 testing
-	@GetMapping(value = "/testAmbilKamar")
-	public String testPemeriksaan(Model model) throws IOException {
-
-		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
-		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
-		List<KamarPasienIsi>  listKamar = new ArrayList<>();
-		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-
-		listKamar = response.getResult();
-		for(KamarPasienIsi kamar : listKamar) {
-			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
-		}
-		System.out.println(response.getResult());
-		return "home";
-	}
+//	//FITUR 7 testing
+//	@GetMapping(value = "/testAmbilKamar")
+//	public String testPemeriksaan(Model model) throws IOException {
+//
+//		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+//		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+//		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+//		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
+//
+//		listKamar = response.getResult();
+//		for(KamarPasienIsi kamar : listKamar) {
+//			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
+//		}
+//		System.out.println(response.getResult());
+//		return "home";
+//	}
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
@@ -98,20 +98,22 @@ public class PemeriksaanController {
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
 		
-
-		for(KamarPasienIsi kamar : listKamar) {
-			long idPasienBaru = kamar.getId_pasien();
-			if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
-				PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
-				pemeriksaanBaru.setIdPasien(idPasienBaru);
-				pemeriksaanBaru.setStatus(0);
-				Calendar currentTime = Calendar.getInstance();
-				Date sqlDate = new Date((currentTime.getTime()).getTime());
-				pemeriksaanBaru.setTanggalPengajuan(sqlDate);
-				pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
-				pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
+		if(!listKamar.isEmpty()) {
+			for(KamarPasienIsi kamar : listKamar) {
+				long idPasienBaru = kamar.getId_pasien();
+				if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
+					PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
+					pemeriksaanBaru.setIdPasien(idPasienBaru);
+					pemeriksaanBaru.setStatus(0);
+					Calendar currentTime = Calendar.getInstance();
+					Date sqlDate = new Date((currentTime.getTime()).getTime());
+					pemeriksaanBaru.setTanggalPengajuan(sqlDate);
+					pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
+					pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
+				}
 			}
 		}
+		
 
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
 		//call object pasien
@@ -133,16 +135,16 @@ public class PemeriksaanController {
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
-	//FITUR 8
-    @PostMapping(value = "/permintaan/save")
-    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
-        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
-        pemeriksaanService.addPemeriksaan(pemeriksaan);
-        response.setStatus(200);
-        response.setMessage("success");
-        response.setResult(pemeriksaan);
-        return response;
-    }
+//	//FITUR 8
+//    @PostMapping(value = "/permintaan/save")
+//    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
+//        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
+//        pemeriksaanService.addPemeriksaan(pemeriksaan);
+//        response.setStatus(200);
+//        response.setMessage("success");
+//        response.setResult(pemeriksaan);
+//        return response;
+//    }
 
 	//FITUR 9
 	@PostMapping(value = "/{id}")
