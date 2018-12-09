@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+	<title>Update Reagen</title>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -9,8 +10,8 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	
-	<div class="container-fluid"><br>
-		<h2 th:text="'Ubah Status '+ ${nama}"></h2>
+	<div class="container-fluid" style="margin:50px 100px 10px 80px"><br>
+		<h3 th:text="'Ubah Status Pembelian '+ ${nama}"></h3>
 		<br>
 		<div class="row">
 			<div class="col-md-6">
@@ -18,9 +19,8 @@
 					<form th:action="@{'/lab/kebutuhan/ubah/'} + ${datareagen.id}" th:object="${reagen}" method="POST">
 						<div class="card-body">
 							
-							Status: <br>
-							<input type="radio" name="status" value=0> 0<br>
-							<input type="radio" name="status" value=1> 1<br>
+							<input type="radio" name="status" value=0 style="margin-bottom:15px"> Sudah dibeli<br>
+							<input type="radio" name="status" value=1> Belum dibeli<br>
 							<br>
 							
 							<button type="submit" class="btn btn-primary">Simpan</button>

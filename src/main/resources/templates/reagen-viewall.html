@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+	<title>Perencanaan Reagen</title>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	<meta charset="utf-8">
@@ -13,8 +14,14 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 		<div class="container-fluid">
-			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1><br>
-			<h4 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h4>
+			<br><h1 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h1>
+			<h1 th:if="${value} == false">Oops :(</h1><br><br>
+			<h5 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h5><br>
+			
+			<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
+				<button class="btn btn-primary" type="submit">Tambah Reagen</button>
+			</form>
+			<br>
 			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
 				<thead>
 					<tr>
@@ -23,6 +30,7 @@
 						<th>Jumlah</th>
 						<th>Status</th>
 						<th>Tanggal Diubah</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				
@@ -31,8 +39,14 @@
 						<td th:text="${reagen.id}"></td>
 						<td th:text="${reagen.nama}"></td>
 						<td th:text="${reagen.jumlah}"></td>
-						<td th:text="${reagen.status}"></td>
+						<td th:if="${reagen.status} == 0">Sudah dibeli</td>
+						<td th:if="${reagen.status} == 1">Belum dibeli</td>
 						<td th:text="${reagen.tanggal_update}"></td>
+						<td>
+							<div th:if="${reagen.status} == 1">
+								<a th:href="@{'/lab/kebutuhan/ubah/' +${reagen.id}}">Ubah Status</a>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
