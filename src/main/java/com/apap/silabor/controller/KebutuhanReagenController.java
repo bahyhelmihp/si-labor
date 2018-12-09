@@ -48,41 +48,50 @@ public class KebutuhanReagenController {
 	//FITUR 3 : Membuat perencanaan kebutuhan reagen
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
-		KebutuhanReagenModel reagen = new KebutuhanReagenModel();
-		
-		//input tanggal otomatis
-		LocalDate date = LocalDate.now();
-		Date tanggal =  Date.valueOf(date);
-		model.addAttribute("tanggal", tanggal);
-		
-		//mengambil list supply dengan jenis reagen
-		List<SupplyModel> listSupply = supplyService.getListSupply();
-		List result = new ArrayList<>();
+		String show = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Staf")) {
+				KebutuhanReagenModel reagen = new KebutuhanReagenModel();
 				
-		for(int i = 0; i<listSupply.size(); i++) {
-			if(listSupply.get(i).getJenis().equalsIgnoreCase("reagen")) {
-				result.add(listSupply.get(i));
-			}
+				//input tanggal otomatis
+				LocalDate date = LocalDate.now();
+				Date tanggal =  Date.valueOf(date);
+				model.addAttribute("tanggal", tanggal);
+				
+				//mengambil list supply dengan jenis reagen
+				List<SupplyModel> listSupply = supplyService.getListSupply();
+				List result = new ArrayList<>();
+						
+				for(int i = 0; i<listSupply.size(); i++) {
+					if(listSupply.get(i).getJenis().equalsIgnoreCase("reagen")) {
+						result.add(listSupply.get(i));
+					}
+				}
+				model.addAttribute("listsupply", result);
+				
+				model.addAttribute("reagen", reagen);
+				show = "reagen-add";
+			} else show= "not-staf";
 		}
-		model.addAttribute("listsupply", result);
+			
 		
-		model.addAttribute("reagen", reagen);
-		return "reagen-add";
+		
+		return show;
 	}
 	
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.POST)
 	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel reagen) {
 		//mengambil list reagen yang sudah ada
-		List<KebutuhanReagenModel> list_reagen = kebutuhanReagenService.getListReagen();
-		KebutuhanReagenModel reagen_temp = null;
+		List<KebutuhanReagenModel> list_reagen = kebutuhanReagenService.getListReagen();				KebutuhanReagenModel reagen_temp = null;
 		long id = reagen.getSupply().getId();
-		
+				
 		for (int i = 0; i<list_reagen.size(); i++) {
 			if(list_reagen.get(i).getSupply().getId()==id) {
 				reagen_temp = list_reagen.get(i);
 			}
 		}
-		
+				
 		//melakukan tambah jumlah jika reagen sudah ada dan belum dibeli
 		if(reagen_temp!=null && reagen_temp.getStatus()==1) {
 			reagen_temp.setJumlah(reagen_temp.getJumlah() + reagen.getJumlah());
@@ -93,7 +102,7 @@ public class KebutuhanReagenController {
 			reagen.setNama(supply.getNama());
 			kebutuhanReagenService.addReagen(reagen);
 		}
-		
+			
 		return "success";
 	}
 	
