@@ -8,26 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.PemeriksaanModel;
 import com.apap.silabor.model.SupplyModel;
-import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.KamarPasienIsi;
 import com.apap.silabor.rest.KamarPasienIsiResponse;
 import com.apap.silabor.rest.LabResponse;
@@ -38,7 +32,6 @@ import com.apap.silabor.rest.Setting;
 import com.apap.silabor.service.JadwalJagaService;
 import com.apap.silabor.service.JenisPemeriksaanService;
 import com.apap.silabor.service.PemeriksaanService;
-import com.apap.silabor.service.SupplyService;
 
 @Controller
 @RequestMapping("/lab/pemeriksaan")
@@ -54,9 +47,6 @@ public class PemeriksaanController {
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
-	private SupplyService supplyService;
-
-	@Autowired
 	private PemeriksaanService pemeriksaanService;
 
 	@Autowired
@@ -65,29 +55,28 @@ public class PemeriksaanController {
 
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
-
-	//FITUR 7 testing
-	@GetMapping(value = "/testAmbilKamar")
-	public String testPemeriksaan(Model model) throws IOException {
-
-		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
-		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
-		List<KamarPasienIsi>  listKamar = new ArrayList<>();
-		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-
-		listKamar = response.getResult();
-		for(KamarPasienIsi kamar : listKamar) {
-			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1)) {
-				System.out.println("masuk pak eko");
-			};
-		}
-		System.out.println(response.getResult());
-		return "home";
-	}
+  
+//	//FITUR 7 testing
+//	@GetMapping(value = "/testAmbilKamar")
+//	public String testPemeriksaan(Model model) throws IOException {
+//
+//		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+//		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+//		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+//		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
+//
+//		listKamar = response.getResult();
+//		for(KamarPasienIsi kamar : listKamar) {
+//			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
+//		}
+//		System.out.println(response.getResult());
+//		return "home";
+//	}
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/permintaan")
 	public String viewAllPemeriksaan(Model model) throws IOException {
+		//Menambahkan Otentikasi Admin
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority: authentication.getAuthorities()) {
 			if (authority.getAuthority().equals("Admin")) {
@@ -99,22 +88,25 @@ public class PemeriksaanController {
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
 		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+		listKamar = response.getResult();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
 		
-
-		for(KamarPasienIsi kamar : listKamar) {
-			long idPasienBaru = kamar.getId_pasien();
-			if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
-		 		PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
-				pemeriksaanBaru.setIdPasien(idPasienBaru);
-				pemeriksaanBaru.setStatus(0);
-				Calendar currentTime = Calendar.getInstance();
-				Date sqlDate = new Date((currentTime.getTime()).getTime());
-				pemeriksaanBaru.setTanggalPengajuan(sqlDate);
-				pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
-				pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
+		if(!listKamar.isEmpty()) {
+			for(KamarPasienIsi kamar : listKamar) {
+				long idPasienBaru = kamar.getId_pasien();
+				if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
+					PemeriksaanModel pemeriksaanBaru =new PemeriksaanModel(); 
+					pemeriksaanBaru.setIdPasien(idPasienBaru);
+					pemeriksaanBaru.setStatus(0);
+					Calendar currentTime = Calendar.getInstance();
+					Date sqlDate = new Date((currentTime.getTime()).getTime());
+					pemeriksaanBaru.setTanggalPengajuan(sqlDate);
+					pemeriksaanBaru.setJenisPemeriksaan(jenisPemeriksaanService.getJenisPemeriksaanById(1));
+					pemeriksaanService.addPemeriksaan(pemeriksaanBaru);
+				}
 			}
 		}
+		
 
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
 		//call object pasien
@@ -136,16 +128,17 @@ public class PemeriksaanController {
 		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
-	//FITUR 8
-    @PostMapping(value = "/permintaan/save")
-    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
-        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
-        pemeriksaanService.addPemeriksaan(pemeriksaan);
-        response.setStatus(200);
-        response.setMessage("success");
-        response.setResult(pemeriksaan);
-        return response;
-    }
+	
+//	//FITUR 8
+//    @PostMapping(value = "/permintaan/save")
+//    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
+//        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
+//        pemeriksaanService.addPemeriksaan(pemeriksaan);
+//        response.setStatus(200);
+//        response.setMessage("success");
+//        response.setResult(pemeriksaan);
+//        return response;
+//    }
 
 	//FITUR 9
 	@PostMapping(value = "/{id}")
@@ -153,14 +146,11 @@ public class PemeriksaanController {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 		List<SupplyModel> supplyChoosen = new ArrayList<>();
 		//Menunggu -> Diproses
-		System.out.println(pemeriksaan.getStatus());
-		System.out.println(pemeriksaan.getJenisPemeriksaan().getNama());
 		if (pemeriksaan.getStatus() == 0) {
 			int error = 0;
 
 			//Iterasi Terpenuhi
 			for (SupplyModel supply : pemeriksaan.getJenisPemeriksaan().getSupplyList()) {
-				System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				//Lab Supllies Ada
 				if (supply.getJumlah() != 0) {
 					supplyChoosen.add(supply);
@@ -170,19 +160,23 @@ public class PemeriksaanController {
 					error += 1;
 				}
 			}
+			
+			//Cek Jadwal Ada
+			Calendar currentTime = Calendar.getInstance();
+			Date sqlDate = new Date((currentTime.getTime()).getTime());
+			if (jadwalJagaService.getJadwalByDate(sqlDate).isEmpty()) {
+				System.out.println("Jadwal Jaga Kosong");
+				error += 1;
+			}
 
 			//Syarat Terpenuhi
+			System.out.println("Error: " + error);
 			if (error == 0) {
-				System.out.println(supplyChoosen.size());
 				for (SupplyModel supply : supplyChoosen) {
 					supply.setJumlah(supply.getJumlah() - 1);
-					System.out.println("Supply Chosen");
-					System.out.println(supply.getNama() + ": " + supply.getJumlah());
 				}
 
 				//Set Tanggal Pemeriksaan
-				Calendar currentTime = Calendar.getInstance();
-				Date sqlDate = new Date((currentTime.getTime()).getTime());
 				pemeriksaan.setTanggalPemeriksaan(sqlDate);
 				//Set Jadwal Jaga
 				pemeriksaan.setJadwalJaga(jadwalJagaService.getJadwalByDate(pemeriksaan.getTanggalPemeriksaan()).get(0));
@@ -240,6 +234,6 @@ public class PemeriksaanController {
 		}
 
 		//Return 
-		return "redirect:/lab/pemeriksaan/permintaan";
+		return "sukses-kirim";
 	}
 }

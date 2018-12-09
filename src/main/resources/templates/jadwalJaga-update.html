@@ -7,97 +7,58 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div style="margin-left: 2rem">
-		<h2>Tambah Jadwal Jaga</h2>
-		<form  th:action="@{'/lab/jadwal-jaga/ubah/'} + ${jadwalJaga.id}" th:object="${jadwalJaga}" method="POST"
-			id="ubahJadwal">
-			<input type="hidden" th:value="${jadwalJaga.id}" name="id"></input>
-			<table>
-				<tr style="height: 3rem">
-					<td style="width: 10rem">Tanggal</td>
-					<td><input type="date" th:name="tanggal" class="form-control"
-					required="required" th:field="*{tanggal}" /></td>
-				</tr>
-				<tr style="height: 3rem">
-					<td>Waktu Mulai</td>
-					<td><input type="time" th:name="startString"
-						class="form-control" required="required" value="00:00:00" step=1  /></td>
-				</tr>
-				<tr style="height: 3rem">
-					<td>Waktu Selesai</td>
-					<td><input type="time" th:name="endString"
-						class="form-control" required="required" value="00:00:00" step=1 /></td>
-				</tr>
-
-				<tr style="height:3rem">
-					<td>Nama Staff</td>
-					<td>
-						<select class="form-control" th:name="namaStaff" id="namaStaff" required="required">
-						<option disabled="disabled" selected="selected" >Pilih Nama Staff</option>
-					    	<option th:each="ns : ${listStaff}" th:value="${ns.nama}" th:text="${ns.nama}"></option>
-					    </select>
-					</td>
-				</tr>
-			</table>
-			<br>
-			<button type="submit" class="btn btn-warning">Simpan</button>
-		</form>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<div class="container-fluid"
+		style="margin-left: 1rem; margin-top: 1rem">
+		<a class="btn btn-warning" th:href="@{/lab/jadwal-jaga/}"
+			th:text="'< Kembali'"></a>
+		<h2 style="margin-top: 1rem">Ubah Jadwal Jaga Lab</h2>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<form th:action="@{'/lab/jadwal-jaga/ubah/'} + ${jadwalJaga.id}"
+						th:object="${jadwalJaga}" method="POST">
+						<input type="hidden" th:value="${jadwalJaga.id}" name="id"></input>
+						<div class="card-body">
+							<table style="width: 100%;">
+								<tr>
+									<th>Tanggal</th>
+									<td><input class="form-control" type="date"
+										th:value="${jadwalJaga.tanggal}" name="tanggal"
+										required="required"
+										th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" /></td>
+								</tr>
+								<tr>
+									<th>Waktu Mulai</th>
+									<td><input class="form-control" type="time"
+										th:value="${jadwalJaga.start}" name="start"
+										required="required" value="00:00:00" step=1 /></td>
+								</tr>
+								<tr>
+									<th>Waktu Selesai</th>
+									<td><input class="form-control" type="time"
+										th:value="${jadwalJaga.end}" name="end" required="required"
+										value="00:00:00" step=1 /></td>
+								</tr>
+								<tr>
+									<th>Nama Staff</th>
+									<td><select class="form-control" name="namaStaff"
+										th:value="${jadwalJaga.namaStaff}">
+											<option th:each="ls, iterationStatus : ${listStaff}"
+												th:value="${ls.nama}" th:text="${ls.nama}">Pilih
+												Nama Staff</option>
+									</select></td>
+								</tr>
+							</table>
+							<br>
+							<button type="submit" class="btn btn-primary">Simpan
+								Perubahan</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-<!-- 	<nav th:replace="fragments/fragment :: navbar"></nav> -->
-
-<!-- 	<div class="container-fluid"> -->
-<!-- 		<h2>Ubah Jadwal Jaga Lab</h2> -->
-<!-- 		<br> -->
-<!-- 		<div class="row"> -->
-<!-- 			<div class="col-md-6"> -->
-<!-- 				<div class="card"> -->
-<!-- 					<form th:action="@{'/lab/jadwal-jaga/ubah/'} + ${jadwalJaga.id}" -->
-<!-- 						th:object="${jadwalJaga}" method="POST"> -->
-<!-- 						<input type="hidden" th:value="${jadwalJaga.id}" name="id"></input> -->
-<!-- 						<input type="hidden" th:value="${jadwalJaga.tanggal}"name="tanggal"></input>  -->
-<!-- 						<input type="hidden" th:value="${jadwalJaga.start}" name="start"></input> -->
-<!-- 						<input type="hidden" th:value="${jadwalJaga.end}" name="end"></input> -->
-<!-- 						<input type="hidden" th:value="${jadwalJaga.namaStaff}"></input> -->
-<!-- 						<div class="card-body"> -->
-<!-- 							<table style="width: 100%" cellpadding="10"> -->
-<!-- 								<tr> -->
-<!-- 									<th>Tanggal</th> -->
-<!-- 									<td><input class="form-control" type="date" -->
-<!-- 										th:value="${jadwalJaga.tanggal}" name="tanggal" /></td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<th>Waktu Mulai</th> -->
-<!-- 									<td><input class="form-control" type="time" -->
-<!-- 										th:value="${jadwalJaga.start}" name="start" /></td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<th>Waktu Selesai</th> -->
-<!-- 									<td><input class="form-control" type="time" -->
-<!-- 										th:value="${jadwalJaga.end}" name="end" /></td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<th>Nama Staff</th> -->
-<!-- 									<td><select class="form-control" name="namaStaff" th:value="${jadwalJaga.namaStaff}"> -->
-<!-- 										<option th:each="ls, iterationStatus : ${listStaff}" -->
-<!-- 											th:value="${ls.nama}" th:text="${ls.nama}">Nama -->
-<!-- 											Staff</option> -->
-<!-- 								</select></td> -->
-<!-- 								</tr> -->
-<!-- 							</table> -->
-<!-- 							<br> -->
-<!-- 							<button type="submit" class="btn btn-primary">Simpan</button> -->
-<!-- 						</div> -->
-<!-- 						<script> -->
-// 							function myFunction() {
-// 								alert("Data Berhasil Disimpan!");
-// 							}
-<!-- 						</script> -->
-<!-- 					</form> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 </body>
 </html>

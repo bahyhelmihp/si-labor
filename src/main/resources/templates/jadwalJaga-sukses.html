@@ -2,13 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Sukses</title>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 <script type="text/javascript">
 	(function() {
 		setTimeout(function() {
-			window.location = "/lab/pemeriksaan/permintaan";
+			window.location = "/lab/jadwal-jaga/";
 		}, 3000); /* 1000 = 1 second*/
 	})();
 </script>
@@ -17,11 +16,16 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
-	<div class="container-fluid">
-	<div class="alert alert-success">
-		<h4>Sukses!</h4>
-		<p th:text="'Pemeriksaan berhasil diproses.'"></p>
-		<p th:text="'Anda akan dialihkan ke halaman sebelumnya dalam beberapa saat....'"></p>
+	<div style="margin-left: 1rem">
+		<div class="col-md-5">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="alert alert-success">Data Berhasil Disimpan!</h4>
+				</div>
+				<div class="card-body">
+					<h5>Anda akan dikembalikan ke halaman awal dalam 3 detik</h5>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

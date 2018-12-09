@@ -6,40 +6,78 @@
 
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
 </head>
-
+<style>
+.head {
+	background-color: #343a40;
+	color: white;
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+}
+</style>
 <body>
-	<div class="container-fluid">
-		<h2>Hello!</h2>
-		<div class="row">
-			<div class="col-md-4">
-
-				<div class="card">
-					<div class="card-header">Log In</div>
-					<div class="card-body" style="padding: 32px;">
-						<div th:if="${param.error}">
-							<div class="alert alert-danger">
-								<strong>Invalid!</strong> you enter a wrong username or password
-							</div>
-						</div>
-						<form th:action="@{/login}" method="POST">
-							<div class="row form-group">
-								<label class="col-sm-4">Username:</label> <input type="text"
-									class="col-sm-8 form-control input-sm" name="username">
-							</div>
-							<div class="row form-group">
-								<label class="col-sm-4">Password:</label> <input type="password"
-									class="col-sm-8 form-control input-sm" name="password">
-							</div>
-							<div class="row form-group">
-								<button type="submit" class="btn btn-primary">Sign In</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+	<br>
+	<div class="head">
+		<h2 align="center">Selamat Datang di SiLabor RS APAP</h2>
+		<p align="center">Sistem Informasi Laboratorium Rumah Sakit APAP
+			v1.0</p>
 	</div>
+	<table width="1000">
+		<br>
+		<br>
+		<br>
+		<br>
+		<tr>
+			<td width="500"><img align="right"
+				src="https://image.flaticon.com/icons/png/512/63/63794.png"
+				width="150px" height="150px"></img></td>
+
+			<td width="400">
+				<div>
+					<div th:if="${param.error}">
+						<div class="alert alert-danger">
+							<strong>Invalid!</strong> Username dan password tidak sesuai.
+						</div>
+					</div>
+
+					<form th:action="@{/login}" method="POST">
+						<div class="row">
+							<label class="col-sm-3">Username:</label> <input type="text"
+								name="username" class="col-sm-7 form-control input-sm">
+						</div>
+
+						<p></p>
+						<div class="row">
+							<label class="col-sm-3">Password:</label> <input type="password"
+								class="col-sm-7 form-control input-sm" name="password">
+						</div>
+
+						<p></p>
+						<label class="col-sm-8"></label>
+						<button type="submit" class="btn btn-primary">Sign
+							In</button>
+					</form>
+				</div>
+			</td>
+		</tr>
+	</table>
 </body>
+
+<footer>
+	<div style="margin-right: 19px">
+		
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<p align="right">Developed by Kelompok 6 - APAP C</p>
+	</div>
+</footer>
 
 </html>

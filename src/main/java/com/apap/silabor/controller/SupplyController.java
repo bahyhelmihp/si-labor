@@ -3,6 +3,9 @@ package com.apap.silabor.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,20 +25,35 @@ public class SupplyController {
 	private JenisPemeriksaanService jenisPemeriksaanService;
 	
 	//FITUR 14 Membuat data persediaan lab
+	//adminonly
 	@RequestMapping(value = "/lab/stok/tambah", method = RequestMethod.GET)
 	private String addLabSupply(Model model) {
-		model.addAttribute("suppliesByJenisPemeriksaan", ((JenisPemeriksaanService)jenisPemeriksaanService).getJenisPemeriksaanDb().findAll());
-		model.addAttribute("supply", new SupplyModel());
-		model.addAttribute("title", "Tambah Persediaan Lab");
-		return "supply-add";
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+		   if (authority.getAuthority().equals("Admin")) {
+			   model.addAttribute("suppliesByJenisPemeriksaan", ((JenisPemeriksaanService)jenisPemeriksaanService).getJenisPemeriksaanDb().findAll());
+			   model.addAttribute("supply", new SupplyModel());
+			   model.addAttribute("title", "Tambah Persediaan Lab");
+			   return "supply-add";
+		   }
+		} 
+		return "not-admin";
 	}
+	
+	//adminonly
 	
 	@RequestMapping(value= "/lab/stok/tambah", method = RequestMethod.POST)
 	private String addLabSupplySubmit(SupplyModel supply, Model model) {
-		SupplyModel add = supplyService.addSupply(supply);
-		model.addAttribute("supply", add);
-		model.addAttribute("title", "Persediaan Lab");
-		return "success";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+		   if (authority.getAuthority().equals("Admin")) {
+			   SupplyModel add = supplyService.addSupply(supply);
+				model.addAttribute("supply", add);
+				model.addAttribute("title", "Persediaan Lab");
+				return "success";
+		   }
+		}
+		return "not-admin";
 	}
 	
 	//FITUR 15 Melihat data persediaan lab
@@ -59,19 +77,32 @@ public class SupplyController {
 	//hanyaJumlah yang bisa diubah
 	@RequestMapping(value="lab/stok/ubah/{id}", method = RequestMethod.GET)
 	private String updateLabSupply(@PathVariable(value="id") long id, Model model) {
-		SupplyModel supply = supplyService.getSupplyById(id);
-		model.addAttribute("datasupply", supply);
-		model.addAttribute("title","Ubah Data Reagen");
-		return "supply-update";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+		   if (authority.getAuthority().equals("Admin")) {
+			   	SupplyModel supply = supplyService.getSupplyById(id);
+				model.addAttribute("datasupply", supply);
+				model.addAttribute("title","Ubah Data Reagen");
+				return "supply-update";
+		   }
+		}
+		return "not-admin";
 	}
 	
+	//adminonly
 	@RequestMapping(value="lab/stok/ubah/{id}", method = RequestMethod.POST)
 	private String updateLabSupplySubmit(@PathVariable(value="id") long id, SupplyModel supply, Model model) {
-		supply.setId(id);
-		supplyService.updateSupply(supply);
-		model.addAttribute("datasupply", supply);
-		model.addAttribute("title","Ubah Persediaan Reagen");
-		return "success";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+		   if (authority.getAuthority().equals("Admin")) {
+			   	supply.setId(id);
+				supplyService.updateSupply(supply);
+				model.addAttribute("datasupply", supply);
+				model.addAttribute("title","Ubah Persediaan Reagen");
+				return "success";
+		   }
+		}
+		return "not-admin";
 	}
 	
 }
