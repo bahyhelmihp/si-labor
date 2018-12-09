@@ -10,10 +10,15 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
-	<div class="container-fluid" style="margin:150px 100px 10px 400px"><br>
-		<h1>Oops :(</h1><br><br>
-		<h5>Kamu bukan admin</h5>
-		<h5>Kamu tidak bisa mengakses fitur ini</h5>
+	<div class="alert alert-danger" style="margin: 100px 100px 200px 100px">
+		<br>
+		<div>
+			<h1>Oops :(</h1>
+			<br>
+			<br>
+			<h5>Kamu bukan Admin</h5>
+			<h5>Kamu tidak bisa mengakses fitur ini</h5>
+		</div>
 	</div>
 </body>
 </html>
