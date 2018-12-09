@@ -30,7 +30,8 @@
 			<div class="card-body">
 				<h5 class="alert alert-success" th:if="${msgUpdate!=null}"
 					th:text="${msgUpdate}"></h5>
-					<h5 class="alert alert-info" th:if="${jadwalJaga!=null}">Belum Ada Jadwal! Silakan Tambah Jadwal.</h5>
+				<h5 class="alert alert-info" th:if="${jadwalJaga.isEmpty()}">Belum
+					Ada Jadwal! Silakan Tambah Jadwal</h5>
 				<table class="table table-striped table-bordered table-sm display"
 					id="jadwalJagaTable">
 					<thead>
@@ -40,7 +41,7 @@
 							<th>Waktu Mulai</th>
 							<th>Waktu Selesai</th>
 							<th>Nama Staff</th>
-							<th>Opsi</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tr th:each="jj,iterationStatus : ${jadwalJaga}">
