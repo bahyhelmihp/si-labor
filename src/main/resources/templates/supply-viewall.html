@@ -11,21 +11,22 @@
 </head>
 
 <body>
+
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h1>    Daftar Persediaan<h1>
-	<h5>    Periksa Daftar Persediaan Laboratorium </h5>
+	<br>
+	<div class="container-fluid">
+	<h2>   Daftar Persediaan </h2>
+	<p>    Periksa Daftar Persediaan Laboratorium </p>
 	<br>
 	<div th:if="${datasupply.isEmpty()}">
    		<div>Stok kosong/habis! Segera ajukan medical supply!</div>
 	</div>
-	
-	<div class="container-fluid">
 		<table id="supplyTable">
 
 			<!-- Header Table -->
 			<thead>
 				<tr>
-					<th>Id</th>
+					<th>ID</th>
 	  				<th>Jenis</th>
 	  			  	<th>Nama</th>
 	    			<th>Deskripsi</th>
