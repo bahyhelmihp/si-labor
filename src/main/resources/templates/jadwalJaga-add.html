@@ -4,6 +4,7 @@
 <head>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<object th:include="fragments/fragment :: jquery" th:remove="tag"></object>
 </head>
 
 <body>
@@ -37,18 +38,19 @@
 							</thead>
 							<tr th:each="nj, iterationStatus : *{jadwalColl}">
 								<td style="height: 3rem"><input type="date" id="tanggal"
-									class="form-control" required="required"
+									class="dateInput" required="required"
 									th:field="*{jadwalColl[__${iterationStatus.index}__].tanggal}"
 									th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 								</td>
 								<td style="height: 3rem"><input type="time" id="start"
+									class="startInput"
 									th:field="*{jadwalColl[__${iterationStatus.index}__].start}"
-									class="form-control" required="required" value="00:00:00"
-									step=1 /></td>
+									required="required" step=1
+									/></td>
 								<td style="height: 3rem"><input type="time" id="end"
+									class="endInput"
 									th:field="*{jadwalColl[__${iterationStatus.index}__].end}"
-									class="form-control" required="required" value="00:00:00"
-									step=1 /></td>
+									required="required" step=1 /></td>
 
 								<td style="height: 3rem"><select class="form-control"
 									id="namaStaff" required="required"
@@ -71,6 +73,22 @@
 			</div>
 		</form>
 	</div>
-</body>
+	<script th:inline="javascript">
+	var dateControler = {
+		    currentTime : null
+		}
 
+		 $(document).on( "change", "#start",function( event, ui ) {
+		        var now = Math.round(new Date() / 1000);
+		        var slDate = Math.round(new Date($(this).val())/1000);
+		        
+		        if(slDate < now) {
+		            $(this).val(dateControler.currentTime)
+                alert("invalid")
+		        } else {
+		            dateControler.currentTime = Math.round( $(this).val()/1000);
+		        }
+		    });
+	</script>
+</body>
 </html>

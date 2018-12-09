@@ -1,6 +1,7 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,20 +48,23 @@ public class JadwalJagaController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority : authentication.getAuthorities()) {
 			if (authority.getAuthority().equals("Admin")) {
-				model.addAttribute("authenticated", authority.getAuthority());
-			}
+				// Consume API
+				StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
+				List<StaffTest> listStaff = response.getResult();
+				JadwalCollection jadwalColl = new JadwalCollection();
+				jadwalColl.addJadwal(new JadwalJagaModel());
+				java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTime().getTime());
+
+				model.addAttribute("waktu", time);
+				model.addAttribute("formJadwal", jadwalColl);
+				model.addAttribute("listStaff", listStaff);
+
+				model.addAttribute("title", "Tambah Jadwal Jaga");
+				return "jadwalJaga-add";
+			} else
+				return "not-admin";
 		}
-		// Consume API
-		StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
-		List<StaffTest> listStaff = response.getResult();
-		JadwalCollection jadwalColl = new JadwalCollection();
-		jadwalColl.addJadwal(new JadwalJagaModel());
-
-		model.addAttribute("formJadwal", jadwalColl);
-		model.addAttribute("listStaff", listStaff);
-
-		model.addAttribute("title", "Tambah Jadwal Jaga");
-		return "jadwalJaga-add";
+		return "";
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/tambah", params = { "addEntry" })
@@ -120,18 +124,19 @@ public class JadwalJagaController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority : authentication.getAuthorities()) {
 			if (authority.getAuthority().equals("Admin")) {
-				model.addAttribute("authenticated", authority.getAuthority());
-			}
+				// Consume API
+				StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
+				List<StaffTest> listStaff = response.getResult();
+				JadwalJagaModel archive = jadwalJagaService.getJadwalById(id);
+				// Add Model
+				model.addAttribute("listStaff", listStaff);
+				model.addAttribute("jadwalJaga", archive);
+				model.addAttribute("title", "Ubah Jadwal Jaga");
+				return "jadwalJaga-update";
+			} else
+				return "not-admin";
 		}
-		// Consume API
-		StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
-		List<StaffTest> listStaff = response.getResult();
-		JadwalJagaModel archive = jadwalJagaService.getJadwalById(id);
-		// Add Model
-		model.addAttribute("listStaff", listStaff);
-		model.addAttribute("jadwalJaga", archive);
-		model.addAttribute("title", "Ubah Jadwal Jaga");
-		return "jadwalJaga-update";
+		return "";
 	}
 
 	@PostMapping(value = "lab/jadwal-jaga/ubah/{id}")
@@ -154,21 +159,25 @@ public class JadwalJagaController {
 		model.addAttribute("title", "Jadwal Jaga Lab");
 		return "jadwalJaga-home";
 	}
-	
-	//Buat IGD
+
+	// Buat IGD
 	@ResponseBody
-	@PostMapping(value="/tambah/{tanggal}")
-	private String kirimJadwalJaga (@PathVariable(value="tanggal") Date tanggal, Model model) {
-		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+	@GetMapping(value = "/tambah/{tanggal}")
+	public String kirimJadwalJaga(@PathVariable(value = "tanggal") Date tanggal, Model model) {
+		String path = "some link for API";
 		List<JadwalJagaModel> archive = jadwalJagaService.getJadwalByDate(tanggal);
+		BaseResponse<List<JadwalJagaModel>> response = new BaseResponse<List<JadwalJagaModel>>();
 		if (archive != null) {
-			BaseResponse<List<JadwalJagaModel>> response = restTemplate.postForObject(path, archive, BaseResponse.class);
-	
+			response.setStatus(200);
+			response.setMessage("success");
+			response.setResult(archive);
+			restTemplate.getForObject("http://localhost:8080/tambah/", BaseResponse.class);
+		} else {
+			response.setStatus(500);
+			response.setMessage("Tidak ada jadwal di tanggal tersebut");
 		}
-		
-		return "";
-		
-		
+		return "redirect:/jadwalJaga-home";
+
 	}
 
 	// Buat Fitur Pemeriksaan
