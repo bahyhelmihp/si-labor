@@ -2,78 +2,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-<script
-	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="container-fluid">
-	<h2>Daftar Persediaan</h2>
-	<p>Periksa Daftar Persediaan Laboratorium</p>
+	<h1>    Daftar Persediaan<h1>
+	<h5>    Periksa Daftar Persediaan Laboratorium </h5>
 	<br>
 	<div th:if="${datasupply.isEmpty()}">
-		<div>Stok kosong/habis! Segera ajukan medical supply!</div>
+   		<div>Stok kosong/habis! Segera ajukan medical supply!</div>
 	</div>
-
 	
+	<div class="container-fluid">
 		<table id="supplyTable">
 
 			<!-- Header Table -->
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Jenis</th>
-					<th>Nama</th>
-					<th>Deskripsi</th>
-					<th>Jumlah</th>
-					<th>Edit</th>
+					<th>Id</th>
+	  				<th>Jenis</th>
+	  			  	<th>Nama</th>
+	    			<th>Deskripsi</th>
+	    			<th>Jumlah</th>
+	    			<th>Edit</th>
 				</tr>
 			</thead>
 
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="supply : ${datasupply}">
-					<td th:text="${supply.id}"></td>
-					<td th:text="${supply.jenis}"></td>
-					<td th:text="${supply.nama}"></td>
-					<td th:text="${supply.deskripsi}"></td>
-					<td th:text="${supply.jumlah}"></td>
-					<td>
+	  				<td th:text="${supply.id}"></td>
+	  				<td th:text="${supply.jenis}"></td>
+			   		<td th:text="${supply.nama}"></td>
+			  	 	<td th:text="${supply.deskripsi}"></td>
+	    			<td th:text="${supply.jumlah}"></td>
+	    			<td>
 
-						<form th:action="@{'/lab/stok/ubah/' + ${supply.id}}"
-							class="form-inline" method="GET">
-							<button class="btn btn-primary" type="submit">Update</button>
+	    				<form th:action="@{'/lab/stok/ubah/' + ${supply.id}}" class="form-inline" method="GET">
+							<button class="btn btn-primary" type="submit">Update </button>
 						</form>
-						<div th:if="${supply.jumlah} == 0">
-							<div th:if="${supply.jenis} == 'Reagen'">
-								<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline"
-									method="GET">
-									<button class="btn btn-danger" type="submit">Ajukan
-										Reagen</button>
+	    				<div th:if="${supply.jumlah} == 0" >
+	    					<div th:if="${supply.jenis} == 'Reagen'" >
+	    						<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
+									<button class="btn btn-danger" type="submit">Ajukan Reagen</button>
 								</form>
 							</div>
-						</div>
-					</td>
-				</tr>
+	    					<div th:if="${supply.jenis} == 'reagen'" >
+	    						<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
+									<button class="btn btn-danger" type="submit">Ajukan Reagen</button>
+								</form>
+							</div>
+	    				</div>
+	    			</td>
+	  			</tr>
 			</tbody>
 		</table>
+		</div>
 		<br>
 		<form th:action="@{/lab/stok/tambah}" class="form-inline" method="GET">
-			<button class="btn btn-primary" type="submit">Tambah
-				Persediaan Lab</button>
+			<button class="btn btn-primary" type="submit">Tambah Persediaan Lab</button>
 		</form>
-		<br> <br>
-	</div>
+		<br>
+		<br>
+		
 </body>
 
 
