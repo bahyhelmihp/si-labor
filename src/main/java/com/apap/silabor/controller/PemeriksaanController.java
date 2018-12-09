@@ -55,7 +55,7 @@ public class PemeriksaanController {
 
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
-
+  
 //	//FITUR 7 testing
 //	@GetMapping(value = "/testAmbilKamar")
 //	public String testPemeriksaan(Model model) throws IOException {
