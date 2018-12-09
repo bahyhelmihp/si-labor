@@ -3,6 +3,7 @@ package com.apap.silabor.controller;
 import com.apap.silabor.model.KebutuhanReagenModel;
 import com.apap.silabor.service.KebutuhanReagenService;
 import com.apap.silabor.model.SupplyModel;
+import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.service.SupplyService;
 
 import java.time.LocalDate;
@@ -116,8 +117,13 @@ public class KebutuhanReagenController {
 	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
 	@ResponseBody
 	@RequestMapping(value = "/api/lab/kebutuhan/perencanaan", method = RequestMethod.GET)
-	private List<KebutuhanReagenModel> viewAll() {
-		return kebutuhanReagenService.getListReagen();
+	private BaseResponse<List<KebutuhanReagenModel>> viewAll() {
+		BaseResponse<List<KebutuhanReagenModel>> response = new BaseResponse<List<KebutuhanReagenModel>>();
+		response.setStatus(202);
+		response.setMessage("success");
+		response.setResult(kebutuhanReagenService.getListReagen());
+		
+		return  response;
 	}
 	
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
