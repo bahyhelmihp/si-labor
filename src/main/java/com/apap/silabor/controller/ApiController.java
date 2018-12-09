@@ -14,14 +14,13 @@ import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.service.PemeriksaanService;
 
 @RestController
-@RequestMapping("/api/lab/pemeriksaan")
 public class ApiController {
 	
 	@Autowired
 	private PemeriksaanService pemeriksaanService;
 	
 	//FITUR 8
-    @PostMapping(value = "/permintaan")
+    @PostMapping(value = "/api/lab/pemeriksaan/permintaan")
     public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
         BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
         pemeriksaanService.addPemeriksaan(pemeriksaan);
