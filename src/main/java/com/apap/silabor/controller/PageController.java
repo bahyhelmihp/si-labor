@@ -1,8 +1,5 @@
 package com.apap.silabor.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,11 +15,6 @@ public class PageController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority: authentication.getAuthorities()) {
 			model.addAttribute("role", authority.getAuthority());
-		}
-		
-		int j=41;
-		for (int i=30;i < j;i++) {
-			System.out.println("(" + i + ", 4),");
 		}
 		return "home";
 	}

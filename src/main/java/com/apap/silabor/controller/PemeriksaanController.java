@@ -165,12 +165,11 @@ public class PemeriksaanController {
 			Calendar currentTime = Calendar.getInstance();
 			Date sqlDate = new Date((currentTime.getTime()).getTime());
 			if (jadwalJagaService.getJadwalByDate(sqlDate).isEmpty()) {
-				System.out.println("Jadwal Jaga Kosong");
 				error += 1;
+				model.addAttribute("error",error);
 			}
 
 			//Syarat Terpenuhi
-			System.out.println("Error: " + error);
 			if (error == 0) {
 				for (SupplyModel supply : supplyChoosen) {
 					supply.setJumlah(supply.getJumlah() - 1);

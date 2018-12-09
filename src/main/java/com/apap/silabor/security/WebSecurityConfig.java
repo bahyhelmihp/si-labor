@@ -21,13 +21,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/**").permitAll()
 			.antMatchers("/js/**").permitAll()
 			.antMatchers("/img/**").permitAll()
-			//Pembatasan
-			.antMatchers("lab/pemeriksaan/kirim/").hasAnyRole("Admin")
-			.antMatchers("lab/pemeriksaan/permintaan/").hasAnyAuthority("Admin")
-			.antMatchers("lab/jadwal-jaga/tambah/").hasAuthority("Admin")
-			.antMatchers("lab/jadwal-jaga/ubah/").hasAuthority("Admin")
-			
-			//Login Dimatikan Terlebih Dahulu
 			.antMatchers("/api/**").permitAll()
 			.antMatchers("/register/**").permitAll()
 			.anyRequest().authenticated()
