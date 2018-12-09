@@ -96,6 +96,7 @@ public class PemeriksaanController {
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
 		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+		listKamar = response.getResult();
 		//listOfIdPasien = restTemplate.getForObject(path, List.class);
 		
 		if(!listKamar.isEmpty()) {
