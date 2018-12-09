@@ -22,9 +22,7 @@
 				<h6 class="alert alert-danger" th:if="${error!=null}"
 					th:text="${error}"></h6>
 				<div class="card" style="text-align: center">
-
 					<div class="card-body">
-
 						<table class="table table-striped table-bordered table-sm display"
 							id="jadwalJaga">
 							<thead>
@@ -43,14 +41,11 @@
 									th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
 								</td>
 								<td style="height: 3rem"><input type="time" id="start"
-									class="startInput"
 									th:field="*{jadwalColl[__${iterationStatus.index}__].start}"
-									required="required" step=1
-									/></td>
+									required="required" step=1 value="00:00:00" /></td>
 								<td style="height: 3rem"><input type="time" id="end"
-									class="endInput"
 									th:field="*{jadwalColl[__${iterationStatus.index}__].end}"
-									required="required" step=1 /></td>
+									required="required" step=1 value="00:00:00" /></td>
 
 								<td style="height: 3rem"><select class="form-control"
 									id="namaStaff" required="required"
@@ -73,22 +68,5 @@
 			</div>
 		</form>
 	</div>
-	<script th:inline="javascript">
-	var dateControler = {
-		    currentTime : null
-		}
-
-		 $(document).on( "change", "#start",function( event, ui ) {
-		        var now = Math.round(new Date() / 1000);
-		        var slDate = Math.round(new Date($(this).val())/1000);
-		        
-		        if(slDate < now) {
-		            $(this).val(dateControler.currentTime)
-                alert("invalid")
-		        } else {
-		            dateControler.currentTime = Math.round( $(this).val()/1000);
-		        }
-		    });
-	</script>
 </body>
 </html>

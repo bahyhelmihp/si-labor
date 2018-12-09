@@ -1,7 +1,6 @@
 package com.apap.silabor.controller;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.JadwalJagaModel;
-import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.rest.StaffResponse;
 import com.apap.silabor.rest.StaffTest;
 import com.apap.silabor.service.JadwalJagaService;
-import com.apap.silabor.controller.JadwalCollection;
 
+/**
+ * Controller Jadwal Jaga
+ * 
+ * @author Nathanael Lemuella
+ *
+ */
 @Controller
 public class JadwalJagaController {
 
@@ -43,43 +46,64 @@ public class JadwalJagaController {
 	@Autowired
 	JadwalJagaService jadwalJagaService;
 
-	// Fitur 11
+	/**
+	 * Fitur add Jadwal Jaga part 1 : Get form
+	 * 
+	 * @param model Model
+	 * @return HTML page jadwalJaga-add
+	 */
 	@GetMapping(value = "lab/jadwal-jaga/tambah")
 	private String addJadwalJaga(Model model) {
+		// Authorization
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		for (GrantedAuthority authority : authentication.getAuthorities()) {
 			if (authority.getAuthority().equals("Admin")) {
 				// Consume API
 				StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
 				List<StaffTest> listStaff = response.getResult();
+				// Collection Jadwal
 				JadwalCollection jadwalColl = new JadwalCollection();
 				jadwalColl.addJadwal(new JadwalJagaModel());
-				java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTime().getTime());
-
-				model.addAttribute("waktu", time);
+				// Tambah attribute ke dalam model
 				model.addAttribute("formJadwal", jadwalColl);
 				model.addAttribute("listStaff", listStaff);
-
 				model.addAttribute("title", "Tambah Jadwal Jaga");
 				return "jadwalJaga-add";
-			} else
+			} else // Jika bukan admin
 				return "not-admin";
 		}
 		return "";
 	}
 
+	/**
+	 * Add Jadwal Jaga Part 2 : Add Jadwal Lain (Fitur tambah banyak jadwal)
+	 * 
+	 * @param model      Model
+	 * @param formJadwal Formulir Jadwal awal
+	 * @return HTML page jadwalJaga-add
+	 */
 	@PostMapping(value = "lab/jadwal-jaga/tambah", params = { "addEntry" })
 	private String addEntryJadwal(Model model, @ModelAttribute JadwalCollection formJadwal) {
 		// Consume API
 		StaffResponse response = restTemplate.getForObject(Setting.getAllStaffLabUrl, StaffResponse.class);
 		List<StaffTest> listStaff = response.getResult();
 
+		// Add baris baru dalam jadwal di form
 		formJadwal.addJadwal(new JadwalJagaModel());
+		// Tamba
 		model.addAttribute("listStaff", listStaff);
 		model.addAttribute("formJadwal", formJadwal);
 		return "jadwalJaga-add";
 	}
 
+	/**
+	 * Add Jadwal Jaga Part 3 : Delete Jadwal Lain (Fitur tambah banyak jadwal)
+	 * 
+	 * @param model       Model
+	 * @param formJadwal  Formulir Jadwal awal
+	 * @param deleteIndex Index to delete
+	 * @return HTML page jadwalJaga-add
+	 */
 	@PostMapping(value = "lab/jadwal-jaga/tambah", params = { "deleteEntry" })
 	private String deleteEntryJadwal(Model model, @ModelAttribute JadwalCollection formJadwal,
 			HttpServletRequest deleteIndex) {
@@ -99,6 +123,13 @@ public class JadwalJagaController {
 
 	}
 
+	/**
+	 * Add Jadwal Jaga Part 4 : Post Jadwal
+	 * 
+	 * @param formJadwal Form jadwal yang sudah diisi
+	 * @param model      Model
+	 * @return HTML page jadwalJaga-sukses
+	 */
 	@PostMapping(value = "lab/jadwal-jaga/tambah", params = { "submitJadwal" })
 	private String tambahJadwalSubmit(@ModelAttribute JadwalCollection formJadwal, Model model) {
 
@@ -108,7 +139,13 @@ public class JadwalJagaController {
 		return "jadwalJaga-sukses";
 	}
 
-	// Fitur 12
+	/**
+	 * Melihat jadwal berdasarkan tanggal
+	 * 
+	 * @param tanggal Tanggal pilihan
+	 * @param model   Model
+	 * @return HTML page jadwalJaga-view
+	 */
 	@GetMapping(value = "lab/jadwal-jaga/lihat")
 	private String getJadwalJaga(@RequestParam("tanggal") Date tanggal, Model model) {
 		List<JadwalJagaModel> archive = jadwalJagaService.getJadwalByDate(tanggal);
@@ -118,7 +155,13 @@ public class JadwalJagaController {
 		return "jadwalJaga-view";
 	}
 
-	// Fitur 13
+	/**
+	 * Fitur Update Jadwal : Get Form Update Jadwal
+	 * 
+	 * @param id    ID jadwal jaga
+	 * @param model Model
+	 * @return HTML page jadwalJaga-update
+	 */
 	@GetMapping(value = "lab/jadwal-jaga/ubah/{id}")
 	private String updateJadwalJaga(@PathVariable(value = "id") long id, Model model) {
 		// Authorization
@@ -140,6 +183,14 @@ public class JadwalJagaController {
 		return "";
 	}
 
+	/**
+	 * Fitur Update Jadwal : Post form update jadwal
+	 * 
+	 * @param id         ID jadwal
+	 * @param jadwalJaga JadwalJaga Model
+	 * @param model      Model
+	 * @return HTML page jadwalJaga-view
+	 */
 	@PostMapping(value = "lab/jadwal-jaga/ubah/{id}")
 	private String updateLabSupplySubmit(@PathVariable(value = "id") long id, JadwalJagaModel jadwalJaga, Model model) {
 		jadwalJagaService.updateJadwal(jadwalJaga);
@@ -152,7 +203,12 @@ public class JadwalJagaController {
 		return "jadwalJaga-view";
 	}
 
-	// Menu Awal
+	/**
+	 * Menu awal fitur jadwal jaga
+	 * 
+	 * @param model Model
+	 * @return HTML page jadwalJaga-Home
+	 */
 	@GetMapping(value = "/lab/jadwal-jaga")
 	private String viewAllJadwalJaga(Model model) {
 		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwalJaga();
@@ -161,27 +217,24 @@ public class JadwalJagaController {
 		return "jadwalJaga-home";
 	}
 
-	// Buat IGD
-	@ResponseBody
-	@GetMapping(value = "/tambah/{tanggal}")
-	public String kirimJadwalJaga(@PathVariable(value = "tanggal") Date tanggal, Model model) {
-		String path = "some link for API";
-		List<JadwalJagaModel> archive = jadwalJagaService.getJadwalByDate(tanggal);
-		BaseResponse<List<JadwalJagaModel>> response = new BaseResponse<List<JadwalJagaModel>>();
-		if (archive != null) {
-			response.setStatus(200);
-			response.setMessage("success");
-			response.setResult(archive);
-			restTemplate.getForObject("http://localhost:8080/tambah/", BaseResponse.class);
-		} else {
-			response.setStatus(500);
-			response.setMessage("Tidak ada jadwal di tanggal tersebut");
-		}
-		return "redirect:/jadwalJaga-home";
-
+	/**
+	 * Post jadwal ke IGD
+	 * 
+	 * @return HTML page jadwalJaga-home
+	 */
+	@PostMapping(value = "api/lab/jadwal-jaga/kirim")
+	public String kirimJadwalJaga() {
+		List<JadwalJagaModel> archive = jadwalJagaService.getAllJadwalJaga();
+		restTemplate.postForObject(Setting.postToUgdUrl, archive, String.class);
+		return "redirect:/lab/jadwal-jaga";
 	}
 
-	// Buat Fitur Pemeriksaan
+	/**
+	 * Get All Jadwal Jaga
+	 * 
+	 * @param model Model
+	 * @return All jadwal Jaga
+	 */
 	@ResponseBody
 	@GetMapping(value = "lab/jadwal-jaga/getJadwalJaga")
 	public List<JadwalJagaModel> getJadwalJagaPemeriksaan(Model model) {
