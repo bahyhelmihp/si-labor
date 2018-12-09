@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.silabor.model.JadwalJagaModel;
-import com.apap.silabor.rest.BaseResponse;
 import com.apap.silabor.rest.Setting;
 import com.apap.silabor.rest.StaffResponse;
 import com.apap.silabor.rest.StaffTest;
@@ -223,11 +222,11 @@ public class JadwalJagaController {
 	 * 
 	 * @return HTML page jadwalJaga-home
 	 */
-	@PostMapping(value = "api/lab/jadwal-jaga/kirim/")
+	@PostMapping(value = "api/lab/jadwal-jaga/kirim")
 	public String kirimJadwalJaga() {
 		List<JadwalJagaModel> archive = jadwalJagaService.getAllJadwalJaga();
-		restTemplate.postForObject(Setting.postToUgdUrl, archive, BaseResponse.class);
-		return "jadwalJaga-home";
+		restTemplate.postForObject(Setting.postToUgdUrl, archive, String.class);
+		return "redirect:/lab/jadwal-jaga";
 	}
 
 	/**
