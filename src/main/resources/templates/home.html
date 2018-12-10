@@ -18,8 +18,8 @@
 			<div class="hero-center">
 				<img src="img/big-logo.png" alt="">
 				<p th:text="'Halo ' + ${#httpServletRequest.remoteUser} + '! Selamat datang di SiLabor.'"></p>
-				<p th:if="${authenticated}">Role kamu adalah: Admin Laboratorium</p>
-				<p th:unless="${authenticated}" style="font-weight:bold;">Role: Staf Laboratorium</p>
+				<p th:if="${role} == 'Admin'">Role kamu adalah: Admin Laboratorium</p>
+				<p th:unless="${role} == 'Admin'" style="font-weight:bold;">Role: Staf Laboratorium</p>
 			</div>
 		</div>
 
