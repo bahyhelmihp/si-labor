@@ -16,17 +16,19 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<div class="container"></div>
+	<br><br><br><br><br><br>
+	<div class="container">
 
 	<div class="row, col-lg">
 		<a class="btn btn-warning" th:href="@{/lab/jadwal-jaga/}"
 			th:text="'< Kembali'" style="margin-top: 1rem; margin-bottom: 1rem"></a>
-		<div class="card" style="text-align: center">
-			<div class="card-header">
+		
+			
 
-				<h2>Jadwal Jaga Staff Lab</h2>
-				<h5 th:text="'Tanggal: '+ ${tanggalJadwal}"></h5>
-			</div>
+				<h2 align="center">Jadwal Jaga Staff Lab</h2>
+				<p></p>
+				<h5 align="center" th:text="'Tanggal: '+ ${tanggalJadwal}"></h5>
+			
 			<div class="card-body">
 				<h5 class="alert alert-success" th:if="${msgUpdate!=null}"
 					th:text="${msgUpdate}"></h5>

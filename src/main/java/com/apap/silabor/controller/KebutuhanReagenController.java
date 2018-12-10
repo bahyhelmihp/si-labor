@@ -94,7 +94,7 @@ public class KebutuhanReagenController {
 			kebutuhanReagenService.addReagen(reagen);
 		}
 			
-		return "success";
+		return "success-reagen";
 	}
 	
 	

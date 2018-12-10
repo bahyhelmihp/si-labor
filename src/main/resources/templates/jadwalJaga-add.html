@@ -9,11 +9,11 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="container-fluid">
+	<br><br><br><br><br><br>
+	<div class="container">
 		<a class="btn btn-warning" th:href="@{/lab/jadwal-jaga/}"
 			th:text="'< Kembali'"></a>
-		<h2 style="margin-top: 1rem">Tambah Jadwal Jaga</h2>
+		<h2 align="center" style="margin-top: 1rem">Tambah Jadwal Jaga</h2>
 		<hr>
 
 		<form th:action="@{/lab/jadwal-jaga/tambah}" th:object="${formJadwal}"
