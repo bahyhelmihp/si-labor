@@ -43,8 +43,8 @@
 					<td>
 					
 						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
-							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 0">Proses</button>
-							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
+							<button type="submit" class="site-btn btn-2 mr20" th:if="${pemeriksaan.status} == 0">Proses</button>
+							<button type="submit" class="site-btn btn-2 mr20" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
 						</form>
 						<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}" method="POST">
 							<button th:if="${authenticated} and ${pemeriksaan.status} == 2" type="submit" class="btn btn-primary">Kirim</button>
