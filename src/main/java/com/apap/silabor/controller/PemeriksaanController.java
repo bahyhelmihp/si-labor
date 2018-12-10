@@ -87,15 +87,24 @@ public class PemeriksaanController {
 				model.addAttribute("authenticated", authority.getAuthority());
 			}
 		}
-
+		
+		
 		// mengambil data dari {url}
+		boolean error = false;
+		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+		
+		try {
 		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
 		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
-		List<KamarPasienIsi>  listKamar = new ArrayList<>();
 		listKamar = response.getResult();
-		//listOfIdPasien = restTemplate.getForObject(path, List.class);
+		}
+		catch (Exception e)
+		{
+			error = true;;
+		}
 		
-		if(!listKamar.isEmpty()) {
+		
+		if(!listKamar.isEmpty()&!error) {
 			for(KamarPasienIsi kamar : listKamar) {
 				long idPasienBaru = kamar.getId_pasien();
 				if(!pemeriksaanService.isExist(idPasienBaru, 1)) {
