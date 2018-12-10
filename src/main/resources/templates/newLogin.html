@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Labs - Design Studio</title>
+
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+
+
+
+<!-- Contact section -->
+<div class="contact-section spad fix">
+	<div class="container">
+		<div class="row">
+			<!-- contact info -->
+			<div class="col-md-5 col-md-offset-1 contact-info col-push">
+
+				<div class="section-title left">
+					<h2>Sistem Informasi Laboratorium</h2>
+					<p>V.1.8</p>
+				</div>
+
+				<h3 class="mt60">Main Office</h3>
+				<p class="con-item">
+					C/ Libertad, 34 <br> 05200 Arévalo
+				</p>
+				<p class="con-item">0034 37483 2445 322</p>
+				<p class="con-item">hello@company.com</p>
+			</div>
+			<!-- contact form -->
+			<div class="col-md-6 col-pull">
+				<div class="logo">
+					<img src="img/logo.png" alt="">
+					<!-- Logo -->
+				</div>
+				<br>
+				<div th:if="${param.error}">
+					<div class="alert alert-danger">
+						<strong>Invalid!</strong> Username dan password tidak sesuai.
+					</div>
+				</div>
+				<form class="form-class" id="con_form" th:action="@{/login}"
+					method="POST">
+					<div class="row">
+						<div class="col-sm-12">
+							<h3>Username</h3>
+							<br> <input class="col-sm-5 form-control input-sm"
+								type="text" name="username" placeholder="username">
+							<h3>Password</h3>
+							<br> <input class="col-sm-5 form-control input-sm"
+								type="password" name="password" placeholder="password">
+							<br> <br> <br> <br>
+							<button class="site-btn">Sign In</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Contact section end-->
+
+
+<!-- Footer section -->
+<footer class="footer-section">
+	<h2>
+		2017 All rights reserved. Designed by <a href="https://colorlib.com"
+			target="_blank">Colorlib</a> Code by Kelompok-6-8 APAP
+	</h2>
+</footer>
+<!-- Footer section end -->
+
+
+</body>
+</html>
