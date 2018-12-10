@@ -28,5 +28,10 @@ public class PageController {
 	public String register(Model model) {
 		return "register";
 	}
+	
+	@RequestMapping("/htmlTest")
+	public String test(Model model) {
+		return "test";
+	}
 
 }
