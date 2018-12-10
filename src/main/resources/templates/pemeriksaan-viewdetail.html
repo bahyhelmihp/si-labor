@@ -23,9 +23,10 @@
 				<p th:if="${pemeriksaan.status} == 1">Status: Diproses</p>
 				<p th:if="${pemeriksaan.status} == 2">Status: Selesai</p>
 				<p th:if="${pemeriksaan.status} == 3">Status: Terkirim</p>
-				<p th:text="'Tanggal Pengajuan: ' + ${pemeriksaan.tanggalPengajuan}"></p>
-				<p th:unless="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: ' + ${pemeriksaan.tanggalPemeriksaan}"></p>
 				<p th:if="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: -'"></p>
+				<p th:unless="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pengajuan: ' + ${pemeriksaan.tanggalPengajuan}"></p>
+				<p th:if="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: -'"></p>
+				<p th:unless="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: ' + ${pemeriksaan.tanggalPemeriksaan}"></p>
 			</div>
 		</div>
 	</div>
