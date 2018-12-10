@@ -51,21 +51,12 @@
 			<div class="col-sm">
 				<div class="card" style="text-align: center">
 					<div class="card-header">
-						<h4>Tambah Jadwal Jaga Lab</h4>
-					</div>
-					<div class="card-body">
-						<a class="btn btn-primary" th:href="@{/lab/jadwal-jaga/tambah}">Tambah</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm">
-				<div class="card" style="text-align: center">
-					<div class="card-header">
 						<h4>Kirim Jadwal ke IGD</h4>
 					</div>
 					<div class="card-body">
 						<form th:action="@{/api/lab/jadwal-jaga/kirim}" method="POST">
-							<button type="submit" class="btn btn-primary">Kirim Jadwal</button>
+							<button type="submit" class="btn btn-primary">Kirim
+								Jadwal</button>
 						</form>
 					</div>
 				</div>
@@ -92,7 +83,6 @@
 								<th>Waktu Mulai</th>
 								<th>Waktu Selesai</th>
 								<th>Nama Staff</th>
-								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -102,8 +92,6 @@
 								<td th:text="${jj.start}"></td>
 								<td th:text="${jj.end}"></td>
 								<td th:text="${jj.namaStaff}"></td>
-								<td><a class="btn btn-primary"
-									th:href="@{'/lab/jadwal-jaga/ubah/' +${jj.id}}">Update</a></td>
 							</tr>
 						</tbody>
 					</table>

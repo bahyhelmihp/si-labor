@@ -48,42 +48,33 @@ public class KebutuhanReagenController {
 	//FITUR 3 : Membuat perencanaan kebutuhan reagen
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
-		String show = "";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		for (GrantedAuthority authority: authentication.getAuthorities()) {
-			if (authority.getAuthority().equals("Staf")) {
-				KebutuhanReagenModel reagen = new KebutuhanReagenModel();
+		KebutuhanReagenModel reagen = new KebutuhanReagenModel();
 				
-				//input tanggal otomatis
-				LocalDate date = LocalDate.now();
-				Date tanggal =  Date.valueOf(date);
-				model.addAttribute("tanggal", tanggal);
+		//input tanggal otomatis
+		LocalDate date = LocalDate.now();
+		Date tanggal =  Date.valueOf(date);
+		model.addAttribute("tanggal", tanggal);
 				
-				//mengambil list supply dengan jenis reagen
-				List<SupplyModel> listSupply = supplyService.getListSupply();
-				List result = new ArrayList<>();
+		//mengambil list supply dengan jenis reagen
+		List<SupplyModel> listSupply = supplyService.getListSupply();
+		List result = new ArrayList<>();
 						
-				for(int i = 0; i<listSupply.size(); i++) {
-					if(listSupply.get(i).getJenis().equalsIgnoreCase("reagen")) {
-						result.add(listSupply.get(i));
-					}
-				}
-				model.addAttribute("listsupply", result);
-				
-				model.addAttribute("reagen", reagen);
-				show = "reagen-add";
-			} else show= "not-staf";
+		for(int i = 0; i<listSupply.size(); i++) {
+			if(listSupply.get(i).getJenis().equalsIgnoreCase("reagen")) {
+				result.add(listSupply.get(i));
+			}
 		}
-			
-		
-		
-		return show;
+		model.addAttribute("listsupply", result);
+		model.addAttribute("reagen", reagen);
+
+		return "reagen-add";		
 	}
 	
 	@RequestMapping(value = "/lab/kebutuhan/tambah", method = RequestMethod.POST)
 	private String addKebutuhanSubmit(@ModelAttribute KebutuhanReagenModel reagen) {
 		//mengambil list reagen yang sudah ada
-		List<KebutuhanReagenModel> list_reagen = kebutuhanReagenService.getListReagen();				KebutuhanReagenModel reagen_temp = null;
+		List<KebutuhanReagenModel> list_reagen = kebutuhanReagenService.getListReagen();				
+		KebutuhanReagenModel reagen_temp = null;
 		long id = reagen.getSupply().getId();
 				
 		for (int i = 0; i<list_reagen.size(); i++) {
@@ -120,7 +111,16 @@ public class KebutuhanReagenController {
 		
 		model.addAttribute("value", value);
 		model.addAttribute("datareagen", reagen);
-		return "reagen-viewall";
+		
+		String show = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Staf")) {
+				show = "reagen-viewall-staf";
+			} else if(authority.getAuthority().equals("Admin")) show = "reagen-viewall-admin";
+		}
+		
+		return show;
 	}
 	
 	//FITUR 5 : Web Service untuk mengembalikan data perencanaan kebutuhan reagen
@@ -138,22 +138,14 @@ public class KebutuhanReagenController {
 	//FITUR 6 : Mengubah data perencanaan kebutuhan reagen
 	@RequestMapping(value="/lab/kebutuhan/ubah/{id}", method = RequestMethod.GET)
 	private String updateReagen(@PathVariable(value="id") long id, Model model){
-		String show = "";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			for (GrantedAuthority authority: authentication.getAuthorities()) {
-				if (authority.getAuthority().equals("Admin")) {
-					KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
+		KebutuhanReagenModel reagen = kebutuhanReagenService.getReagenById(id);
 			
-					//mengubah nama pada title sesuai reagen
-					String nama = reagen.getNama();
-					model.addAttribute("nama", nama);
+		//mengubah nama pada title sesuai reagen
+		String nama = reagen.getNama();
+		model.addAttribute("nama", nama);
 			
-					model.addAttribute("datareagen", reagen);
-					show = "reagen-update";
-				}else show="not-admin";
-				
-			}
-			return show;
+		model.addAttribute("datareagen", reagen);
+		return "reagen-update";
 		}
 	 
 	@RequestMapping(value="lab/kebutuhan/ubah/{id}", method = RequestMethod.POST)
