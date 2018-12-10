@@ -58,14 +58,24 @@ public class SupplyController {
 	
 	//FITUR 15 Melihat data persediaan lab
 	@RequestMapping(value="/lab/stok", method = RequestMethod.GET)
+	//if admin throw to supply-viewall
 	private String viewAllLabSupply(Model model) {
-		List<SupplyModel> supply = supplyService.getListSupply();
-		//if(supply.isEmpty()) {
-		//	return "supply-empty";
-		//}
-		model.addAttribute("datasupply", supply);
-		model.addAttribute("title", "Daftar Persediaan Lab");	
-		return "supply-viewall";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority: authentication.getAuthorities()) {
+		   if (authority.getAuthority().equals("Admin")) {
+			   List<SupplyModel> supply = supplyService.getListSupply();
+			   model.addAttribute("datasupply", supply);
+			   model.addAttribute("title", "Daftar Persediaan Lab");	
+			   return "supply-viewall";
+		   } else if (authority.getAuthority().equals("Staf")) {
+			   List<SupplyModel> supply = supplyService.getListSupply();
+			   model.addAttribute("datasupply", supply);
+			   model.addAttribute("title", "Daftar Persediaan Lab");	
+			   return "supply-viewall-staf";
+		   }
+		
+		}
+		return "500";
 	}
 	
 	//FITUR16 Mengubah data persediaan lab
