@@ -12,10 +12,266 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
-	<div class="container-fluid">
-	<h2 th:text=" 'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
-	<p th:text=" 'Kamu adalah seorang ' + ${role} + ' Laboratorium.'"></p>
+	<!-- Intro Section -->
+	<div class="hero-section">
+		<div class="hero-content">
+			<div class="hero-center">
+				<img src="img/big-logo.png" alt="">
+				<p>Halo {nama}! selamat datang di SI-LABOR</p>
+			</div>
+		</div>
+
 	</div>
+	<!-- Intro Section -->
+
+
+	<!-- About section -->
+	<div class="about-section">
+		<div class="overlay"></div>
+		<!-- card section -->
+		<div class="card-section">
+			<div class="container">
+				<div class="row">
+					<!-- single card -->
+					<div class="col-md-4 col-sm-6">
+						<div class="lab-card" th:href="@{/lab/stok}">
+							<div class="icon">
+								<i class="flaticon-023-flask"></i>
+							</div>
+							<h2>PERSEDIAAN LAB</h2>
+							<p>Melihat dan mengelola daftar seluruh persediaan laboratorium.</p>
+						</div>
+					</div>
+					<!-- single card -->
+					<div class="col-md-4 col-sm-6">
+						<div class="lab-card">
+							<div class="icon">
+								<i class="flaticon-011-compass"></i>
+							</div>
+							<h2>KEBUTUHAN REAGEN</h2>
+							<p>Melihat dan mengelola daftar perencanaan kebutuhan reagen yang telah diajukan oleh Staf Laboratorium.</p>
+						</div>
+					</div>
+					<!-- single card -->
+					<div class="col-md-4 col-sm-12">
+						<div class="lab-card">
+							<div class="icon">
+								<i class="flaticon-037-idea"></i>
+							</div>
+							<h2>PERMINTAAN PEMERIKSAAN</h2>
+							<p>Melihat dan mengelola permintaan dari pemeriksaan lab. Permintaan berasal dari Rawat Jalan dan Rawat Inap</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- card section end-->
+
+
+		<!-- About contant -->
+		<div class="about-contant">
+			<div class="container">
+				<div class="section-title">
+					<h2>Get in <span>the Lab</span> and discover the world</h2>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<p>Rumah Sakit Cepat Sembuh (RSCS) merupakan salah satu rumah sakit terbesar di Indonesia. RSCS dikenal sebagai rumah sakit rujukan yang terpercaya dan dapat menyembuhkan segala penyakit. Setiap harinya RSCS bisa menangani hampir lima ribu pasien yang berdatangan dari berbagai daerah. Untuk dapat menangani ribuan pasien, tentunya RSCS memiliki tenaga medis dengan jumlah yang tak sedikit. RSCS menawarkan layanan kesehatan utama seperti rawat inap, rawat jalan, dan IGD. Selain menawarkan layanan kesehatan utama RSCS juga memiliki layanan penunjang medis, salah satunya yaitu Laboratorium. </p>
+					</div>
+					<div class="col-md-6">
+						<p>Unit Laboratorium berfungsi untuk memberikan pelayanan medis berupa pemeriksaan laboratorium. Hasil pemeriksaan Laboratorium akan digunakan sebagai penetapan diagnosis, pemberian pengobatan, pemantauan hasil pengobatan, dan penentuan prognosis. Untuk dapat mendukung kegiatan yang dilakukan oleh Laboratorium, diperlukan suatu sistem (SILabor). Dengan SILabor, diharapkan dapat mendukung kegiatan administratif dari laboratorium seperti dokter serta staf laboratorium dapat melakukan pertukaran informasi antar unit dengan mudah. Sehingga dapat meningkatkan efisiensi dan efektifitas dari kinerja laboratorium.</p>
+					</div>
+				</div>
+				<br>
+				<br>
+			</div>
+		</div>
+	</div>
+	<!-- About section end -->
+
+
+	<!-- Services section -->
+	<div class="services-section spad">
+		<div class="container">
+			<div class="section-title dark">
+				<h2>Get in <span>the Lab</span> and see the services</h2>
+			</div>
+			<div class="row">
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-023-flask"></i>
+						</div>
+						<div class="service-text">
+							<h2>Membuat Perencanaan Kebutuhan Reagen</h2>
+							<p>Fitur ini tersedia pada halaman “Kebutuhan Reagen” dan digunakan untuk menambahkan reagen yang butuh dibeli. Data yang akan ditambahkan adalah Nama dan Jumlah. Nama diambil dari menu “Daftar Persediaan” dan yang merupakan jenis “reagen”.</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-011-compass"></i>
+						</div>
+						<div class="service-text">
+							<h2>Melihat Perencanaan Kebutuhan Reagen</h2>
+							<p>Fitur ini tersedia pada menu “Kebutuhan Reagen” dan digunakan untuk menampilkan daftar perencanaan kebutuhan reagen (dalam bentuk tabel) yang telah diajukan oleh Staf Laboratorium.</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-037-idea"></i>
+						</div>
+						<div class="service-text">
+							<h2>Mengelola Perencanaan Kebutuhan Reagen</h2>
+							<p>Fitur ini tersedia pada halaman “Kebutuhan Reagen” dan terletak pada bagian kolom “Action”. Fitur ini digunakan untuk mengubah status pembelian dari suatu reagen. Admin hanya dapat mengubah status pembelian dari “Belum dibeli” menjadi “Sudah dibeli”.</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-039-vector"></i>
+						</div>
+						<div class="service-text">
+							<h2>Melihat Daftar Permintaan Pemeriksaan Lab</h2>
+							<p>Fitur ini menampilkan permintaan dari pemeriksaan lab. Permintaan berasal dari Rawat Jalan dan Rawat Inap. </p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-036-brainstorming"></i>
+						</div>
+						<div class="service-text">
+							<h2>Membuat Jadwal Jaga</h2>
+							<p>Fitur ini adalah fitur untuk membuat jadwal jaga staff lab setiap harinya. Data mengenai staff lab berasal dari webservice SI Appointment. </p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-026-search"></i>
+						</div>
+						<div class="service-text">
+							<h2>Melihat Jadwal Jaga</h2>
+							<p>Fitur ini adalah fitur untuk menampilkan dan mengubah jadwal jaga staff lab berdasarkan tanggal yang ada. Tampilan ini menampilkan Tanggal, Waktu Mulai, Waktu Selesai, dan Nama Staff</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-018-laptop-1"></i>
+						</div>
+						<div class="service-text">
+							<h2>Membuat Data Persediaan Lab</h2>
+							<p>Fitur ini  tersedia pada menu “Daftar Persediaan” dan digunakan untuk membuat/menambah data persediaan  yang dimiliki laboratorium. Data-data yang dapat dimasukkan adalah Jenis barang, Nama barang, Jumlah barang, dan Deskripsi barang</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-043-sketch"></i>
+						</div>
+						<div class="service-text">
+							<h2>Melihat  Data Persediaan Lab</h2>
+							<p>Fitur ini digunakan untuk menampilkan daftar seluruh persediaan laboratorium  data yang akan disajikan dalam tabel adalah Id, Jenis, Nama, Jumlah, dan Deskripsi</p>
+						</div>
+					</div>
+				</div>
+				<!-- single service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<div class="icon">
+							<i class="flaticon-012-cube"></i>
+						</div>
+						<div class="service-text">
+							<h2>Extra Security</h2>
+							<p>Sistem ini dilengkapi dengan algoritma keamanan canggih untuk menjaga data yang ada</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- services section end -->
+
+
+	<!-- Team Section -->
+	<div class="team-section spad">
+		<div class="overlay"></div>
+		<div class="container" align="left">
+			<div class="section-title" style="text-align: right !important;">
+				<h2>Get in <span>the Lab</span> and  meet the team</h2>
+			</div>
+			<div class="row">
+				<!-- single member -->
+				<div class="col-sm-2">
+					<div class="member">
+						<img src="img/team/1.jpg" alt="">
+						<h2>Christinne Williams</h2>
+						<h3>Project Manager</h3>
+					</div>
+				</div>
+				<!-- single member -->
+				<div class="col-sm-2">
+					<div class="member">
+						<img src="img/team/2.jpg" alt="">
+						<h2>Christinne Williams</h2>
+						<h3>Junior developer</h3>
+					</div>
+				</div>
+				<!-- single member -->
+				<div class="col-sm-2">
+					<div class="member">
+						<img src="img/team/3.jpg" alt="">
+						<h2>Christinne Williams</h2>
+						<h3>Digital designer</h3>
+					</div>
+				</div>
+								<!-- single member -->
+				<div class="col-sm-2">
+					<div class="member">
+						<img src="img/team/3.jpg" alt="">
+						<h2>Christinne Williams</h2>
+						<h3>Digital designer</h3>
+					</div>
+				</div>
+								<!-- single member -->
+				<div class="col-sm-2">
+					<div class="member">
+						<img src="img/team/3.jpg" alt="">
+						<h2>Christinne Williams</h2>
+						<h3>Digital designer</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Team Section end-->
+
+
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<h2>2017 All rights reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></h2>
+	</footer>
+	<!-- Footer section end -->
+
+
 </body>
 
 </html>

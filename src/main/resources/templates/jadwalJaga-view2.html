@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<div class="container-fluid"></div>
+
+	<div class="row, col-lg">
+		<a class="btn btn-warning" th:href="@{/lab/jadwal-jaga/}"
+			th:text="'< Kembali'" style="margin-top: 1rem; margin-bottom: 1rem"></a>
+		<div class="card" style="text-align: center">
+			<div class="card-header">
+
+				<h2>Jadwal Jaga Staff Lab</h2>
+				<h5 th:text="'Tanggal: '+ ${tanggalJadwal}"></h5>
+			</div>
+			<div class="card-body">
+				<h5 class="alert alert-info" th:if="${jadwalJaga.isEmpty()}">Belum
+					Ada Jadwal!</h5>
+				<table class="table table-striped table-bordered table-sm display"
+					id="jadwalJagaTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Tanggal</th>
+							<th>Waktu Mulai</th>
+							<th>Waktu Selesai</th>
+							<th>Nama Staff</th>
+						</tr>
+					</thead>
+					<tr th:each="jj,iterationStatus : ${jadwalJaga}">
+						<td th:text="${jj.id}"></td>
+						<td th:text="${jj.tanggal}"></td>
+						<td th:text="${jj.start}"></td>
+						<td th:text="${jj.end}"></td>
+						<td th:text="${jj.namaStaff}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready(function() {
+		$('#jadwalJagaTable').DataTable();
+	});
+</script>
+</html>
