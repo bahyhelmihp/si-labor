@@ -13,16 +13,18 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-		<div class="container-fluid">
-			<br><h2 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h2>
-			<p th:if="${value}==true">Daftar Perencanaan Kebutuhan Reagen</p> 
-			<h2 th:if="${value} == false">Oops :(</h2>
-			<h5 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h5><br>
+		<div class="container">
+			<br><h2 align="center" th:if="${value}==true">Perencanaan Kebutuhan Reagen</h2>
+			<p align="center" th:if="${value}==true">Daftar Perencanaan Kebutuhan Reagen</p> 
+			<h2 align="center" th:if="${value} == false">Oops :(</h2>
+			<p align="center" th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</p><br>
 			
 			<form th:action="@{/lab/kebutuhan/tambah}" class="form-inline" method="GET">
 				<button class="btn btn-primary" type="submit">Tambah Reagen</button>
 			</form>
 			<br>
+			<div class="card">
+			<div class="card-body">
 			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
 				<thead>
 					<tr>
@@ -47,6 +49,8 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
+			</div>
 			<div class="pagination-container">
 				<nav>
 					<ul class="pagination"></ul>

@@ -2,59 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Perencanaan Reagen</title>
-	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	<link href="bootstrap.min.css" rel="stylesheet"/>
+<title>Perencanaan Reagen</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link href="bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-		<div class="container-fluid">
-			<br><h2 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h2>
-			<p th:if="${value}==true">Daftar Perencanaan Kebutuhan Reagen</p> 
-			<h2 th:if="${value} == false">Oops :(</h2>
-			<h5 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h5><br>
-			
-			<br>
-			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Nama</th>
-						<th>Jumlah</th>
-						<th>Status</th>
-						<th>Tanggal Diubah</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					<tr th:each="reagen: ${datareagen}">
-						<td th:text="${reagen.id}"></td>
-						<td th:text="${reagen.nama}"></td>
-						<td th:text="${reagen.jumlah}"></td>
-						<td th:if="${reagen.status} == 0">Sudah dibeli</td>
-						<td th:if="${reagen.status} == 1">Belum dibeli</td>
-						<td th:text="${reagen.tanggal_update}"></td>
-						<td>
-							<div th:if="${reagen.status} == 1">
-								<a th:href="@{'/lab/kebutuhan/ubah/' +${reagen.id}}">Ubah Status</a>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="pagination-container">
-				<nav>
-					<ul class="pagination"></ul>
-				</nav>
+	<div class="container">
+		<br>
+		<h2 align="center" th:if="${value}==true">Perencanaan Kebutuhan
+			Reagen</h2>
+		<p align="center" th:if="${value}==true">Daftar Perencanaan
+			Kebutuhan Reagen</p>
+		<h2 align="center" th:if="${value} == false">Oops :(</h2>
+		<p align="center" th:if="${value} == false">Perencanaan Kebutuhan
+			Reagen Belum Diajukan</p>
+		<br>
+
+		<div class="card">
+			<div class="card-body">
+				<br>
+				<table id="mytable" class="table table-bordered table-striped"
+					th:if="${value} == true">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nama</th>
+							<th>Jumlah</th>
+							<th>Status</th>
+							<th>Tanggal Diubah</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="reagen: ${datareagen}">
+							<td th:text="${reagen.id}"></td>
+							<td th:text="${reagen.nama}"></td>
+							<td th:text="${reagen.jumlah}"></td>
+							<td th:if="${reagen.status} == 0">Sudah dibeli</td>
+							<td th:if="${reagen.status} == 1">Belum dibeli</td>
+							<td th:text="${reagen.tanggal_update}"></td>
+							<td>
+								<div th:if="${reagen.status} == 1">
+									<a th:href="@{'/lab/kebutuhan/ubah/' +${reagen.id}}">Ubah
+										Status</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		
+		<div class="pagination-container">
+			<nav>
+				<ul class="pagination"></ul>
+			</nav>
+		</div>
+	</div>
+
 	<script src="jquery.min.js"></script>
 	<script src="bootstrap.min.js"></script>
 	<script> 
