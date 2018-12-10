@@ -17,7 +17,9 @@
 		<div class="hero-content">
 			<div class="hero-center">
 				<img src="img/big-logo.png" alt="">
-				<p>Halo {nama}! selamat datang di SI-LABOR</p>
+				<p th:text="'Halo ' + ${#httpServletRequest.remoteUser} + '! Selamat datang di SiLabor.'"></p>
+				<p th:if="${authenticated}">Role kamu adalah: Admin Laboratorium</p>
+				<p th:unless="${authenticated}" style="font-weight:bold;">Role: Staf Laboratorium</p>
 			</div>
 		</div>
 
@@ -115,7 +117,7 @@
 						</div>
 						<div class="service-text">
 							<h2>Membuat Perencanaan Kebutuhan Reagen</h2>
-							<p>Fitur ini tersedia pada halaman “Kebutuhan Reagen” dan digunakan untuk menambahkan reagen yang butuh dibeli. Data yang akan ditambahkan adalah Nama dan Jumlah. Nama diambil dari menu “Daftar Persediaan” dan yang merupakan jenis “reagen”.</p>
+							<p>Fitur ini tersedia pada halaman "Kebutuhan Reagen" dan digunakan untuk menambahkan reagen yang butuh dibeli. Data yang akan ditambahkan adalah Nama dan Jumlah. Nama diambil dari menu "Daftar Persediaan" dan yang merupakan jenis "reagen".</p>
 						</div>
 					</div>
 				</div>
@@ -127,7 +129,7 @@
 						</div>
 						<div class="service-text">
 							<h2>Melihat Perencanaan Kebutuhan Reagen</h2>
-							<p>Fitur ini tersedia pada menu “Kebutuhan Reagen” dan digunakan untuk menampilkan daftar perencanaan kebutuhan reagen (dalam bentuk tabel) yang telah diajukan oleh Staf Laboratorium.</p>
+							<p>Fitur ini tersedia pada menu "Kebutuhan Reagen" dan digunakan untuk menampilkan daftar perencanaan kebutuhan reagen (dalam bentuk tabel) yang telah diajukan oleh Staf Laboratorium.</p>
 						</div>
 					</div>
 				</div>
@@ -139,7 +141,7 @@
 						</div>
 						<div class="service-text">
 							<h2>Mengelola Perencanaan Kebutuhan Reagen</h2>
-							<p>Fitur ini tersedia pada halaman “Kebutuhan Reagen” dan terletak pada bagian kolom “Action”. Fitur ini digunakan untuk mengubah status pembelian dari suatu reagen. Admin hanya dapat mengubah status pembelian dari “Belum dibeli” menjadi “Sudah dibeli”.</p>
+							<p>Fitur ini tersedia pada halaman "Kebutuhan Reagen" dan terletak pada bagian kolom "Action". Fitur ini digunakan untuk mengubah status pembelian dari suatu reagen. Admin hanya dapat mengubah status pembelian dari "Belum dibeli" menjadi "Sudah dibeli".</p>
 						</div>
 					</div>
 				</div>
@@ -187,7 +189,7 @@
 						</div>
 						<div class="service-text">
 							<h2>Membuat Data Persediaan Lab</h2>
-							<p>Fitur ini  tersedia pada menu “Daftar Persediaan” dan digunakan untuk membuat/menambah data persediaan  yang dimiliki laboratorium. Data-data yang dapat dimasukkan adalah Jenis barang, Nama barang, Jumlah barang, dan Deskripsi barang</p>
+							<p>Fitur ini  tersedia pada menu "Daftar Persediaan" dan digunakan untuk membuat/menambah data persediaan  yang dimiliki laboratorium. Data-data yang dapat dimasukkan adalah Jenis barang, Nama barang, Jumlah barang, dan Deskripsi barang</p>
 						</div>
 					</div>
 				</div>
@@ -233,40 +235,40 @@
 				<div class="col-sm-2">
 					<div class="member">
 						<img src="img/team/1.jpg" alt="">
-						<h2>Christinne Williams</h2>
-						<h3>Project Manager</h3>
+						<h2>Bahy Helmi Hartoyo Putra</h2>
+						<h3></h3>
 					</div>
 				</div>
 				<!-- single member -->
 				<div class="col-sm-2">
 					<div class="member">
 						<img src="img/team/2.jpg" alt="">
-						<h2>Christinne Williams</h2>
-						<h3>Junior developer</h3>
+						<h2>Muhammad Zidane Zaffar</h2>
+						<h3></h3>
 					</div>
 				</div>
 				<!-- single member -->
 				<div class="col-sm-2">
 					<div class="member">
 						<img src="img/team/3.jpg" alt="">
-						<h2>Christinne Williams</h2>
-						<h3>Digital designer</h3>
+						<h2>Christie Vithasa Immanuel Kassan</h2>
+						<h3></h3>
 					</div>
 				</div>
 								<!-- single member -->
 				<div class="col-sm-2">
 					<div class="member">
 						<img src="img/team/3.jpg" alt="">
-						<h2>Christinne Williams</h2>
-						<h3>Digital designer</h3>
+						<h2>Faizah Afifah</h2>
+						<h3></h3>
 					</div>
 				</div>
 								<!-- single member -->
 				<div class="col-sm-2">
 					<div class="member">
 						<img src="img/team/3.jpg" alt="">
-						<h2>Christinne Williams</h2>
-						<h3>Digital designer</h3>
+						<h2>Nathanael Lemuella</h2>
+						<h3></h3>
 					</div>
 				</div>
 			</div>

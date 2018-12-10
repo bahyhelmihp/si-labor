@@ -2,27 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Gagal</title>
+<title>Sukses</title>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 <script type="text/javascript">
 	(function() {
 		setTimeout(function() {
-			window.location = "/lab/pemeriksaan/permintaan";
-		}, 6000); /* 1000 = 1 second*/
+			window.location = "/lab/stok";
+		}, 3000); /* 1000 = 1 second*/
 	})();
 </script>
+
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br><br><br><br><br><br>
-	<div class="container">
-	<div class="alert alert-danger">
-		<h4>Gagal!</h4>
-		<p th:if="${error} == 1" th:text="'Pemeriksaan gagal diproses, tidak ada jadwal jaga untuk hari ini. Silahkan ajukan jadwal jaga.'"></p>
-		<p th:text="'Anda akan dialihkan ke halaman sebelumnya dalam 6 detik....'"></p>
+	<div class="container-fluid">
+		<div class="alert alert-success">
+			<h4>Sukses!</h4>
+			<p th:text="'Supply berhasil ditambah'"></p>
+			<p th:text="'Anda akan dialihkan ke halaman sebelumnya dalam beberapa saat....'"></p>
 		</div>
+		
 	</div>
 </body>
 </html>

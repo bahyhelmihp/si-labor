@@ -21,7 +21,7 @@ public class PageController {
 
 	@RequestMapping("/login")
 	public String login(Model model) {
-		return "login";
+		return "newLogin";
 	}
 
 	@RequestMapping("/register")

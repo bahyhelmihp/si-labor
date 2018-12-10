@@ -40,14 +40,14 @@ import com.apap.silabor.service.PemeriksaanService;
 
 @Controller
 public class PemeriksaanController {
-//	@Autowired
-//	RestTemplate restTemplate;
-//
-//	@Bean
-//	public RestTemplate restPemeriksaan() {
-//		return new RestTemplate();
-//	}
-	
+	//	@Autowired
+	//	RestTemplate restTemplate;
+	//
+	//	@Bean
+	//	public RestTemplate restPemeriksaan() {
+	//		return new RestTemplate();
+	//	}
+
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
@@ -59,23 +59,23 @@ public class PemeriksaanController {
 
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
-  
-//	//FITUR 7 testing
-//	@GetMapping(value = "/testAmbilKamar")
-//	public String testPemeriksaan(Model model) throws IOException {
-//
-//		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
-//		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
-//		List<KamarPasienIsi>  listKamar = new ArrayList<>();
-//		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
-//
-//		listKamar = response.getResult();
-//		for(KamarPasienIsi kamar : listKamar) {
-//			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
-//		}
-//		System.out.println(response.getResult());
-//		return "home";
-//	}
+
+	//	//FITUR 7 testing
+	//	@GetMapping(value = "/testAmbilKamar")
+	//	public String testPemeriksaan(Model model) throws IOException {
+	//
+	//		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+	//		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+	//		List<KamarPasienIsi>  listKamar = new ArrayList<>();
+	//		List<Long> listIdPasienRawatInapBaru = new ArrayList<>();
+	//
+	//		listKamar = response.getResult();
+	//		for(KamarPasienIsi kamar : listKamar) {
+	//			if(pemeriksaanService.isExist(kamar.getId_pasien(), 1));
+	//		}
+	//		System.out.println(response.getResult());
+	//		return "home";
+	//	}
 
 	//FITUR 7 Menampilkan permintaan pemeriksaan lab
 	@GetMapping(value = "/lab/pemeriksaan/permintaan")
@@ -87,23 +87,23 @@ public class PemeriksaanController {
 				model.addAttribute("authenticated", authority.getAuthority());
 			}
 		}
-		
-		
+
+
 		// mengambil data dari {url}
 		boolean error = false;
 		List<KamarPasienIsi>  listKamar = new ArrayList<>();
-		
+
 		try {
-		String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
-		KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
-		listKamar = response.getResult();
+			String path = "https://ta-5-1.herokuapp.com/api/kamars?isFilled=true";
+			KamarPasienIsiResponse response = restTemplate.getForObject(path, KamarPasienIsiResponse.class)	;
+			listKamar = response.getResult();
 		}
 		catch (Exception e)
 		{
 			error = true;;
 		}
-		
-		
+
+
 		if(!listKamar.isEmpty()&!error) {
 			for(KamarPasienIsi kamar : listKamar) {
 				long idPasienBaru = kamar.getId_pasien();
@@ -119,7 +119,7 @@ public class PemeriksaanController {
 				}
 			}
 		}
-		
+
 
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.getListPemeriksaan();
 		//call object pasien
@@ -138,27 +138,26 @@ public class PemeriksaanController {
 		listPasien = response2.getResult();
 		model.addAttribute("pemeriksaanList", listPemeriksaan);
 		model.addAttribute("pasienList", listPasien);
-		model.addAttribute("title", "Daftar Pemeriksaan Lab");
 		return "pemeriksaan-viewall";
 	}
 
 	//FITUR 8
 	@ResponseBody
-    @PostMapping(value = "/api/lab/pemeriksaan/permintaan")
-    public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
-        BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
-        if (bindingResult.hasErrors()) {
-            response.setStatus(500);
-            response.setMessage("error data");
-        }else {
-        	pemeriksaanService.addPemeriksaan(pemeriksaan);
-            response.setStatus(200);
-            response.setMessage("success");
-            response.setResult(pemeriksaan);
+	@PostMapping(value = "/api/lab/pemeriksaan/permintaan")
+	public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
+		BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
+		if (bindingResult.hasErrors()) {
+			response.setStatus(500);
+			response.setMessage("error data");
+		}else {
+			pemeriksaanService.addPemeriksaan(pemeriksaan);
+			response.setStatus(200);
+			response.setMessage("success");
+			response.setResult(pemeriksaan);
 
-        }
-              return response;
-    }
+		}
+		return response;
+	}
 
 
 	//FITUR 9
@@ -181,7 +180,7 @@ public class PemeriksaanController {
 					error += 1;
 				}
 			}
-			
+
 			//Cek Jadwal Ada
 			Calendar currentTime = Calendar.getInstance();
 			Date sqlDate = new Date((currentTime.getTime()).getTime());
@@ -218,6 +217,7 @@ public class PemeriksaanController {
 			return "update-hasil";
 		}
 	}
+
 	//Sukses Update Diproses -> Selesai
 	@PostMapping(value = "lab/pemeriksaan/permintaan/update/sukses")
 	public String updatePemeriksaan(PemeriksaanModel pemeriksaan) {
@@ -228,10 +228,24 @@ public class PemeriksaanController {
 		return "sukses-selesai";
 	}
 
+	//Cek Detail Pemeriksaan
+	@PostMapping(value = "lab/pemeriksaan/view/{id}")
+	public String viewPemeriksaanDetail(@PathVariable(value="id") long id, Model model) {
+		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
+		String url = "http://si-appointment.herokuapp.com/api/getPasien?listId="+id+"&resultType=Map";
+		PasienResponse response = restTemplate.getForObject(url, PasienResponse.class)	;
+		Map<String,PasienTest> listPasien = new HashMap<>();
+		listPasien = response.getResult();
+		String namaPasien = listPasien.get(String.valueOf(id)).getNama();
+		model.addAttribute("pemeriksaan", pemeriksaan);
+		model.addAttribute("namaPasien", namaPasien);
+		return "pemeriksaan-viewdetail";
+	}
+
 	//FITUR 10
 	@PostMapping(value = "/lab/pemeriksaan/kirim/{id}")
 	public String kirimPemeriksaan(@PathVariable(value="id") long id) {
-		
+
 		//Get Pemeriksaan Selesai
 		PemeriksaanModel pemeriksaan = pemeriksaanService.getPemeriksaanById(id);
 
@@ -251,6 +265,10 @@ public class PemeriksaanController {
 		if (response.getMessage().equals("success")) {
 			pemeriksaan.setStatus(3);
 			pemeriksaanService.addPemeriksaan(pemeriksaan);
+		}
+
+		else {
+			return "gagal";
 		}
 
 		//Return 

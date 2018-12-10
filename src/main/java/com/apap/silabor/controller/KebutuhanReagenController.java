@@ -94,7 +94,7 @@ public class KebutuhanReagenController {
 			kebutuhanReagenService.addReagen(reagen);
 		}
 			
-		return "success";
+		return "success-reagen";
 	}
 	
 	
@@ -169,6 +169,6 @@ public class KebutuhanReagenController {
 		}
 		model.addAttribute("datareagen", reagen);
 		
-		return "success";
+		return "success-reagen";
 	}
 }

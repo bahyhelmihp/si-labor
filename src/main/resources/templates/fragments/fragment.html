@@ -5,36 +5,38 @@
 <title>Home</title>
 <head th:fragment="css">
 <title>Labs - Design Studio</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="Labs - Design Studio">
-	<meta name="keywords" content="lab, onepage, creative, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Favicon -->
-	<link href="img/favicon.ico" rel="shortcut icon"/>
+<meta charset="UTF-8">
+<meta name="description" content="Labs - Design Studio">
+<meta name="keywords" content="lab, onepage, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Favicon -->
+<link th:href="@{/favicon.ico}" rel="shortcut icon" />
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,700|Roboto:300,400,700" rel="stylesheet">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,700|Roboto:300,400,700"
+	rel="stylesheet">
 
-	<!-- Stylesheets -->
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-	<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}"/>
-	<link rel="stylesheet" th:href="@{/css/flaticon.css}"/>
-	<link rel="stylesheet" th:href="@{/css/magnific-popup.css}"/>
-	<link rel="stylesheet" th:href="@{/css/owl.carousel.css}"/>
-	<link rel="stylesheet" th:href="@{/css/style.css}"/>
+<!-- Stylesheets -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/css/flaticon.css}" />
+<link rel="stylesheet" th:href="@{/css/magnific-popup.css}" />
+<link rel="stylesheet" th:href="@{/css/owl.carousel.css}" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 
 </head>
 
 <head th:fragment="js">
-			<!--====== Javascripts & Jquery ======-->
+<!--====== Javascripts & Jquery ======-->
 
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/jquery-2.1.4.min.js}"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/magnific-popup.min.js}"></script>
-	<script th:src="@{/js/owl.carousel.min.js}"></script>
-	<script th:src="@{/js/circle-progress.min.js}"></script>
-	<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/magnific-popup.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/circle-progress.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </head>
 <head th:fragment="jquery">
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
@@ -53,8 +55,7 @@
 		<!-- Header section -->
 		<header class="header-section">
 			<div class="logo">
-				<a th:href="@{/}">
-				<img th:src="@{/img/logo.png}" alt="" >
+				<a th:href="@{/}"> <img th:src="@{/img/logo.png}" alt="">
 				</a>
 				<!-- Logo -->
 			</div>
@@ -69,7 +70,10 @@
 					<li><a th:href="@{/lab/pemeriksaan/permintaan}">Permintaan
 							Pemeriksaan</a></li>
 					<li><a th:href="@{/lab/jadwal-jaga/}">Jadwal Jaga</a></li>
-					<li><button class="site-btn btn-3" href="@{/logout}">Logout</button></li>
+					<li>
+							<a th:href="@{/logout}" ><button class="site-btn btn-3">Logout</button></a>
+						
+					</li>
 				</ul>
 
 
