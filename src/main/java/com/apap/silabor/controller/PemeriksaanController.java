@@ -146,7 +146,8 @@ public class PemeriksaanController {
 	@PostMapping(value = "/api/lab/pemeriksaan/permintaan")
 	public BaseResponse<PemeriksaanModel> addLabResult(@RequestBody @Valid PemeriksaanModel pemeriksaan, BindingResult bindingResult) {
 		BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
-		if (bindingResult.hasErrors()) {
+		
+		if (bindingResult.hasErrors() || pemeriksaan.getIdPasien()==0) {
 			response.setStatus(500);
 			response.setMessage("error data");
 		}else {
