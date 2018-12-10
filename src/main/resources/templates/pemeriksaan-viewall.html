@@ -2,58 +2,80 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Permintaan Pemeriksaan</title>
-	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<title>Permintaan Pemeriksaan</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="container-fluid">
-		<h2>Daftar Permintaan Pemeriksaan</h2>
-		<p>Daftar permintaan pemeriksaan dari SI Rawat Inap dan SI Rawat Jalan</p>
+	<br><br><br><br><br><br>
+	<div class="container">
+		<h2 align="center">Daftar Permintaan Pemeriksaan</h2>
+		<p align="center">Daftar permintaan pemeriksaan dari SI Rawat Inap dan SI Rawat
+			Jalan</p>
 		<br>
+		<div class="card">
+			<div class="card-body">
 		<table id="pemeriksaanTable">
 
 			<!-- Header Table -->
 			<thead>
 				<tr>
 					<th>Nama Pasien</th>
-					<th>Tanggal Permintaan </th>
+					<th>Tanggal Permintaan</th>
 					<th>Status</th>
 					<th>Aksi</th>
+					<th></th>
 				</tr>
 			</thead>
 
 			<!-- Body Table -->
 			<tbody>
 				<tr th:each="pemeriksaan,iter : ${pemeriksaanList}">
-					<td th:text="${pasienList.get(#strings.toString(__${pemeriksaan.idPasien}__)).nama}"></td>
+					<td
+						th:text="${pasienList.get(#strings.toString(__${pemeriksaan.idPasien}__)).nama}"></td>
 					<td th:text="${pemeriksaan.tanggalPengajuan}"></td>
 					<td th:if="${pemeriksaan.status} == 0">Menunggu Persetujuan</td>
 					<td th:if="${pemeriksaan.status} == 1">Diproses</td>
 					<td th:if="${pemeriksaan.status} == 2">Selesai</td>
 					<td th:if="${pemeriksaan.status} == 3">Terkirim</td>
 					<td>
-					
-						<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}" method="POST">
-							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 0">Proses</button>
-							<button type="submit" class="btn btn-primary" th:if="${pemeriksaan.status} == 1">Selesaikan</button>
-						</form>
-						<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}" method="POST">
-							<button th:if="${authenticated} and ${pemeriksaan.status} == 2" type="submit" class="btn btn-primary">Kirim</button>
+							<form th:action="@{/lab/pemeriksaan/} + ${pemeriksaan.id}"
+								method="POST">
+								<button type="submit" class="btn btn-primary"
+									th:if="${pemeriksaan.status} == 0">Proses</button>
+								<button type="submit" class="btn btn-primary"
+									th:if="${pemeriksaan.status} == 1">Selesaikan</button>
+							</form>
+							<form th:action="@{/lab/pemeriksaan/kirim/} + ${pemeriksaan.id}"
+								method="POST">
+								<button th:if="${authenticated} and ${pemeriksaan.status} == 2"
+									type="submit" class="btn btn-primary">Kirim</button>
+							</form>
+					</td>
+					<td>
+						<form th:action="@{/lab/pemeriksaan/view/} + ${pemeriksaan.id}"
+								method="POST">
+						<button type="submit"
+								class="btn ">Lihat Detail</button>
 						</form>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		</div>
+	</div>
+	</div>
+	</div>
 </body>
 
 

@@ -152,7 +152,17 @@ public class JadwalJagaController {
 		model.addAttribute("jadwalJaga", archive);
 		model.addAttribute("tanggalJadwal", tanggal);
 		model.addAttribute("title", "Lihat Jadwal Jaga");
-		return "jadwalJaga-view";
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority : authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Admin")) {
+
+				return "jadwalJaga-view";
+			} else {
+				return "jadwalJaga-view2";
+			}
+		}
+		return "";
 	}
 
 	/**
@@ -214,7 +224,16 @@ public class JadwalJagaController {
 		List<JadwalJagaModel> jadwalJaga = jadwalJagaService.getAllJadwalJaga();
 		model.addAttribute("jadwalJaga", jadwalJaga);
 		model.addAttribute("title", "Jadwal Jaga Lab");
-		return "jadwalJaga-home";
+		// Authorization
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority : authentication.getAuthorities()) {
+			if (authority.getAuthority().equals("Admin")) {
+				return "jadwalJaga-home";
+			} else {
+				return "jadwalJaga-home2";
+			}
+		}
+		return "";
 	}
 
 	/**

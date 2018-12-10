@@ -50,7 +50,7 @@ public class SupplyController {
 			   SupplyModel add = supplyService.addSupply(supply);
 				model.addAttribute("supply", add);
 				model.addAttribute("title", "Persediaan Lab");
-				return "success";
+				return "success-supply";
 		   }
 		}
 		return "not-admin";
@@ -109,7 +109,7 @@ public class SupplyController {
 				supplyService.updateSupply(supply);
 				model.addAttribute("datasupply", supply);
 				model.addAttribute("title","Ubah Persediaan Reagen");
-				return "success";
+				return "success-supply";
 		   }
 		}
 		return "not-admin";

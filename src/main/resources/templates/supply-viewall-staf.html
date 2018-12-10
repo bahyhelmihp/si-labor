@@ -18,14 +18,16 @@
 <body>
 
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<br>
-	<div class="container-fluid">
-		<h2>Daftar Persediaan</h2>
-		<p>Periksa Daftar Persediaan Laboratorium</p>
+	<br><br><br><br><br><br>
+	<div class="container">
+		<h2 align="center">Daftar Persediaan</h2>
+		<p align="center">Periksa Daftar Persediaan Laboratorium</p>
 		<br>
 		<div th:if="${datasupply.isEmpty()}">
 			<div>Stok kosong/habis! Segera ajukan medical supply!</div>
 		</div>
+		<div class="card">
+		<div class="card-body">
 		<table id="supplyTable">
 
 			<!-- Header Table -->
@@ -72,6 +74,8 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	</div>
 	</div>
 	<br>
 

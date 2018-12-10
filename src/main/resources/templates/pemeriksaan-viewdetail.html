@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Detail Pemeriksaan</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container">
+		<br><br><br><br><br><br>
+		<h2 align="center">Detail Pemeriksaan</h2>
+		<p align="center" th:text="'Detail pemeriksaan laboratorium dengan ID ' +  ${pemeriksaan.id}"></p>
+		<div class="card">
+			<div class="card-body">
+				<p th:text="'Nama Pasien: ' + ${namaPasien}"></p>
+				<p th:if="${pemeriksaan.jenisPemeriksaan.nama} == 'darah'" th:text="'Jenis Pemeriksaan: Cek Darah'"></p>
+				<p th:if="${pemeriksaan.jenisPemeriksaan.nama} == 'urin'" th:text="'Jenis Pemeriksaan: Cek Urin'"></p>
+				<p th:if="${pemeriksaan.jenisPemeriksaan.nama} == 'mukus'" th:text="'Jenis Pemeriksaan: Cek Mukus'"></p>
+				<p th:if="${pemeriksaan.jenisPemeriksaan.nama} == 'kulit'" th:text="'Jenis Pemeriksaan: Cek Kulit'"></p>
+				<p th:if="${pemeriksaan.status} == 0">Status: Menunggu Persetujuan</p>
+				<p th:if="${pemeriksaan.status} == 1">Status: Diproses</p>
+				<p th:if="${pemeriksaan.status} == 2">Status: Selesai</p>
+				<p th:if="${pemeriksaan.status} == 3">Status: Terkirim</p>
+				<p th:text="'Tanggal Pengajuan: ' + ${pemeriksaan.tanggalPengajuan}"></p>
+				<p th:unless="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: ' + ${pemeriksaan.tanggalPemeriksaan}"></p>
+				<p th:if="${pemeriksaan.tanggalPemeriksaan} == null" th:text="'Tanggal Pemeriksaan: -'"></p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
