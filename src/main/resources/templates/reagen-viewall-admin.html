@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Perencanaan Reagen</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	<link href="bootstrap.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div class="container-fluid">
+			<br><h2 th:if="${value}==true">Perencanaan Kebutuhan Reagen</h2>
+			<p th:if="${value}==true">Daftar Perencanaan Kebutuhan Reagen</p> 
+			<h2 th:if="${value} == false">Oops :(</h2>
+			<h5 th:if="${value} == false">Perencanaan Kebutuhan Reagen Belum Diajukan</h5><br>
+			
+			<br>
+			<table id="mytable" class="table table-bordered table-striped"  th:if="${value} == true">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nama</th>
+						<th>Jumlah</th>
+						<th>Status</th>
+						<th>Tanggal Diubah</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="reagen: ${datareagen}">
+						<td th:text="${reagen.id}"></td>
+						<td th:text="${reagen.nama}"></td>
+						<td th:text="${reagen.jumlah}"></td>
+						<td th:if="${reagen.status} == 0">Sudah dibeli</td>
+						<td th:if="${reagen.status} == 1">Belum dibeli</td>
+						<td th:text="${reagen.tanggal_update}"></td>
+						<td>
+							<div th:if="${reagen.status} == 1">
+								<a th:href="@{'/lab/kebutuhan/ubah/' +${reagen.id}}">Ubah Status</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pagination-container">
+				<nav>
+					<ul class="pagination"></ul>
+				</nav>
+			</div>
+		</div>
+		
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script> 
+	var table = '#mytable'
+	$('#maxRows').on('change', function(){
+		$('.pagination').html('')
+		var trnum = 0
+		var maxRows = parseInt($(this).val())
+		var totalRows = $(table+' tbody tr').length
+		$(table+' tr:gt(0)').each(function(){
+			trnum++
+			if(trnum > maxRows){
+				$(this).hide()
+			}
+			if trnum <= maxRows){
+				$(this).show()
+			}
+		})
+		if(totalRows >maxRows){
+			var pagenum = Math.ceil(totalRows/maxRows)
+			for(var i=1; i<=pagenum;){
+				$('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ + '<span class="sr-only">(current)</span></span>\<li>').show()
+			}
+		}
+		$('.pagination li:first-child').addClass('active')
+		$('.pagination li').on('click', fuction(){
+			var pagenum = $(this).attr('data-page')
+			var trIndex=0;
+			$('.pagination li').removeClass('active')
+			$(this).addClass('active')
+			$(table+' tr:gt(0)').each(function(){
+				trIndex++
+				if(trIndex > (maxRows*pageNum) || trIndex<=((maxRows*pageNum)-maxRows)){
+					$(this).hide()
+				} else{
+					$(this).show()
+				}
+			})
+		})
+	})
+	$(function(){
+		$('table tr:eq(0)').prepend('<th>ID</th>')
+		var id = 0;
+		$('table tr:gt(0)').each(function(){
+			id++
+			$(this).prepend('<td>'+id+'</td')
+		})
+	})
+	
+	</script>
+</body>
