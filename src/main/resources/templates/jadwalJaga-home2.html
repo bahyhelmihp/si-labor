@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Jadwal Jaga</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link href="bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
+		<div class="page-header">
+			<h2>Jadwal Jaga Laboratorium</h2>
+			<p>Jadwal jaga seluruh staf yang bertugas pada Laboratorium RS
+				APAP</p>
+			<p></p>
+
+		</div>
+		<hr>
+
+		<div class="row">
+			<div class="col-sm">
+				<div class="card" style="text-align: center">
+					<div class="card-header">
+						<h4>Lihat Jadwal Berdasarkan Tanggal</h4>
+					</div>
+					<div class="card-body">
+						<p>Pilih tanggal yang diinginkan</p>
+						<form th:action="@{/lab/jadwal-jaga/lihat/}" method="GET">
+							<input type="date" th:name="tanggal" required="required"
+								class="form-control" style="text-align: center" /> <br>
+							<button type="submit" value="submit" class="btn btn-primary">Lihat</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="card" style="text-align: center">
+					<div class="card-header">
+						<h4>Kirim Jadwal ke IGD</h4>
+					</div>
+					<div class="card-body">
+						<form th:action="@{/api/lab/jadwal-jaga/kirim}" method="POST">
+							<button type="submit" class="btn btn-primary">Kirim
+								Jadwal</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div style="margin-left: 1rem" th:if="${jadwalJaga.isEmpty()}">
+				<span class="alert alert-danger">Jadwal jaga belum ada!
+					Segera tambah jadwal jaga</span>
+			</div>
+		</div>
+
+		<br>
+		<div class="row, col-lg">
+			<div class="card" style="text-align: center">
+				<div class="card-header">
+					<h5>List Jadwal Jaga Lab</h5>
+				</div>
+				<div class="card-body">
+					<table id="mytable" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Tanggal</th>
+								<th>Waktu Mulai</th>
+								<th>Waktu Selesai</th>
+								<th>Nama Staff</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="jj : ${jadwalJaga}">
+								<td th:text="${jj.id}"></td>
+								<td th:text="${jj.tanggal}"></td>
+								<td th:text="${jj.start}"></td>
+								<td th:text="${jj.end}"></td>
+								<td th:text="${jj.namaStaff}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('#mytable').DataTable();
+		});
+	</script>
+</body>
+</html>
