@@ -8,4 +8,4 @@ Developers:
 - **Christie Vithasa Immanuel Kassan** (1606823670)
 - **Faizah Afifah** (1606918093)
 <br>
-API Documentation available at: **silabor_API_documentation.pdf**
+API Documentation available at: silabor_API_documentation.pdf
