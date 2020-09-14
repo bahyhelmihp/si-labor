@@ -1,4 +1,4 @@
-# Sistem Informasi Laboratroum
+# Sistem Informasi Laboratorium
 Sistem Infomasi Laboratorium (si-labor) is a collaborative work done by Unviersity of Indonesia Computer Science students. Done to fulfill Enterprise Application Programming and Architectrue final project.
 <br>
 Developers:
@@ -8,4 +8,4 @@ Developers:
 - **Christie Vithasa Immanuel Kassan** (1606823670)
 - **Faizah Afifah** (1606918093)
 <br>
-API Documentation available at: silabor_API_documentation.pdf
+API Documentation available at [here](https://github.com/bahyhelmihp/si-labor/blob/master/silabor_API_documentation.pdf)
