@@ -1,5 +1,5 @@
-# si-labor
-Sistem Infomasi Laboratorium. A collaborative work done by Unviersity of Indonesia Computer Science student. Done to fulfill Enterprise Application Programming and Architectrue final project.
+# Sistem Informasi Laboratroum
+Sistem Infomasi Laboratorium (si-labor) is a collaborative work done by Unviersity of Indonesia Computer Science students. Done to fulfill Enterprise Application Programming and Architectrue final project.
 <br>
 Developers:
 - **Bahy Helmi Hartoyo Putra** (1606918124)
